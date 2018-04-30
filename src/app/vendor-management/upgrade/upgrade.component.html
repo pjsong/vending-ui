@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-1 col-md-2">  <h4>界面版本号：1.0.0<br>{{uiVersion}}</h4></div>
+    <div class="col-md-offset-1 col-md-2">  <h4>设备版本号：1.0.0<br>{{deviceVersion}}</h4></div>
+    <div class="col-md-offset-1 col-md-2">  <h4>服务版本号：1.0.0<br>{{dataVersion}}</h4></div>
+  </div>
+  <hr>
+  <div class="row subcontainer" >
+    <div class="col-md-2 col-md-offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(0)"><h4>升级系统</h4></label>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(1)"><h4>关闭设备</h4></label>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(2)"><h4>重启设备</h4></label>
+    </div>
+  </div>
+  <div class="subcontainer" >
+    <h3>{{processMsg}}</h3>
+  </div>
+
+  <div class="row">
+    <footercommand [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+</div>

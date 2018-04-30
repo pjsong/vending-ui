@@ -7,6 +7,9 @@ import {Http, Response,} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
 import {Observable} from "rxjs";
 import * as CryptoJS from "crypto-js"
+// import CryptoJS from 'crypto-js'
+
+// var CryptoJS = require("crypto-js");
 
 export class VendingConf{
   slug:string;sec:string;vm_type:number;charger:number;product_category:number[];

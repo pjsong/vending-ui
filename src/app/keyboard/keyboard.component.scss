@@ -1,0 +1,49 @@
+.container-fluid{
+  width: 65vw;
+}
+.col-md-1{
+  width: 10%;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+
+.input-group{
+  .input-group-addon{
+    width: 12vw;
+    border-bottom: 0px;
+    vertical-align: text-bottom;
+  }
+  input{
+    height: 5vw;
+    border-bottom-width: .2vw;
+    border-bottom-color: greenyellow;
+  }
+  .input-group-addon, input{
+    color:green;
+    background-color: transparent;
+    font-size: 3vw;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+  }
+
+}
+button{
+  width: 5vw;
+  height: 5vw;
+  font-size: 2vw;
+}
+button[value="shift"], button[value="backspace"], button[value="clear"], button[value="enter"]{
+  font-size: 1vw;
+}
+.loginButton{
+  font-size: 3vw;
+  //font-color: grey;
+  width: 18vw;
+  height:5vw;
+  background-color: #4cae4c;
+}
+.col-xs-3, .col-md-3{
+  margin-bottom: 3vw;
+}

@@ -1,0 +1,14 @@
+<div class="container">
+  <div *ngIf="timeoutMsg">
+    <h2>{{timeoutMsg}}</h2>
+  </div>
+  <div *ngIf="!timeoutMsg">
+    <h1><span class="label label-danger">{{tipMessage}}</span></h1>
+    <div *ngIf="this.transactionStatus == 'started' && wxPayParams != undefined">
+      <img [src]="wxPayParams.imgUrl" (load)="startTrx()">
+    </div>
+  </div>
+
+  <footercommand [retTxt]="retTxt" [retAddress]="retAddress" [retDisabled]="retDisabled" [cmdDisplay]="false"
+                 (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+</div>

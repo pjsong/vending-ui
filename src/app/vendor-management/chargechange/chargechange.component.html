@@ -1,0 +1,17 @@
+<!--<div class="container">-->
+
+  <h2 *ngIf="amountBefore">历史余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </h2>
+  <h2 *ngIf="amountCharging">当前充值：<span class="label label-info">{{amountCharging | number:'3.0-0'}}</span></h2>
+  <h2 *ngIf="amountBefore">当前余额：<span class="label label-info">{{(amountBefore+amountCharging) | number:'3.0-0'}}</span></h2>
+
+  <label *ngIf="chargingTipMessage" class="label-warning chargingTipMessage" >
+    <h2>{{chargingTipMessage}}</h2>
+  </label>
+
+  <div class="row" *ngIf="cmdDisplay">
+    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+
+<!--</div>-->
+

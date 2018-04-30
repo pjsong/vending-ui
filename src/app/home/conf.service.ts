@@ -3,8 +3,8 @@ import {Observable} from "rxjs";
 import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
 import {TimeVars, TIMEVARS, PaycashVars, PAYCASHVARS} from "../paymethod/paycash/paycash.service";
-import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.service";
-import {BUTTONSTEST} from "../paymethod/paymethod.service";
+import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
+import {BUTTONSTEST} from "../paymethod/paymethod.services";
 import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
 
 export const configserver = "http://172.18.0.4/";

@@ -1,0 +1,40 @@
+<div class="slotSelect">
+  <div class="container-fluid">
+    <!--<div class="row">-->
+      <div class="col-md-9">
+        <label class="label-danger" *ngIf="finishWithError"><h2>{{finishWithError}}</h2></label>
+        <div class="row">
+          <numKB [maxLength]="maxLength" [tipMessage]="tipMessage" (onFinish)="onFinish($event)"></numKB>
+        </div>
+        <div *ngIf="slotSelectFinishClicked">
+          <div class="col-md-5 col-md-offset-2">
+            <input type="text" class="form-control" value="购买数量: {{itemCount}}" (click)="itemCntClick(1)">
+          </div>
+          <div class="col-md-1">
+            <i class="fa fa-plus-circle fa-4x" (click)="itemCntClick(1)"></i>
+          </div>
+          <div class="col-md-1">
+            <i class="fa fa-minus-circle fa-4x" (click)="itemCntClick(-1)"></i>
+          </div>
+        </div>
+        <div *ngIf="slotSelectFinishClicked" class="row footercommand">
+          <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop"
+                         (cmdClickedEmitter)="onCmdClicked($event)" [retTxt]="retTxt"
+                         [retNavDisabled]="retNavDisabled"></footercommand>
+        </div>
+      </div>
+
+      <div *ngIf="cart.productOrders.length>0" class="col-md-3">
+        <h1><i class="fa fa-cart-plus fa-2x"></i></h1>
+        <div *ngFor="let productOrder of cart.productOrders" class="row cart">
+          <h3>
+            货道{{productOrder.slotStatus.slotNo}} * 数量 {{ productOrder.itemCnt}}
+            <i class="fa fa-times-circle-o fa-2x" (click)="cartRemoveProductClick(productOrder)"></i>
+          </h3>
+        </div>
+      </div>
+    <!--</div>-->
+
+  </div>
+</div>
+

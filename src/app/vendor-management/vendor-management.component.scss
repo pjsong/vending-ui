@@ -1,0 +1,24 @@
+.container{
+  height: 68vh;
+}
+.btn{
+  font-size: 3.2vw;
+  background-color: greenyellow;
+  color: black;
+  margin-right: 4vw;
+  border-radius: 30%;
+  margin-top:3vh;
+}
+.active{
+  background-color: orange;
+}
+a .col-md-1{
+  padding-top: 5vh;
+}
+label.router-disabled{
+  pointer-events: none;
+  color: gray;
+}
+.col-md-9{
+  text-align: center;
+}

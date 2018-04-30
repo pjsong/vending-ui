@@ -1,0 +1,26 @@
+<hr>
+<div class="container-fluid">
+  <div *ngIf="manager" class="row">
+    <div class="col-md-3">
+      <h5>
+        <span class="fa fa-phone-square"></span>
+        {{manager.tel_no}}
+      </h5>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <h5>
+        <span class="fa fa-weixin"></span>
+        {{manager.wechat_no}}
+      </h5>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <h5>
+        <i class="fa fa-desktop"></i>
+        {{manager.website}}
+      </h5>
+    </div>
+  </div>
+</div>
+
+
+

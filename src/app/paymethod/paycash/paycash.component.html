@@ -1,0 +1,19 @@
+<div class="paycash">
+  <div class="container">
+    <label class="label-warning topPayTipMessageLabel" >
+      <h2>{{tipMessage}}</h2>
+    </label><br>
+    <label *ngIf="changeTipMessage" class="label-warning payTipMessageLabel" >
+      <h2>{{changeTipMessage}}</h2>
+    </label><br>
+    <label *ngIf="payingTipMessage" class="label-warning payTipMessageLabel" >
+      <h2>{{payingTipMessage}}</h2>
+    </label><br>
+  </div>
+  <div *ngIf="!changeVerified" class="row">
+    <footercommand [cmdDisplay]="cmdDisplay" [cmdStart]="cmdStart" [cmdStop]="cmdStop"
+                   [retDisabled]="retDisabled" [retTxt]="retTxt" [retAddress]="retAddress"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+</div>
+

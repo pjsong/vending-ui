@@ -1,0 +1,19 @@
+<!--<div class="container">-->
+  <label class="label-danger" *ngIf="finishedWithError"><h3>{{finishedWithError}}</h3></label>
+
+  <div class="container-fluid">
+    <numKB [maxLength] = "slotMaxLength" [autohide] = "slotAutohide" [tipMessage] = "slotTipMessage"
+           (onFinish)="onSlotFinish($event)"></numKB>
+  </div>
+
+  <div *ngIf="slotSelectFinishClicked" class="container-fluid">
+    <numKB [maxLength] = "turnCntMaxLength" [autohide] = "turnCntAutohide"
+           [tipMessage] = "turnCntTipMessage" (onFinish)="onTurnCntFinish($event)"></numKB>
+  </div>
+
+  <div class="row" *ngIf="currentItemCntFinishClicked">
+    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+<!--</div>-->
+

@@ -1,0 +1,18 @@
+<div *ngIf="cmdDisplay && !retDisabled"  class="row">
+  <div class="col-md-offset-3 col-md-3">
+    <label class="btn btn-success" (click)="cmdClicked(0)"><h5>{{cmdStatus}}</h5></label>
+  </div>
+  <div class="col-md-3">
+    <label class="btn btn-success" (click)="cmdClicked(1)"><h5>{{retTxt}}</h5></label>
+  </div>
+</div>
+
+<div *ngIf="!retDisabled && !cmdDisplay"  class="row">
+  <div class="col-md-offset-4 col-md-4">
+    <label class="btn btn-success" (click)="cmdClicked(1)"><h5>{{retTxt}}</h5></label>
+  </div>
+</div>
+
+<div *ngIf="cmdDisplay && retDisabled" class="row">
+  <label class="btn btn-success" (click)="cmdClicked(0)"><h5>{{cmdStatus}}</h5></label>
+</div>

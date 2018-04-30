@@ -1,0 +1,36 @@
+.container-fluid{
+  height: 54vh;
+  width: 95vw;
+}
+.slotSelect{
+  height: 68vh;
+}
+.row{
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+}
+.footercommand{
+  margin-top: 12vw;
+  margin-bottom: 2vw;
+}
+.cart{
+  text-align: left;
+}
+input{
+  background-color: transparent;
+  color: green;
+  font-size: 3vw;
+  text-align: center;
+  height:8vh;
+}
+.col-md-2 i{
+  height:8vh;
+}
+button{
+  //width: 8vw;
+  height: 8vw;
+  border: 0;
+  font-size: 3vw;
+  color: green;
+  background: transparent;
+}

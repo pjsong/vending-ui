@@ -1,0 +1,24 @@
+<!-- use | async pip if main button is observable-->
+<div class="container">
+  <div class="row">
+    <div *ngIf="!timeoutMsg">
+      <div *ngFor="let mb of mainButtons" class="col-sm-6 col-md-4">
+        <div class="thumbnail" routerLink= {{mb.linkTarget}}>
+          <img src={{mb.imgUrl}}>
+          <div class = "caption">
+            <h3>
+              <label class="btn btn-lg">
+                {{mb.buttonTxt}}
+              </label>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div *ngIf="timeoutMsg">
+    <h2>{{timeoutMsg}}</h2>
+  </div>
+  </div>
+</div>
+
+

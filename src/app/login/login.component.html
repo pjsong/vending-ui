@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="container subcontainer">
+    <div *ngIf="loginErrorMsg">
+      <label class="has-error">{{loginErrorMsg}}</label>
+    </div>
+
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <keyboardInput [maxLength]="maxLengthUserName" [tipMessage]="tipMessageUserName"
+                       [autohide]="autohideUserName" [inputType]="inputTypeUserName" (onFinish)="onUserNameFinish($event)">
+        </keyboardInput>
+      </div>
+    </div>
+
+    <div class="container-fluid" *ngIf="clickStatus=='usernameClicked' || clickStatus=='passwordClicked'">
+      <div class="col-md-12">
+        <keyboardInput [maxLength]="maxLengthPassword" [tipMessage]="tipMessagePassword"
+                       [autohide]="autohidePassword" [inputType]="inputTypePassword" (onFinish)="onPasswordFinish($event)">
+        </keyboardInput>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="clickStatus=='passwordClicked'">
+    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retTxt]="retTxt"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+
+</div>

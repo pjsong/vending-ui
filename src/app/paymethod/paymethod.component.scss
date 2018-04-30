@@ -1,0 +1,37 @@
+.container{
+  padding-top: 1vh;
+  padding-bottom: 10vh;
+  height: 68vh;
+}
+.btn{
+  font-size: 2.2vw;
+}
+.thumbnail{
+  background-color: transparent;
+  img{
+    height:20vh;
+  }
+  border: 0px;
+}
+
+.payTipMessageLabel{
+  padding-bottom: 4vh;
+  background: transparent;
+}
+
+.caption{
+  background-color: greenyellow;
+  margin-left: 5vw;
+  height: 8vh;
+  width: 20vw;
+  h3{
+    margin-top: 0vh;
+    margin-bottom: 0vh;
+    font-size: 1.2vh;
+  }
+}
+
+.footerrow{
+  margin-top: 9vh;
+  padding-left: 9vw
+}

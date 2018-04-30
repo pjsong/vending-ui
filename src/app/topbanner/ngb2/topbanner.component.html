@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row page-header" >
+    <div class="col-md-6">
+      <h2>
+        <span class="fa fa-handshake-o"></span>
+        傲咪迪<small>自动售货</small>
+      </h2>
+    </div>
+    <div class="col-md-4 col-md-offset-2">
+      <h2>
+        <i class="fa fa-clock-o"></i>
+        <span *ngIf="pageWaiting > 0">
+      {{pageWaiting | number:'3.0-0'}}s
+      </span>
+      </h2>
+    </div>
+  </div>
+</div>
+
+

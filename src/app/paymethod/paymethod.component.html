@@ -1,0 +1,33 @@
+<div class="container">
+  <div *ngIf="timeoutMsg">
+    <h2>{{timeoutMsg}}</h2>
+  </div>
+  <div *ngIf="!timeoutMsg">
+    <div *ngIf="needToPay" class = "row">
+      <label class="label-warning payTipMessageLabel" >
+        <h2>{{needToPay}}</h2>
+      </label>
+    </div>
+    <div class="row">
+      <div *ngFor="let mb of mainButtons" class="col-sm-6 col-md-4">
+        <div class="thumbnail" routerLink= {{mb.linkTarget}}>
+          <img src={{mb.imgUrl}}>
+          <div class = "caption">
+            <h3>
+              <label class="btn btn-lg">
+                {{mb.buttonTxt}}
+              </label>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row footerrow">
+    <footercommand [cmdDisplay]="cmdDisplay" [retTxt]="retTxt"
+                  ></footercommand>
+  </div>
+</div>
+
+

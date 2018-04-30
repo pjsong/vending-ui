@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>会员帐号：<span class="label label-danger">{{accountName}}</span></h1>
+
+  <h2>历史余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </h2>
+  <h2>当前充值：<span class="label label-info">{{amountCharging | number:'3.0-0'}}</span></h2>
+  <h2>当前余额：<span class="label label-info">{{(amountBefore + amountCharging) | number:'3.0-0'}}</span></h2>
+  <label *ngIf="chargingTipMessage" class="label-warning chargingTipMessage" >
+    <h3>{{chargingTipMessage}}</h3>
+  </label>
+  <div class="row">
+    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
+                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  </div>
+
+</div>
+
