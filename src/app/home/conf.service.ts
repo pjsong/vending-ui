@@ -6,42 +6,7 @@ import {TimeVars, TIMEVARS, PaycashVars, PAYCASHVARS} from "../paymethod/paycash
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
 import {BUTTONSTEST} from "../paymethod/paymethod.services";
 import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
-
-export const configserver = "http://172.18.0.4/";
-export const vendingStatusUrl = configserver + "api/data/status";
-
-export const devicelogserver = "http://172.18.0.2/";
-export const fileserver = "http://static.oursmedia.cn/";
-export const localserver = "http://localhost:8000/";
-export const wxPayServer = "https://api.scheduler.oursmedia.cn/showPngQR";
-export const wxPayPollUrl = "https://api.scheduler.oursmedia.cn/wxpaycheck";
-export const wxPayHeartbeatUrl = "https://api.scheduler.oursmedia.cn/wxPayHeartbeat";
-
-export const confUrlPrefix = configserver + "api/data/config/?format=json&";
-export const memberUrl = configserver + "api/data/member/";
-export const slotUrl = configserver + "api/data/slot/";
-export const productUrl = configserver + "api/data/product/";
-export const authUrl = configserver + "api/data/api-token-auth/";
-export const adminloginUrl = configserver+ "api/data/perm/?format=json";
-export const vendingConfUrl = configserver + "api/data/vendingmachine/";
-
-export const coinchangepostUrl = devicelogserver + "api/data/coinchangelog/create/";
-export const coinchangelogUrl = devicelogserver + "api/data/coinchangelog/?format=json";
-export const slotstatusUrl = devicelogserver + "api/data/slotstatus/";
-export const ordermainUrl = devicelogserver + "api/data/cashmachine/ordermain/?format=json";
-export const devicelogUrl = devicelogserver + "api/data/cashmachine/cashboxlog/?format=json";
-export const controlboardUrl = devicelogserver + "api/data/controlboard/";
-
-export const versionUrl = localserver + "api/data/version/";
-export const pullcodeUrl = localserver + "api/data/pullcode/";
-export const slotTestUrl = localserver + "api/data/controlboard/testrun/?format=json";
-export const shutdownUrl = localserver + "api/data/shutdown/";
-export const rebootUrl = localserver + "api/data/reboot/";
-
-export const timeoutSet = 200;
-export const timeoutSetCashbox = 5000;
-export const timeoutTip = ", timeout "+timeoutSet+ " exceed";
-
+import { environment as env} from '../environments/environment';
 
 @Injectable()
 export class ConfService{
@@ -55,7 +20,7 @@ export class ConfService{
     return this.getVendingStatus().map((x:VendingStatus)=>{
       let ret = '';
       let vmtype = 'vmtype=' + x.vmtype;
-      let prefixOriginal = configserver + "api/data/config/?format=json&";
+      let prefixOriginal = env.configserver + "api/data/config/?format=json&";
       if(prefixOriginal.endsWith('&') || prefixOriginal.endsWith('?')){
         ret = prefixOriginal + vmtype
       }
@@ -185,7 +150,7 @@ export class ConfService{
   }
 
   initWXPayConnection(){
-    return this.http.get(wxPayHeartbeatUrl).map(x=>x.json());
+    return this.http.get(env.wxPayHeartbeatUrl).map(x=>x.json());
   }
   getHomepageButton(){
     const key = "homepagebutton";
@@ -240,7 +205,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=product").map(x=>x.json())
           // .timeout(timeoutSet, "getProductUrl "+timeoutTip)
-          .map(x=>x[0].conf_value).catch(err=>Observable.of(productUrl))
+          .map(x=>x[0].conf_value).catch(err=>Observable.of(env.productUrl))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })}
     return Observable.of(JSON.parse(ret));
@@ -254,7 +219,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=ordermain").map(x=>x.json())
           // .timeout(timeoutSet, "getOrdermainUrl "+timeoutTip)
-          .map(x=>x[0].conf_value).catch(err=>Observable.of(ordermainUrl))
+          .map(x=>x[0].conf_value).catch(err=>Observable.of(env.ordermainUrl))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
@@ -310,7 +275,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=loginapi").map(x=>x.json())
           // .timeout(timeoutSet, "getAuthUrl" + timeoutTip)
-          .map(x=>x[0].conf_value).catch(err=>Observable.of(authUrl))
+          .map(x=>x[0].conf_value).catch(err=>Observable.of(env.authUrl))
           .do(x=>localStorage.setItem(key, x));
     })}
     return Observable.of(ret);
@@ -387,7 +352,7 @@ export class ConfService{
           .map(x=>x.json())
           // .timeout(timeoutSet, "getCoinChangeUrl" + timeoutTip)
           .map(x=>x[0].conf_value)
-          .catch(x=>Observable.of(coinchangepostUrl))
+          .catch(x=>Observable.of(env.coinchangepostUrl))
           .do(x=> localStorage.setItem(key, x));
     })};
     return Observable.of(ret);
@@ -403,7 +368,7 @@ export class ConfService{
           .map(x => x.json())
           // .timeout(timeoutSet, "getCoinChangeUrl" + timeoutTip)
           .map(x => x[0].conf_value)
-          .catch(x => Observable.of(coinchangelogUrl))
+          .catch(x => Observable.of(env.coinchangelogUrl))
           .do(x=> localStorage.setItem(key, x));
     })};
     return Observable.of(ret);
@@ -433,7 +398,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=controlboardapi").map(x=>x.json())
         // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(err=>Observable.of(controlboardUrl))
+        .map(x=>x[0].conf_value).catch(err=>Observable.of(env.controlboardUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
@@ -446,7 +411,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=vendingconf").map(x=>x.json())
       // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(err=>Observable.of(vendingConfUrl))
+        .map(x=>x[0].conf_value).catch(err=>Observable.of(env.vendingConfUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
       // return Observable.of(vendingConfUrl).do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
@@ -460,7 +425,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=version").map(x=>x.json())
       // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(err=>Observable.of(versionUrl))
+        .map(x=>x[0].conf_value).catch(err=>Observable.of(env.versionUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })}
     return Observable.of(JSON.parse(ret));
@@ -474,7 +439,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=pullcode").map(x=>x.json())
       // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(err=>Observable.of(pullcodeUrl))
+        .map(x=>x[0].conf_value).catch(err=>Observable.of(env.pullcodeUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
@@ -488,7 +453,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=shutdown").map(x=>x.json())
       // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(err=>Observable.of(shutdownUrl))
+        .map(x=>x[0].conf_value).catch(err=>Observable.of(env.shutdownUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
@@ -502,7 +467,7 @@ export class ConfService{
           return this.http.get(confUrlPrefix+"confname=reboot").map(x=>x.json())
           // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
             .map(x=>x[0].conf_value)
-            .catch(err=>Observable.of(rebootUrl))
+            .catch(err=>Observable.of(env.rebootUrl))
             .do(x=>localStorage.setItem(key, JSON.stringify(x)));
         })};
     return Observable.of(JSON.parse(ret));
@@ -512,7 +477,7 @@ export class ConfService{
     const key = "vendingstatus";
     let ret = localStorage.getItem(key);
     if(ret == null) {
-      return this.http.get(vendingStatusUrl).map(x=>{return x.json() as VendingStatus})
+      return this.http.get(env.vendingStatusUrl).map(x=>{return x.json() as VendingStatus})
         .do(x=>{localStorage.setItem(key, JSON.stringify(x));return x;});
     }
     return Observable.of(JSON.parse(ret));
