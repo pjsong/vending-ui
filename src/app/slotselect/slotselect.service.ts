@@ -6,7 +6,6 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import {Http, Response} from "@angular/http";
 import {Observer} from "rxjs";
-import {confUrlPrefix, timeoutSet, timeoutTip} from "../home/conf.service";
 
 export class ProductOrder{
   slotStatus: SlotStatus;

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {confUrlPrefix, timeoutTip, timeoutSet, timeoutSetCashbox, coinchangelogUrl} from "../../home/conf.service";
 import {HttpUtils} from "../../common/http-util";
 import {ConfService} from "../../home/conf.service";
+import { Environment as env} from "../../environments/environment"
 
 export class ChargeCoinReq{
   "amount_before": number;
@@ -31,9 +31,9 @@ let CHARGECOINRET =
 export class ChargeCoinService{
   constructor(private http: Http, private confService: ConfService ){}
   getDeviceUrl(){
-    return this.http.get(confUrlPrefix+"confname=coinlog").map(x=>x.json())
+    return this.http.get(env.confUrlPrefix+"confname=coinlog").map(x=>x.json())
         // .timeout(timeoutSet, "coinLog" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(error=>Observable.of(coinchangelogUrl));
+        .map(x=>x[0].conf_value).catch(error=>Observable.of(env.coinchangelogUrl));
   }
 
   // coinUpdateTest(deviceUrl:string, cc: ChargeCoinReq):Observable<ChargeCoinReq>{

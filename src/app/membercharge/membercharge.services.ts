@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Subject, Observable, Subscription} from "rxjs";
 import {HttpUtils} from "../common/http-util";
-import {confUrlPrefix, timeoutSet, timeoutTip, timeoutSetCashbox} from "../home/conf.service";
 import {TimeVars, TIMEVARS, CashboxTaskRet, CashboxTask} from "../paymethod/paycash/paycash.service";
 
 export class Member{

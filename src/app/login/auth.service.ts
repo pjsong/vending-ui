@@ -8,7 +8,7 @@ import {Http, Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {HttpUtils} from "../common/http-util";
-import {confUrlPrefix, timeoutTip, timeoutSet, timeoutSetCashbox, ConfService} from "../home/conf.service";
+import {ConfService} from "../home/conf.service";
 
 let testLoginRet=[{'token':'123456789'}]
 

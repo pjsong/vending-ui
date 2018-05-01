@@ -5,7 +5,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import {Http, Response} from "@angular/http";
-import {confUrlPrefix, timeoutTip, timeoutSet, timeoutSetCashbox} from "../../home/conf.service";
 import {HttpUtils} from "../../common/http-util";
 
 export class OrderTaskSendRet{

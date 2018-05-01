@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../../home/home.service";
 import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.services";
 import {TimeVars, PaycashService} from "../paycash/paycash.service";
-import {ConfService, vendingConfUrl} from "../../home/conf.service";
+import {ConfService} from "../../home/conf.service";
 import {Observable, Subscription, Subject} from "rxjs";
 import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";

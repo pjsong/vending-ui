@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {HttpUtils} from "../../common/http-util";
-import {confUrlPrefix, timeoutTip, timeoutSet, timeoutSetCashbox, slotstatusUrl} from "../../home/conf.service";
 
 export class SlotUpdateReq{
   "slot_no": string;

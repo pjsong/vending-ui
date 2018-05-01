@@ -4,8 +4,9 @@ const localserveraddr = "http://localhost:8000/";
 const fileserveraddr = "http://static.oursmedia.cn/";
 const wxServer = "https://api.scheduler.oursmedia.cn/";
 
-export const environment = {
-    production: false,
+export const Environment = {
+    isDev: true,
+    name: "dev",
     configserver: configserveraddr,
     vendingStatusUrl: configserveraddr + "api/data/status",
 
@@ -39,5 +40,16 @@ export const environment = {
 
     timeoutSet: 200,
     timeoutSetCashbox: 5000,
-    timeoutTip: ", timeout 200 exceed"
+    timeoutTip: ", timeout 200 exceed",
+
+    mainButton : [
+    {id: 1, imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/On_Screen_Keyboard.png', buttonTxt:'货道购买', linkTarget:'../slotselect'}
+    ,{id: 2,imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/vendor-management.png',buttonTxt:'终端管理', linkTarget:'../vendor-management'}
+    ,{id: 3,imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/membership.png',buttonTxt:'会员充值', linkTarget:'../membercharge'}
+    ],
+    buttonTest: [
+        {"id":1, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/On_Screen_Keyboard.png","buttonTxt":"货道购买","linkTarget":"../slotselect"},
+        {"id":2, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/vendor-management.png","buttonTxt":"终端管理","linkTarget":"../vendor-management"},
+        {"id":3, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/membership.png","buttonTxt":"会员充值","linkTarget":"../membercharge"},
+        ]
 }

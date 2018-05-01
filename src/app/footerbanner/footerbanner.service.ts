@@ -3,6 +3,7 @@ import {Http, Response} from "@angular/http";
 import { Observable} from "rxjs";
 import {HttpUtils} from "../common/http-util";
 import {Member} from "../membercharge/membercharge.services";
+import { Environment as env} from '../environments/environment';
 
 let MEMBERTEST=[{
   "id": 2,
@@ -26,6 +27,8 @@ export class FooterBannerService{
   }
 
   getManagerInfo(memberUrl:string){
+    if(env.isDev) return Observable.of(MEMBERTEST[0]);
+
     console.log("footbanner memberUrl" + memberUrl);
     return this.http.get(memberUrl+"?format=json&isManager")
       // .timeout(timeoutSet, "getManagerInfo" + timeoutTip)

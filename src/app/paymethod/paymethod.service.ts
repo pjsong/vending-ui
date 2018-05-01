@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 import {CashboxTaskRet} from "./paycash/paycash.service";
 import {MainButton} from "../home-default-button/default-button.service";
 import {HttpUtils} from "../common/http-util";
-import {confUrlPrefix, timeoutSet, timeoutTip, timeoutSetCashbox} from "../home/conf.service";
 
 // let BUTTONS = [
 //   new MainButton(1, 'http://172.18.0.3/static/images/vendor/front/paymethod/money-icon-58243.png', '现金支付', '../paycash')

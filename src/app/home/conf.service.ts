@@ -6,7 +6,7 @@ import {TimeVars, TIMEVARS, PaycashVars, PAYCASHVARS} from "../paymethod/paycash
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
 import {BUTTONSTEST} from "../paymethod/paymethod.services";
 import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
-import { environment as env} from '../environments/environment';
+import { Environment as env} from '../environments/environment';
 
 @Injectable()
 export class ConfService{
@@ -48,6 +48,7 @@ export class ConfService{
   }
 
   getMemberUrl(): Observable<string>{
+    if(env.isDev) return Observable.of(env.memberUrl);
     const key = "memberUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -150,6 +151,7 @@ export class ConfService{
   }
 
   initWXPayConnection(){
+    if(env.isDev) return Observable.of();
     return this.http.get(env.wxPayHeartbeatUrl).map(x=>x.json());
   }
   getHomepageButton(){
@@ -282,6 +284,7 @@ export class ConfService{
   }
 
   getDisableClickReturn(){
+    if(env.isDev) return Observable.of("15");
     const key="disableClickReturn";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -459,6 +462,7 @@ export class ConfService{
     return Observable.of(JSON.parse(ret));
   }
   getRebootUrl(){
+    if(env.isDev) return Observable.of(env.rebootUrl);
     const key = "rebootUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -467,13 +471,16 @@ export class ConfService{
           return this.http.get(confUrlPrefix+"confname=reboot").map(x=>x.json())
           // .timeout(timeoutSet, "getControlBoardUrl" + timeoutTip)
             .map(x=>x[0].conf_value)
-            .catch(err=>Observable.of(env.rebootUrl))
             .do(x=>localStorage.setItem(key, JSON.stringify(x)));
         })};
     return Observable.of(JSON.parse(ret));
   }
 
   getVendingStatus(): Observable<VendingStatus>{
+    if(env.isDev){
+      let vs:VendingStatus = {"ip": "223.74.169.125", "hostname": "pjsong-spring001-001", "omddevice": "connection_timeout_exception", "vmtype": "1", "ip_provider": "http://api.scheduler.oursmedia.cn/checkip", "md5": "fba10d5ab4cff3acbc1257acc8416c19", "conf_server": "http://172.16.0.4", "timestamp": "2017-04-25 23:54:17", "vm_slug":"pjsong-spring001-001","cashboxstatus": "0", "coinmachinestatus":"0","controlboardstatus":"0"};
+        return Observable.of(vs);
+    }
     const key = "vendingstatus";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -482,4 +489,6 @@ export class ConfService{
     }
     return Observable.of(JSON.parse(ret));
   }
+
+  
 }
