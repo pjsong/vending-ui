@@ -1,0 +1,6 @@
+#!/usr/bin/expect
+
+spawn git push
+expect "Password for 'https://jeson_peng@bitbucket.org':"
+send "atlassiandotcoM8\r"
+interact

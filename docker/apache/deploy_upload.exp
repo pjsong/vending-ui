@@ -1,0 +1,12 @@
+#!/usr/bin/expect
+
+spawn sudo docker login https://docker-registry.pengel.cn
+expect "password for pjsong:"
+send "pjsong3101\r"
+expect "Username:"
+send "pjsong\r"
+expect "Password:"
+send "pjsong3101\r"
+expect "Login Succeeded"
+spawn sudo docker push docker-registry.pengel.cn/vendingui"
+interact
