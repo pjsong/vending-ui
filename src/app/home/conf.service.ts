@@ -151,7 +151,6 @@ export class ConfService{
   }
 
   initWXPayConnection(){
-    if(env.isDev) return Observable.of();
     return this.http.get(env.wxPayHeartbeatUrl).map(x=>x.json());
   }
   getHomepageButton(){

@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.min.css';
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {MainButton} from "./default-button.services";
 import {Observable} from "rxjs";
 import {HomeService} from "../home/home.service";
 import {ConfService} from "../home/conf.service";
-
+import { Environment as env} from '../environments/environment';
 
 @Component({
   selector: 'default-button',
@@ -18,13 +16,16 @@ import {ConfService} from "../home/conf.service";
 export class DefaultButton implements OnInit{
   mainButtons: MainButton[];
   timeoutMsg:string = '';
-  // mainButtonsOld: Observable<MainButton[]>;
   constructor(private route: ActivatedRoute, private router:Router, private service: ConfService, private homeService: HomeService){
   }
 
   ngOnInit(){
     this.homeService.setPageWaiting('defaultButton->ngOnInit', 0);
     localStorage.clear();
+    if(env.isDev) {
+      this.mainButtons = env.mainButton;
+      return;
+    }
     this.service.initWXPayConnection().timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
       .catch(err=>{
         if(err.name == 'TimeoutError'){

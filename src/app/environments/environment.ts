@@ -3,6 +3,10 @@ const devicelogserveraddr = "http://172.18.0.2/";
 const localserveraddr = "http://localhost:8000/";
 const fileserveraddr = "http://static.oursmedia.cn/";
 const wxServer = "https://api.scheduler.oursmedia.cn/";
+const pic1 = "https://s1.ax2x.com/2018/05/02/SVBMe.png";//"https://simimg.com/i/SmRlX";
+const pic2 = "https://s1.ax2x.com/2018/05/01/SmRlX.png";//"https://simimg.com/i/SmnBl";
+const pic3 = "https://s1.ax2x.com/2018/05/01/SmosJ.png";//"https://simimg.com/i/Sm7vy";
+// https://s1.ax2x.com/2018/05/01/SmRlX.png
 
 export const Environment = {
     isDev: true,
@@ -43,13 +47,13 @@ export const Environment = {
     timeoutTip: ", timeout 200 exceed",
 
     mainButton : [
-    {id: 1, imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/On_Screen_Keyboard.png', buttonTxt:'货道购买', linkTarget:'../slotselect'}
-    ,{id: 2,imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/vendor-management.png',buttonTxt:'终端管理', linkTarget:'../vendor-management'}
-    ,{id: 3,imgUrl: 'http://172.18.0.3/static/images/vendor/front/homepage/membership.png',buttonTxt:'会员充值', linkTarget:'../membercharge'}
+    {id: 1, imgUrl: pic1, buttonTxt:'货道购买', linkTarget:'../slotselect'}
+    ,{id: 2,imgUrl: pic2, buttonTxt:'终端管理', linkTarget:'../vendor-management'}
+    ,{id: 3,imgUrl: pic3, buttonTxt:'会员充值', linkTarget:'../membercharge'}
     ],
     buttonTest: [
-        {"id":1, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/On_Screen_Keyboard.png","buttonTxt":"货道购买","linkTarget":"../slotselect"},
-        {"id":2, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/vendor-management.png","buttonTxt":"终端管理","linkTarget":"../vendor-management"},
-        {"id":3, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/membership.png","buttonTxt":"会员充值","linkTarget":"../membercharge"},
+        {"id":1, "imgUrl":pic1, "buttonTxt":"货道购买","linkTarget":"../slotselect"},
+        {"id":2, "imgUrl":pic2, "buttonTxt":"终端管理","linkTarget":"../vendor-management"},
+        {"id":3, "imgUrl":pic3, "buttonTxt":"会员充值","linkTarget":"../membercharge"},
         ]
 }

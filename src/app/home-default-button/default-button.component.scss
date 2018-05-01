@@ -1,27 +1,26 @@
-.container{
+.container-omd{
   padding-top: 14vh;
   padding-bottom: 10vh;
   height: 68vh;
 }
-.btn{
-  font-size: 3.2vw;
+.btn-omd{
+  margin-top: 0vh;
+  margin-bottom: 0vh;
+  font-size: 5vh;
+  color:purple;
 }
-.thumbnail{
+.thumbnail-omd{
   background-color: transparent;
   img{
     height:30vh;
+    width: 30vw;
   }
   border: 0px;
 }
 
-.caption{
+.caption-omd{
   background-color: greenyellow;
-  height: 9vh;
-  h3{
-    margin-top: 0vh;
-    margin-bottom: 0vh;
-    font-size: 1.8vh;
-  }
+  height: 6vh;
 }
 
 
