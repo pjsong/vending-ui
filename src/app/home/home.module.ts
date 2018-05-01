@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser'
 import { HomeRoutingModule } from './home-routing.module';
-import {Ng2BootstrapModule} from 'ngx-bootstrap';
+// import {Ng2BootstrapModule} from 'ngx-bootstrap';
 import {Home} from "./home.component";
 import {DefaultButton} from "../home-default-button/default-button.component";
 import {SlotSelect} from "../slotselect/slotselect.component";
@@ -28,7 +28,7 @@ import {FooterBannerService} from "../footerbanner/footerbanner.service";
 
 @NgModule({
   //other module whose exported classes are needed by component templates decleared in this module
-  imports: [ BrowserModule, Ng2BootstrapModule, LoginRoutingModule, HomeRoutingModule,  NumKBModule, KeyBoardModule, FooterCommandModule],
+  imports: [ BrowserModule, LoginRoutingModule, HomeRoutingModule,  NumKBModule, KeyBoardModule, FooterCommandModule],
   //view classes that belongs to this module
   declarations: [ Home, TopBanner, FooterBanner, DefaultButton, SlotSelect, LoginComponent, MemberCharge, _404Component
   ],

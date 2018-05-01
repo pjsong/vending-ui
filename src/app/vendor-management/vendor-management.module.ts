@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import {Ng2BootstrapModule} from 'ngx-bootstrap';
+// import {Ng2BootstrapModule} from 'ngx-bootstrap';
 import {RouterModule} from "@angular/router";
 import {VendorManagement} from "./vendor-management.component";
 import {VendorManagementRoutingModule} from "./vendor-management-routing.module";
@@ -22,7 +22,7 @@ import {UpgradeService} from "./upgrade/upgrade.service";
 
 @NgModule({
   //other module whose exported classes are needed by component templates decleared in this module
-  imports: [ CommonModule, Ng2BootstrapModule, VendorManagementRoutingModule, RouterModule, NumKBModule, FooterCommandModule],
+  imports: [ CommonModule, VendorManagementRoutingModule, RouterModule, NumKBModule, FooterCommandModule],
   //view classes that belongs to this module
   declarations: [ VendorManagement, SlotTest, ChargeCoin, ChargeChange,SlotUpdate, Upgrade
   ],

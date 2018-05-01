@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import {Ng2BootstrapModule} from 'ngx-bootstrap';
+// import {Ng2BootstrapModule} from 'ngx-bootstrap';
 import {RouterModule} from "@angular/router";
 
 import {NumKBModule} from "../numKB/numKB.module";
@@ -21,7 +21,7 @@ import {PayweixinService} from "./payweixin/payweixin.service";
 
 @NgModule({
   //other module whose exported classes are needed by component templates decleared in this module
-  imports: [ CommonModule, Ng2BootstrapModule, PaymethodRoutingModule, RouterModule, NumKBModule, FooterCommandModule],
+  imports: [ CommonModule, PaymethodRoutingModule, RouterModule, NumKBModule, FooterCommandModule],
   //view classes that belongs to this module
   declarations: [ Paymethod, Paycash, Paymember, Payweixin
   ],
