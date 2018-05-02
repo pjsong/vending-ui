@@ -45,15 +45,39 @@ export const Environment = {
     timeoutSet: 200,
     timeoutSetCashbox: 5000,
     timeoutTip: ", timeout 200 exceed",
-
+    slotSelectTimeout: "2000",
+     
     mainButton : [
     {id: 1, imgUrl: pic1, buttonTxt:'货道购买', linkTarget:'../slotselect'}
     ,{id: 2,imgUrl: pic2, buttonTxt:'终端管理', linkTarget:'../vendor-management'}
     ,{id: 3,imgUrl: pic3, buttonTxt:'会员充值', linkTarget:'../membercharge'}
     ],
-    buttonTest: [
-        {"id":1, "imgUrl":pic1, "buttonTxt":"货道购买","linkTarget":"../slotselect"},
-        {"id":2, "imgUrl":pic2, "buttonTxt":"终端管理","linkTarget":"../vendor-management"},
-        {"id":3, "imgUrl":pic3, "buttonTxt":"会员充值","linkTarget":"../membercharge"},
-        ]
+    // buttonTest: [
+    //     {"id":1, "imgUrl":pic1, "buttonTxt":"货道购买","linkTarget":"../slotselect"},
+    //     {"id":2, "imgUrl":pic2, "buttonTxt":"终端管理","linkTarget":"../vendor-management"},
+    //     {"id":3, "imgUrl":pic3, "buttonTxt":"会员充值","linkTarget":"../membercharge"},
+    //     ],
+    MANAGER_TEST: [{
+        "id": 2,
+        "owner": 1,
+        "user": 3,
+        "balance": 88,
+        "date_joined": "2017-01-07 14:04:20",
+        "username": "buyer",
+        "tel_no":"13509205735",
+        "wechat_no":"WX13509205735",
+        "website":"http://oursmedia.cn"
+        }],
+    currentPayoutAvailableCmdTest : {"id": 1, "operate_name":"currentPayoutAvailable", "operateData":0, "createTime":"2016-12-29 09:38:21"},
+    ctCurrentPayoutAvailable : [{ "id": 5586,  "operate": 1,  "operate_status": "succeed",  "retData": 130,  "createTime": "2016-12-29 06:52:55"}],
+    tollTestCmdRet : {"id": 99, "operate_name":"toll", "operate_data":9, "create_time":"2016-12-29 09:38:21"},
+    terminateTestCmdRet : {"id": 99, "operate_name":"terminate", "operate_data":9, "create_time":"2016-12-29 09:38:21"},
+    CashboxLogTest : [{"id":100,"operate": 99,   "operate_status": "succeed",  "retData": 20, "createTime":"2016-12-29 06:52:55"}],
+    CashboxLogTest1 : [{"id":39015,"operate":99,"operate_status":"processing","retData":10,"createTime":"2016-12-31 08:06:01"}],
+    slotStatusTest : [
+        {id: 1, slot: 1, product: 1,runningStatus:"1", currentItemNum: 10, malfunctionReportCount: 0, slotNo: "009"},
+        {id: 2, slot: 2, product: 1,runningStatus:"1", currentItemNum: 0, malfunctionReportCount: 0, slotNo: "004"},
+        {id: 3, slot: 3, product: 1,runningStatus:"0", currentItemNum: 10, malfunctionReportCount: 0, slotNo: "009"},
+        {id: 4, slot: 4, product: 1,runningStatus:"1", currentItemNum: 2, malfunctionReportCount: 0, slotNo: "009"}
+      ]
 }

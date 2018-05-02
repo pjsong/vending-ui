@@ -7,7 +7,7 @@ import {ConfService} from "../home/conf.service";
 
 @Component({
   selector: 'slotselect',
-  template: './slotselect.component.html',
+  templateUrl: './slotselect.component.html',
   styleUrls: ['./slotselect.component.scss']
 })
 
@@ -28,7 +28,7 @@ export class SlotSelect implements OnInit{
   cmdStop:string = "开始购买"
   itemCount: number = 1;
   slotSelectFinishClicked = false;
-  defaultWaiting:number = 20;
+  defaultWaiting:number;
 
   public constructor(private router: Router, private slotService: SlotSelectService, private homeService: HomeService, private confService:ConfService) {
   }
@@ -43,7 +43,6 @@ export class SlotSelect implements OnInit{
     })
     this.confService.getSlotStatusUrl().do(x=>this.slotStatusUrl = x).subscribe(x=>console.log("ngOnInit: " + x));
     this.confService.getSlotUrl().do(x=>this.slotUrl = x).subscribe(x=>console.log("ngOnInit: " + x));
-
   }
 
   onFinish(inputTxt: string){

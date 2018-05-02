@@ -44,8 +44,10 @@ export class Home implements OnInit, OnDestroy {
   ngOnInit() {
     //get initial value from page
     this.subscriptionPW = this.homeService.pageWaiting$.subscribe(pw => {
-      this.pageWaiting = pw;
-      this.waitingCnt = this.pageWaiting;
+      setTimeout(() => {
+        this.pageWaiting = pw;
+        this.waitingCnt = this.pageWaiting;
+      });
     });
 
   }

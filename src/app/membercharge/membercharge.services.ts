@@ -3,6 +3,7 @@ import {Http, Response} from "@angular/http";
 import {Subject, Observable, Subscription} from "rxjs";
 import {HttpUtils} from "../common/http-util";
 import {TimeVars, TIMEVARS, CashboxTaskRet, CashboxTask} from "../paymethod/paycash/paycash.service";
+import { Environment as env} from '../environments/environment';
 
 export class Member{
   "id": number;
@@ -17,18 +18,6 @@ export class Member{
   constructor(){}
 }
 
-
-let MEMBERTEST=[{
-  "id": 2,
-  "owner": 1,
-  "user": 3,
-  "balance": 88,
-  "date_joined": "2017-01-07 14:04:20",
-  "username": "buyer",
-  "tel_no":"13509205735",
-  "wechat_no":"WX13509205735",
-  "website":"http://oursmedia.cn"
-}]
 
 export class MemberInfoUpdateReq{
   "id": number;
@@ -65,6 +54,7 @@ export class MemberChargeService{
   // }
 
   memberCharge(deviceUrl:string):Observable<CashboxTaskRet>{
+    if(env.isDev) return Observable.of(env.tollTestCmdRet);
     let ct = new CashboxTask("memberCharge",0);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct)
         // .timeout(timeoutSetCashbox, "memberCharge " + timeoutTip)
@@ -74,7 +64,7 @@ export class MemberChargeService{
     let username = localStorage.getItem("username");
     this.httpUtils.GetWithToken<Member[]>(memberUrl+"?username="+username+"&format=json")
         // .timeout(timeoutSet, "getMemberInfo" + timeoutTip)
-        .filter((x:any)=>x!=undefined && x.length==1).catch(x=>Observable.of(MEMBERTEST)).subscribe(
+        .filter((x:any)=>x!=undefined && x.length==1).catch(x=>Observable.of(env.MANAGER_TEST[0])).subscribe(
         (x:any)=>{this.balanceSub.next(x[0])},
       // err=>{this.balanceSub.next(-1)}
     )

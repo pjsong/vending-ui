@@ -27,7 +27,7 @@ export class FooterBannerService{
   }
 
   getManagerInfo(memberUrl:string){
-    if(env.isDev) return Observable.of(MEMBERTEST[0]);
+    if(env.isDev) return Observable.of(env.MANAGER_TEST[0]);
 
     console.log("footbanner memberUrl" + memberUrl);
     return this.http.get(memberUrl+"?format=json&isManager")

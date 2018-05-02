@@ -76,12 +76,7 @@ export class Slot{
   }
 }
 
-var slotStatusTest = [
-  {id: 1, slot: 1, product: 1,runningStatus:"1", currentItemNum: 10, malfunctionReportCount: 0, slotNo: "009"},
-  {id: 2, slot: 2, product: 1,runningStatus:"1", currentItemNum: 0, malfunctionReportCount: 0, slotNo: "004"},
-  {id: 3, slot: 3, product: 1,runningStatus:"0", currentItemNum: 10, malfunctionReportCount: 0, slotNo: "009"},
-  {id: 4, slot: 4, product: 1,runningStatus:"1", currentItemNum: 2, malfunctionReportCount: 0, slotNo: "009"}
-]
+
 
 @Injectable()
 export class SlotSelectService {

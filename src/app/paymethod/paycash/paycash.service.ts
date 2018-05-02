@@ -52,12 +52,6 @@ export class PaycashVars{
   payoutThreshold:number;payoutCoinThreshold:number;
 }
 
-let currentPayoutAvailableCmdTest = {"id": 1, "operateName":"currentPayoutAvailable", "operateData":0, "createTime":"2016-12-29 09:38:21"};
-let ctCurrentPayoutAvailable = [{ "id": 5586,  "operate": 1,  "operate_status": "succeed",  "retData": 130,  "createTime": "2016-12-29 06:52:55"}];
-let tollTestCmdRet = {"id": 99, "operateName":"toll", "operateData":9, "createTime":"2016-12-29 09:38:21"};
-let terminateTestCmdRet = {"id": 99, "operateName":"terminate", "operateData":9, "createTime":"2016-12-29 09:38:21"};
-let CashboxLogTest = [{"id":100,"operate": 99,   "operate_status": "succeed",  "retData": 20, "createTime":"2016-12-29 06:52:55"}];
-let CashboxLogTest1 = [{"id":39015,"operate":99,"operate_status":"processing","retData":10,"createTime":"2016-12-31 08:06:01"}];
 
 export const TIMEVARS={"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000};

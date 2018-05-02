@@ -1,11 +1,11 @@
-.container-fluid{
+.container-fluid-omd{
   height: 54vh;
   width: 95vw;
 }
 .slotSelect{
   height: 68vh;
 }
-.row{
+.row-omd{
   margin-top: 2vw;
   margin-bottom: 2vw;
 }
@@ -21,9 +21,10 @@ input{
   color: green;
   font-size: 3vw;
   text-align: center;
-  height:8vh;
+  height:1.5em;
+  width: 7em;
 }
-.col-md-2 i{
+.col-md-2-omd i{
   height:8vh;
 }
 button{

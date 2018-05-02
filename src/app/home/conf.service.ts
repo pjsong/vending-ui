@@ -106,6 +106,7 @@ export class ConfService{
   }
 
   getSlotUrl(){
+    if(env.isDev) return Observable.of(env.slotUrl);
     const key = "slotUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -121,6 +122,7 @@ export class ConfService{
   }
 
   getSlotStatusUrl(): Observable<string>{
+    if(env.isDev) return Observable.of(env.slotstatusUrl);
     const key = "slotStatusUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -136,6 +138,7 @@ export class ConfService{
   }
 
   getSlotSelectDefaultWaiting(){
+    if(env.isDev) return Observable.of(env.slotSelectTimeout);
     const key = "slotselectdefaultwaiting";
     let ret = localStorage.getItem(key);
     if(ret == null) {

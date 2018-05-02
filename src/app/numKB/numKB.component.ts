@@ -38,7 +38,7 @@ export class NumKB implements OnInit{
   }
 
   inputboxClicked(){
-    this.inputTxt = "";
+    this.inputTxt = this.inputTxt =="" ? this.tipMessage:"";
     if(this.autohide)
       this.keyboardDisplay = !this.keyboardDisplay;
       this.onFinish.emit("keyboardOpen")

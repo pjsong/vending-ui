@@ -1,17 +1,15 @@
 <div class="container-fluid">
-  <div class="col-md-8 col-md-offset-2">
-       <input class="form-control" type="text" [(ngModel)]="inputTxt" (click)="inputboxClicked()">
-  </div>
-
-  <div *ngIf="keyboardDisplay" class="col-md-8 col-md-offset-2">
-    <div *ngFor='let u of keyboardImgsRow1' >
-      <div class="col-xs-3 col-md-3">
-        <button class="btn btn-info" value="{{u.val}}" (click)="clickButton(u)">
-          {{u.displayValue}}
-        </button>
-      </div>
+  <div class="row">
+    <div class="col-12 ">
+        <input type="text" [(ngModel)]="inputTxt" (click)="inputboxClicked()">
     </div>
   </div>
-
+  <div *ngIf="keyboardDisplay" class="row">
+       <div *ngFor='let u of keyboardImgsRow1' class="col-xs-3 col-xs-3-omd col-md-3 col-md-3-omd">
+          <button class="btn btn-info" value="{{u.val}}" (click)="clickButton(u)">
+              {{u.displayValue}}
+          </button>
+      </div>
+  </div>
 </div>
 

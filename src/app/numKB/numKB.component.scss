@@ -1,14 +1,15 @@
-.container-fluid{
-  //width: 68vw;
+.container-fluid-omd{
+  width: 68vw;
 }
 input{
     background-color: transparent;
     color: green;
-    height: 8vh;
+    height: 1.5em;
     font-size: 3vw;
     margin-top: 2vw;
     margin-bottom: 2vw;
-  }
+}
+
 .btn-info{
   color: green;
   background-color: transparent;
@@ -22,6 +23,6 @@ button[value="10"], button[value="11"]{
   font-size: 1.6vw;
 }
 
-.col-xs-3, .col-md-3{
+.col-xs-3-omd, .col-md-3-omd{
   margin-bottom: 1.2vw;
 }

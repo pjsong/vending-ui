@@ -2,8 +2,8 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 
 @Component({
   selector: 'keyboardInput',
-  template: './keyboard.component.html',
-  styleUrls: ['./keyboard.component.scss']
+  templateUrl: 'keyboard.component.html',
+  styleUrls: ['keyboard.component.scss']
 })
 
 export class KeyboardInput implements OnInit{
