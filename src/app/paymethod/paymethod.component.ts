@@ -24,7 +24,6 @@ export class Paymethod implements OnInit{
   ordermainUrl:string;
   needToPay: string;
   needToPayAmount:number=0;
-  cmdDisplay: boolean;
   cmdStart: string = "";
   cmdStop: string="";
   retTxt:string = "返回首页";
@@ -66,8 +65,6 @@ export class Paymethod implements OnInit{
       this.homeService.setPageWaiting('paymethod->ngOnInit', this.defaultWaiting);
     });
     this.service.getOrdermainUrl().subscribe(x=>this.ordermainUrl=x);
-    this.cmdDisplay = false;
-
     this.service.initWXPayConnection().timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
       .catch(err=>{
         if(err.name == 'TimeoutError'){
@@ -85,7 +82,6 @@ export class Paymethod implements OnInit{
   productRetrive(productOrder:ProductOrder){
     let slotStatus = productOrder.slotStatus;
     let productId = productOrder.product;
-
     return this.paymethodService.getProductPrice(this.productUrl, productId).map(
       (data:Product)=>{
         let itemCount = Number(productOrder.itemCnt)

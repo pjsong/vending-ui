@@ -206,6 +206,7 @@ export class ConfService{
   }
 
   getProductUrl(){
+    if(env.isDev) return Observable.of(env.productUrl);
     const key= "productUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {

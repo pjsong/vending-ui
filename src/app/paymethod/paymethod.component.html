@@ -4,8 +4,8 @@
   </div>
   <div *ngIf="!timeoutMsg">
     <div *ngIf="needToPay" class = "row">
-      <label class="label-warning payTipMessageLabel" >
-        <h2>{{needToPay}}</h2>
+      <label class="col-md-12 label-warning payTipMessageLabel" >
+        {{needToPay}}
       </label>
     </div>
     <div class="row row-omdpay">
@@ -25,7 +25,7 @@
   </div>
 
   <div class="row footerrow">
-    <footercommand [cmdDisplay]="cmdDisplay" [retTxt]="retTxt"></footercommand>
+    <footercommand class="col-md-12" [cmdDisplay]="false" [retTxt]="retTxt"></footercommand>
   </div>
 </div>
 

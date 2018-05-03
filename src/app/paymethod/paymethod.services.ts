@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {CashboxTaskRet} from "./paycash/paycash.service";
 import {MainButton} from "../home-default-button/default-button.services";
 import {HttpUtils} from "../common/http-util";
+import {Environment as env } from "../environments/environment"
 
 let ProductTest = [
   {"id":1,"imageListUrl":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
@@ -68,11 +69,10 @@ export class PaymethodService{
   constructor(private http: Http ){}
 
   getProductPrice(productUrl:string, productId: number): Observable<Product> {
+    if(env.isDev) return Observable.of(env.productTest[0] as Product)
     return this.http.get(productUrl + productId +'/?format=json')
       .map((res:Response)=>res.json() as Product)
       .catch(err=>{return this.handleError(err)});
-      // .timeout(timeoutSet, "getProductPrice "+timeoutTip)
-      // .catch(error=>Observable.of(ProductTest[0]));
   }
 
 
