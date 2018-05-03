@@ -7,10 +7,6 @@ import {MainButton} from "../home-default-button/default-button.services";
 import {HttpUtils} from "../common/http-util";
 import {Environment as env } from "../environments/environment"
 
-let ProductTest = [
-  {"id":1,"imageListUrl":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
-    "productName":"避孕套","saleUnitPrice":9,"productSummary":"避孕套避孕套","productDesc":"避孕套避孕套避孕套"},
-]
 let OrderTaskTestRet = {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100};
 
 export class OrderTaskRet{

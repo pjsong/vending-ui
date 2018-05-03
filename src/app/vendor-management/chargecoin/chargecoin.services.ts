@@ -8,7 +8,8 @@ import { Environment as env} from "../../environments/environment"
 export class ChargeCoinReq{
   "amount_before": number;
   "amount_data": number;
-  constructor(){}
+  // constructor(amount_before: number,
+  // amount_data: number){this.amount_before=amount_before;this.amount_data=amount_data}
 }
 export class ChargeCoinRet{
   "id": number;
@@ -17,20 +18,20 @@ export class ChargeCoinRet{
   "amount_data": number;
   "amount_after": number;
   "create_time": string;
-  constructor(){}
+  constructor(id: number,user: number, amount_before: number, amount_data: number,
+  amount_after: number, create_time: string){
+    this.id=id;this.user=user;
+    this.amount_after=amount_after;this.amount_before=amount_before;this.amount_data=amount_data;this.create_time=create_time}
 }
 
-let CHARGECOINRET =
-  [
-    {"id":2, "user":1, "amountBefore":100,"amountData":-5, "amountAfter":95, "createTime":"2017-01-05 10:01:09"}
-    ,{"id":1, "user":1, "amountBefore":0,"amountData":100, "amountAfter":100, "createTime":"2017-01-05 10:08:18"}
-  ];
+
 
 
 @Injectable()
 export class ChargeCoinService{
   constructor(private http: Http, private confService: ConfService ){}
   getDeviceUrl(){
+    if(env.isDev) return Observable.of(env.coinchangelogUrl);
     return this.http.get(env.confUrlPrefix+"confname=coinlog").map(x=>x.json())
         // .timeout(timeoutSet, "coinLog" + timeoutTip)
         .map(x=>x[0].conf_value).catch(error=>Observable.of(env.coinchangelogUrl));
@@ -47,9 +48,10 @@ export class ChargeCoinService{
   coinCreate(coinChangePostUrl:string, cc: ChargeCoinReq): Observable<ChargeCoinReq>{
     console.log(cc);
     let retData:number = cc.amount_data;
+    if(env.isDev) return Observable.of(env.chargeCoinRet[0]);
     return new HttpUtils(this.http).POSTWithToken<ChargeCoinReq>(coinChangePostUrl, cc)
         // .timeout(timeoutSetCashbox, "coinUpdate"+timeoutTip);
-        // .catch(error=>Observable.of(CHARGECOINRET[0]).catch(this.handleError));
+        // catch(this.handleError));
   }
 
   coinGetWithUrl(){
@@ -57,6 +59,7 @@ export class ChargeCoinService{
   }
 
   coinGet(coinChangeLogUrl:string): Observable<ChargeCoinRet[]>{
+    if(env.isDev) return Observable.of(env.chargeCoinRet);
     return this.http.get(coinChangeLogUrl).map((res:Response)=>res.json() as ChargeCoinRet[])
         // .timeout(timeoutSet, "coinGet"+timeoutTip)
         // .map(x=>x[0])

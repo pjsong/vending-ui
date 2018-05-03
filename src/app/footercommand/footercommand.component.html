@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row" *ngIf="cmdDisplay && !retDisabled else noDisplayRet">
-    <div class="offset-md-1 col-md-5">
+    <div class="offset-md-2 col-md-2">
       <label class="btn btn-success" (click)="cmdClicked(0)">
         <h5>{{cmdStatus}}</h5>
       </label>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
       <label class="btn btn-success" (click)="cmdClicked(1)">
         <h5>{{retTxt}}</h5>
       </label>

@@ -6,6 +6,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import {Http, Response} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
+import {Environment as env} from "../../environments/environment"
 
 export class OrderTaskSendRet{
 id:number;input: number;output_desc: Array<Array<string>>;create_time:string;
@@ -56,9 +57,6 @@ export class PaycashVars{
 export const TIMEVARS={"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000};
 
-export const PAYCASHVARS={"payoutThreshold":90,"payoutCoinThreshold":29};
-
-
 @Injectable()
 export class PaycashService {
   httpUtils:HttpUtils;
@@ -76,6 +74,7 @@ export class PaycashService {
 
 
   getCurrentPayoutAvailable(deviceLogUrl:string): Observable<CashboxLog[]>{
+    if(env.isDev) return Observable.of(env.ctCurrentPayoutAvailable);
     let urlAddr =  deviceLogUrl+"&operateName=currentPayoutAvailable&limit=1";
     return this.http.get(urlAddr)
       .map((res:Response)=>res.json() as CashboxLog[])
@@ -86,6 +85,7 @@ export class PaycashService {
 
 
   toll(deviceUrl:string, tollAmount: number):Observable<CashboxTaskRet>{
+    if(env.isDev) return Observable.of(env.tollTestCmdRet)
     let ct = new CashboxTask("toll",tollAmount);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "toll" + timeoutTip)

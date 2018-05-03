@@ -70,8 +70,6 @@ export class PaymethodService{
     return this.http.get(productUrl + productId +'/?format=json')
       .map((res:Response)=>res.json() as Product)
       .catch(err=>{return this.handleError(err)});
-      // .timeout(timeoutSet, "getProductPrice "+timeoutTip)
-      // .catch(error=>Observable.of(ProductTest[0]));
   }
 
 

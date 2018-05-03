@@ -11,6 +11,7 @@ import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupda
 import {ConfService} from "../../home/conf.service";
 import {Cart} from "../../slotselect/slotselect.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
+import {Environment as env} from "../../environments/environment"
 
 const only20DownSupport = 20;
 const only50DownSupport = 50;
@@ -18,7 +19,7 @@ const leftToPayThreshold = -9;
 
 @Component({
   selector: 'paycash',
-  template: './paycash.component.html',
+  templateUrl: './paycash.component.html',
   styleUrls: ['./paycash.component.scss']
 })
 
@@ -75,8 +76,10 @@ export class Paycash implements OnInit{
 
   ngOnInit(){
     let vendingstatus: VendingStatus = JSON.parse(localStorage.getItem("vendingstatus"));
-    let deviceOk: boolean = vendingstatus.omddevice == 'ok' && vendingstatus.cashboxstatus == 'ok'
-      && vendingstatus.coinmachinestatus == 'ok' && vendingstatus.controlboardstatus == 'ok';
+    if(env.isDev) vendingstatus = env.vendingStatus;
+    console.log(vendingstatus);
+    let deviceOk: boolean = vendingstatus.omddevice.toLowerCase() == 'ok' && vendingstatus.cashboxstatus.toLowerCase() == 'ok'
+      && vendingstatus.coinmachinestatus.toLowerCase() == 'ok' && vendingstatus.controlboardstatus.toLowerCase() == 'ok';
     if(!deviceOk ){
       this.tipMessage = "机器故障,请选择其他支付方式";
       this.retTxt = "返回支付方式";
@@ -139,7 +142,6 @@ export class Paycash implements OnInit{
           .subscribe(
             controlboardInputId=>{
               console.log("now querying controlboardInputId: "+ controlboardInputId);
-              // this.homeService.setPageWaiting('paycash->timeJumpToFinish', this.timeVars.timeWithPay);
               let orderIntervalSource$ = Observable.interval(this.timeVars.queryInterval)
                 .takeWhile(val=> this.productDelievered == false)
                 .flatMap(x=>{

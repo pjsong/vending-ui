@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
-import {TimeVars, TIMEVARS, PaycashVars, PAYCASHVARS} from "../paymethod/paycash/paycash.service";
+import {TimeVars, TIMEVARS, PaycashVars} from "../paymethod/paycash/paycash.service";
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
 import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
 import { Environment as env} from '../environments/environment';
@@ -237,6 +237,7 @@ export class ConfService{
 
   getPaycashTimeVars(){
     const key = "paycashTimeVars";
+    if(env.isDev) return Observable.of(env.paycashTimeVar);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -264,13 +265,15 @@ export class ConfService{
 
   getPaycashVars(){
     const key = "paycashVars";
+    if(env.isDev) return Observable.of(env.paycashVars).do(x=>localStorage.setItem(key, JSON.stringify(x)));
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=paycash-paycashvars").map(x=>x.json())
           // .timeout(timeoutSet, "getPaycashVars" + timeoutTip)
-          .map(x=>JSON.parse(x[0].conf_value) as PaycashVars).catch(x=>Observable.of(PAYCASHVARS))
+          .map(x=>JSON.parse(x[0].conf_value) as PaycashVars)
+          .catch(x=>Observable.of(env.paycashVars))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
@@ -323,6 +326,7 @@ export class ConfService{
 
   getDeviceUrl(){
     const key = "deviceUrl";
+    if(env.isDev){return Observable.of(env.deviceUrl)}
     let ret = localStorage.getItem(key);
     if(ret == null){
       return this.confUrlPrefixWithVmtype()
@@ -331,7 +335,6 @@ export class ConfService{
           .map(x=>x.json())
           // .timeout(timeoutSet, "getDeviceUrl" + timeoutTip)
           .map(x=>x[0].conf_value)
-          // .catch(x=>Observable.of("http://localhost:8000/api/data/cashmachine/cashbox/?format=json"))
           .do(x=>localStorage.setItem(key, x));
     })};
     return Observable.of(ret);
@@ -355,6 +358,7 @@ export class ConfService{
 
   getCoinChangePostUrl(){
     const key = "coinChangePostUrl";
+    if(env.isDev) return Observable.of(env.coinchangepostUrl);
     let ret = localStorage.getItem(key);
     if(ret == null){
       return this.confUrlPrefixWithVmtype()
@@ -371,6 +375,7 @@ export class ConfService{
 
   getCoinChangeLogUrl(){
     const key = "coinChangeLogUrl";
+    if(env.isDev) return Observable.of(env.coinchangelogUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -387,13 +392,13 @@ export class ConfService{
 
   getDeviceLogUrl(){
     const key="deviceLogUrl";
+    if(env.isDev) return Observable.of(env.devicelogUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
         .flatMap(confUrlPrefix=>{
      return this.http.get(confUrlPrefix+"confname=cashboxlog")
         .map(x=>x.json())
-        // .timeout(timeoutSet, "getDeviceLogUrl" + timeoutTip)
         .map(x=>{return x[0].conf_value})
         // .catch(x=>{return Observable.of(devicelogUrl)})
          .do(x=> localStorage.setItem(key, x));
@@ -403,6 +408,7 @@ export class ConfService{
 
   getControlBoardUrl(){
     const key = "controlboardapi";
+    if(env.isDev) return Observable.of(env.controlboardUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -485,11 +491,10 @@ export class ConfService{
   }
 
   getVendingStatus(): Observable<VendingStatus>{
-    if(env.isDev){
-      let vs:VendingStatus = {"ip": "223.74.169.125", "hostname": "pjsong-spring001-001", "omddevice": "connection_timeout_exception", "vmtype": "1", "ip_provider": "http://api.scheduler.oursmedia.cn/checkip", "md5": "fba10d5ab4cff3acbc1257acc8416c19", "conf_server": "http://172.16.0.4", "timestamp": "2017-04-25 23:54:17", "vm_slug":"pjsong-spring001-001","cashboxstatus": "0", "coinmachinestatus":"0","controlboardstatus":"0"};
-        return Observable.of(vs);
-    }
     const key = "vendingstatus";
+    if(env.isDev){
+        return Observable.of(env.vendingStatus).do(x=>{localStorage.setItem(key, JSON.stringify(x));return x;});;
+    }
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.http.get(env.vendingStatusUrl).map(x=>{return x.json() as VendingStatus})
