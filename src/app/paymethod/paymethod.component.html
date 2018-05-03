@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid container-omd">
   <div *ngIf="timeoutMsg">
     <h2>{{timeoutMsg}}</h2>
   </div>
@@ -8,13 +8,13 @@
         <h2>{{needToPay}}</h2>
       </label>
     </div>
-    <div class="row">
+    <div class="row row-omdpay">
       <div *ngFor="let mb of mainButtons" class="col-sm-6 col-md-4">
         <div class="thumbnail" routerLink= {{mb.linkTarget}}>
           <img src={{mb.imgUrl}}>
-          <div class = "caption">
+          <div class = "caption-omd">
             <h3>
-              <label class="btn btn-lg">
+              <label class="btn-lg btn-omd">
                 {{mb.buttonTxt}}
               </label>
             </h3>
@@ -25,8 +25,7 @@
   </div>
 
   <div class="row footerrow">
-    <footercommand [cmdDisplay]="cmdDisplay" [retTxt]="retTxt"
-                  ></footercommand>
+    <footercommand [cmdDisplay]="cmdDisplay" [retTxt]="retTxt"></footercommand>
   </div>
 </div>
 

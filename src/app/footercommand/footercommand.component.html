@@ -7,6 +7,7 @@
       </div>
     </div>
 
+<!-- <ng-template #> -->
     <div *ngIf="!retDisabled && !cmdDisplay">
       <div class="col-md-offset-4 col-md-4">
         <label class="btn btn-success" (click)="cmdClicked(1)"><h5>{{retTxt}}</h5></label>
@@ -16,3 +17,4 @@
     <div *ngIf="cmdDisplay && retDisabled">
       <label class="btn btn-success" (click)="cmdClicked(0)"><h5>{{cmdStatus}}</h5></label>
     </div>
+<!-- </ng-template> -->

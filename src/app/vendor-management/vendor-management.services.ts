@@ -17,14 +17,6 @@ let ADMINLOGINRET:AdminLoginRet[]=[{"detail":"OK"}]
 //   ,new MainButton(4, '', '货道测试', './slottest')
 //   ,new MainButton(5, '', '软件更新', './vendorupdate')
 // ];
-let BUTTONSTEST =
-    [
-      {"id":1, "imgUrl":"","buttonTxt":"纸币找零","linkTarget":"./chargechange"},
-      {"id":2, "imgUrl":"","buttonTxt":"硬币找零","linkTarget":"./chargecoin"},
-      {"id":3, "imgUrl":"","buttonTxt":"货道维护","linkTarget":"./slotupdate"},
-      {"id":4, "imgUrl":"","buttonTxt":"货道测试","linkTarget":"./slottest"},
-      {"id":5, "imgUrl":"","buttonTxt":"软件更新","linkTarget":"./vendorupdate"},
-    ];
 
 @Injectable()
 export class VendorManagementService{
@@ -39,7 +31,7 @@ export class VendorManagementService{
     return this.http.get(env.confUrlPrefix+"confname=vendormanagement-button").map(x=>x.json())
         // .timeout(timeoutSet, "vendormanagement.getButtons" + timeoutTip)
         .map(x=>JSON.parse(x[0].conf_value) as MainButton[])
-        .catch(x=>Observable.of(BUTTONSTEST as MainButton[]))
+        .catch(x=>Observable.of(env.vnedorManagementButton as MainButton[]))
   }
   // adminLoginTest():Observable<AdminLoginRet>{
   //   let testData:Observable<AdminLoginRet> = Observable.create((subscriber:any)=>{subscriber.next(ADMINLOGINRET[0])});

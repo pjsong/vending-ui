@@ -121,8 +121,8 @@ export class SlotSelect implements OnInit{
             this.cart.clearAll();
             // localStorage.setItem("itemCount", ''+this.itemCount);
             // localStorage.setItem("slotStatus", JSON.stringify(data));
-            // console.log("slotNo:" + slotNo +", " + JSON.stringify(data))
-            this.router.navigate(["paymethod"]).then(x=>console.log("navigated in slotselect"));
+            console.log("slotNo:" + slotNo +", " + JSON.stringify(data))
+            this.router.navigate(["paymethod"]).then(x=>console.log("navigated from slotselect"));
           }
         })
       },

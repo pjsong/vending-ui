@@ -93,5 +93,23 @@ export const Environment = {
         {id: 7, vending_machine: 1, product: 3, slot_no: "007", capacity: 60, controll_type: "spring"},
         {id: 8, vending_machine: 1, product: 3, slot_no: "008", capacity: 60, controll_type: "spring"},
         {id: 9, vending_machine: 1, product: 3, slot_no: "009", capacity: 60, controll_type: "spring"},
+    ],
+    payButtons: 
+    [
+      {"id":1, "imgUrl":"https://s1.ax2x.com/2018/05/03/Sb4CA.png","buttonTxt":"现金支付","linkTarget":"../paycash"},
+      {"id":2, "imgUrl":"https://s1.ax2x.com/2018/05/03/SbJ2O.png","buttonTxt":"微信支付","linkTarget":"../payweixin"},
+      {"id":3, "imgUrl":"https://s1.ax2x.com/2018/05/01/SmRlX.png","buttonTxt":"会员支付","linkTarget":"../paymember"},
+    ],
+    vnedorManagementButton: 
+    [
+      {"id":1, "imgUrl":"","buttonTxt":"纸币找零","linkTarget":"./chargechange"},
+      {"id":2, "imgUrl":"","buttonTxt":"硬币找零","linkTarget":"./chargecoin"},
+      {"id":3, "imgUrl":"","buttonTxt":"货道维护","linkTarget":"./slotupdate"},
+      {"id":4, "imgUrl":"","buttonTxt":"货道测试","linkTarget":"./slottest"},
+      {"id":5, "imgUrl":"","buttonTxt":"软件更新","linkTarget":"./vendorupdate"},
+    ],
+    productTest: [
+        {"id":1,"image_list_url":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
+          "product_name":"避孕套","sale_unit_price":9,"product_summary":"避孕套避孕套","product_desc":"避孕套避孕套避孕套"}
     ]
 }

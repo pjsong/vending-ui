@@ -1,9 +1,12 @@
-.container{
+.container-omd{
   padding-top: 1vh;
   padding-bottom: 10vh;
   height: 68vh;
 }
-.btn{
+.row-omdpay{
+  padding-top: 15vh;
+}
+.btn-omd{
   font-size: 2.2vw;
 }
 .thumbnail{
@@ -19,15 +22,16 @@
   background: transparent;
 }
 
-.caption{
+.caption-omd{
   background-color: greenyellow;
   margin-left: 5vw;
   height: 8vh;
   width: 20vw;
+  color: purple;
   h3{
     margin-top: 0vh;
     margin-bottom: 0vh;
-    font-size: 1.2vh;
+    font-size: 4vh;
   }
 }
 

@@ -4,7 +4,6 @@ import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
 import {TimeVars, TIMEVARS, PaycashVars, PAYCASHVARS} from "../paymethod/paycash/paycash.service";
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
-import {BUTTONSTEST} from "../paymethod/paymethod.services";
 import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
 import { Environment as env} from '../environments/environment';
 
@@ -154,6 +153,7 @@ export class ConfService{
   }
 
   initWXPayConnection(){
+    if(env.isDev) return Observable.of("OK");
     return this.http.get(env.wxPayHeartbeatUrl).map(x=>x.json());
   }
   getHomepageButton(){
@@ -172,6 +172,7 @@ export class ConfService{
 
 
   getPayButton(){
+    if(env.isDev) return Observable.of(env.payButtons as MainButton[]);
     const key = "paybutton";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -180,7 +181,7 @@ export class ConfService{
           return this.http.get(confUrlPrefix+"confname=paymethod-button")
               .map(x=>x.json()).map(x=>JSON.parse(x[0].conf_value) as MainButton[])
               // .timeout(timeoutSet, "paymethod.getButtonNew "+timeoutTip)
-              .catch(x=>Observable.of(BUTTONSTEST as MainButton[]))
+              .catch(x=>Observable.of(env.payButtons as MainButton[]))
               .do(x=>localStorage.setItem(key, JSON.stringify(x)));
         });
     }
@@ -219,6 +220,7 @@ export class ConfService{
   }
 
   getOrdermainUrl(){
+    if(env.isDev) return Observable.of(env.ordermainUrl);
     const key="ordermainUrl";
     let ret = localStorage.getItem(key);
     if(ret == null) {

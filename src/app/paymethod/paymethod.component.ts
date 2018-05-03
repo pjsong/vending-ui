@@ -99,6 +99,5 @@ export class Paymethod implements OnInit{
         return orderTask;
       },
       (error:any)=>{this.needToPay = error});
-    // this.needToPay = "需要支付 " + this.needToPayAmount+" 元";
   }
 }

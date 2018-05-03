@@ -5,23 +5,8 @@ import {Observable} from "rxjs";
 import {CashboxTaskRet} from "./paycash/paycash.service";
 import {MainButton} from "../home-default-button/default-button.service";
 import {HttpUtils} from "../common/http-util";
+import {Environment as env} from "../environments/environment"
 
-// let BUTTONS = [
-//   new MainButton(1, 'http://172.18.0.3/static/images/vendor/front/paymethod/money-icon-58243.png', '现金支付', '../paycash')
-//   ,new MainButton(2,'http://172.18.0.3/static/images/vendor/front/paymethod/wechat.png','微信支付', '../payweixin')
-//   ,new MainButton(3,'http://172.18.0.3/static/images/vendor/front/homepage/membership.png','会员支付', '../paymember')
-// ]
-export const BUTTONSTEST =
-    [
-      {"id":1, "imgUrl":"http://172.18.0.3/static/images/vendor/front/paymethod/money-icon-58243.png","buttonTxt":"现金支付","linkTarget":"../paycash"},
-      {"id":2, "imgUrl":"http://172.18.0.3/static/images/vendor/front/paymethod/wechat.png","buttonTxt":"微信支付","linkTarget":"../payweixin"},
-      {"id":3, "imgUrl":"http://172.18.0.3/static/images/vendor/front/homepage/membership.png","buttonTxt":"会员支付","linkTarget":"../paymember"},
-    ]
-
-let ProductTest = [
-  {"id":1,"imageListUrl":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
-    "productName":"避孕套","saleUnitPrice":9,"productSummary":"避孕套避孕套","productDesc":"避孕套避孕套避孕套"},
-]
 let OrderTaskTestRet = {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100};
 
 export class OrderTaskRet{
@@ -81,6 +66,7 @@ export class PaymethodService{
 
 
   getProductPrice(productUrl:string, productId: number): Observable<Product> {
+    // if(env.isDev){return Observable.of(env.productTest[0] as Product)}
     return this.http.get(productUrl + productId +'/?format=json')
       .map((res:Response)=>res.json() as Product)
       .catch(err=>{return this.handleError(err)});
