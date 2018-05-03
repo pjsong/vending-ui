@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../../home/home.service";
-import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.services";
+import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.service";
 import {TimeVars, PaycashService} from "../paycash/paycash.service";
 import {ConfService} from "../../home/conf.service";
 import {Observable, Subscription, Subject} from "rxjs";

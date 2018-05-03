@@ -8,7 +8,7 @@ import {CommonModule} from "@angular/common";
 import {FooterCommandModule} from "../footercommand/FooterCommand.module";
 import {PaymethodRoutingModule} from "./paymethod-routing.module";
 import {Paymethod} from "./paymethod.component";
-import {PaymethodService} from "./paymethod.services";
+import {PaymethodService} from "./paymethod.service";
 import {Paycash} from "./paycash/paycash.component";
 import {PaycashService} from "./paycash/paycash.service";
 import {ChargeCoinService} from "../vendor-management/chargecoin/chargecoin.services";

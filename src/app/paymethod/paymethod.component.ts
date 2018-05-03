@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.min.css';
 import {Router, ActivatedRoute} from "@angular/router";
 
-import {PaymethodService, Product, OrderTask, BuyTask} from "./paymethod.services";
+import {PaymethodService, Product, OrderTask, BuyTask} from "./paymethod.service";
 import {HomeService} from "../home/home.service";
 import {SlotStatus, Cart, ProductOrder} from "../slotselect/slotselect.service";
 import {MainButton} from "../home-default-button/default-button.services";

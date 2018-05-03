@@ -64,9 +64,8 @@ export class Product{
 export class PaymethodService{
   constructor(private http: Http ){}
 
-
   getProductPrice(productUrl:string, productId: number): Observable<Product> {
-    // if(env.isDev){return Observable.of(env.productTest[0] as Product)}
+    if(env.isDev) return Observable.of(env.productTest[0] as Product)
     return this.http.get(productUrl + productId +'/?format=json')
       .map((res:Response)=>res.json() as Product)
       .catch(err=>{return this.handleError(err)});
@@ -74,6 +73,7 @@ export class PaymethodService{
 
 
   sendOrder(ordermainUrl:string, orderTask: OrderTask){
+    if(env.isDev) return Observable.of(env.orderTaskTestRet);
     return new HttpUtils(this.http).POST<OrderTaskRet>(ordermainUrl, orderTask)
         // .timeout(timeoutSetCashbox, "sendOrder "+timeoutTip)
         .catch(err=>{return this.handleError(err)});

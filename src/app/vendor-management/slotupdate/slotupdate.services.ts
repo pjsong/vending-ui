@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {HttpUtils} from "../../common/http-util";
+import {Environment as env} from "../../environments/environment"
 
 export class SlotUpdateReq{
   "slot_no": string;
@@ -19,12 +20,7 @@ export class SlotCreateReq{
   "malfunction_report_count": number;
   constructor(){}
 }
-let SLOTUPDATE = [{
-  "slot": 1,
-  "running_status": "1",
-  "current_item_num": 11,
-  "malfunction_report_count": 0
-}]
+
 
 
 @Injectable()
@@ -43,6 +39,7 @@ export class SlotUpdateService{
 
   slotCreate(slotUpdateUrl:string, su: SlotUpdateReq): Observable<SlotUpdateReq>{
     console.log(su);
+    if(env.isDev) return Observable.of(env.slotUpdateReq[0]);
     return new HttpUtils(this.http).POSTWithToken<SlotUpdateReq>(slotUpdateUrl + 'create/', su)
       .catch(err=> this.handleCreateError(err))
     // .timeout(timeoutSetCashbox, "slotUpdate" + timeoutTip)

@@ -95,6 +95,7 @@ export class PaycashService {
 
   tollLog(deviceLogUrl:string, lastLogId:number, operateId:number):Observable<CashboxLog>{
     let urlAddr =  deviceLogUrl+"&operate="+operateId;
+    if(env.isDev) return Observable.of(env.CashboxLogTest1[0]);
     return this.http.get(urlAddr)
       .map((res:Response)=>res.json() as CashboxLog[]).do(x=>console.log("toll return: " + x))
       // .timeout(timeoutSetCashbox, "tollLog" + timeoutTip)
@@ -109,6 +110,7 @@ export class PaycashService {
   }
 
   orderTaskSendLog(controlboardLogUrl:string, controlboardInputId:number){
+    if(env.isDev) return Observable.of(env.orderTaskTestRet);
     let urlAddr = controlboardLogUrl+"outputlist/?format=json&inputId="+controlboardInputId
     return this.http.get(urlAddr).map((res:Response)=>res.json() as OrderTaskSendRet[]).filter(data=>data.length>0)
       .map(data=>data[0].output_desc[0])

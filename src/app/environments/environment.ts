@@ -85,6 +85,7 @@ export const Environment = {
         {id: 10, slot: 10,running_status:"1", before_item_num: 4, variation_num: 2, current_item_num: 2, malfunction_report_count: 0, slot_no: "010", user:1, create_time:"2016-04-04 01:01:01", update_time: "2016-04-04 01:01:01"}
 
       ],
+    slotUpdateReq:[{id: 1, slot: 1,running_status:"1", before_item_num: 12, variation_num: 2, current_item_num: 10, malfunction_report_count: 0, slot_no: "001", user:1, create_time:"2016-04-04 01:01:01", update_time: "2016-04-04 01:01:01"}],  
     slotProduct: [
         {id: 1, vending_machine: 1, product: 1, slot_no: "001", capacity: 60, controll_type: "spring"},
         {id: 2, vending_machine: 1, product: 2, slot_no: "002", capacity: 60, controll_type: "spring"},
@@ -118,13 +119,18 @@ export const Environment = {
     vendingStatus: {"ip": "223.74.169.125", "hostname": "pjsong-spring001-001", "omddevice": "ok", "vmtype": "1", "ip_provider": "http://api.scheduler.oursmedia.cn/checkip", "md5": "fba10d5ab4cff3acbc1257acc8416c19", "conf_server": "http://172.16.0.4", "timestamp": "2017-04-25 23:54:17", "vm_slug":"pjsong-spring001-001","cashboxstatus": "ok", "coinmachinestatus":"ok","controlboardstatus":"ok"},
     paycashVars: {"payoutThreshold":90,"payoutCoinThreshold":29},
     deviceUrl: deviceUrl,
-    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
+    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":5000,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000},
     orderTaskTestRet: {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100},
-
     chargeCoinRet: 
     [
       {"id":2, "user":1, "amount_before":100,"amount_data":-5, "amount_after":95, "create_time":"2017-01-05 10:01:09"}
       ,{"id":1, "user":1, "amount_before":0,"amount_data":100, "amount_after":100, "create_time":"2017-01-05 10:08:18"}
-    ]
+    ],
+    slotUpdate: [{
+        "slot": 1,
+        "running_status": "1",
+        "current_item_num": 11,
+        "malfunction_report_count": 0
+      }]
 }

@@ -6,7 +6,7 @@ import {
 import {HomeService} from "../../home/home.service";
 import {Observable, Subscription, Subject} from "rxjs";
 import {ChargeCoinService, ChargeCoinRet, ChargeCoinReq} from "../../vendor-management/chargecoin/chargecoin.services";
-import {PaymethodService, BuyTask, OrderTask, OrderTaskRet} from "../paymethod.services";
+import {PaymethodService, BuyTask, OrderTask, OrderTaskRet} from "../paymethod.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
 import {ConfService} from "../../home/conf.service";
 import {Cart} from "../../slotselect/slotselect.service";

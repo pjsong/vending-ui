@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Subject, Subscription, Observable} from "rxjs";
 import {MemberInfoUpdateReq, MemberChargeService} from "../../membercharge/membercharge.services";
 import {HomeService} from "../../home/home.service";
-import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.services";
+import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.service";
 import {TimeVars, PaycashService} from "../paycash/paycash.service";
 import {ConfService} from "../../home/conf.service";
 import {Cart} from "../../slotselect/slotselect.service";
