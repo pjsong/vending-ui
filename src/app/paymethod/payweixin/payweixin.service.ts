@@ -7,9 +7,7 @@ import {Http, Response,} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
 import {Observable} from "rxjs";
 import * as CryptoJS from "crypto-js"
-// import CryptoJS from 'crypto-js'
-
-// var CryptoJS = require("crypto-js");
+import {Environment as env} from "../../environments/environment"
 
 export class VendingConf{
   slug:string;sec:string;vm_type:number;charger:number;product_category:number[];
@@ -41,25 +39,6 @@ export class WXPayParams{
   constructor(){}
 }
 
-
-export const WXTIMEVARS={"timeWithPay":60,"timeWithoutPay":120,"timeStartAlert":30,"timeAlertEnd":15,
-  "timeJumpToFinish":5,"queryInterval":2000};
-export const VENDING=
-  [
-    {
-      "slug": "pjsong-spring001-001",
-      "sec": "7QL8YYGJy4uFK02YUT4Rl6ay1dihh502fQqV44ZNApx",
-      "vmType": 1,
-      "charger": 1,
-      "productCategory": [
-        1
-      ],
-      "chargerTel": "13509205735",
-      "installAddress": "jjj",
-      "installTime": "2016-12-27 12:31:00",
-      "aliveTime": "2016-12-27 12:31:00"
-    }
-  ];
 @Injectable()
 export class PayweixinService {
   httpUtils:HttpUtils;
@@ -67,10 +46,9 @@ export class PayweixinService {
     this.httpUtils = new HttpUtils(http);
   }
   getVendingConf(vendingConfUrl:string): Observable<VendingConf>{
+    if(env.isDev) return Observable.of(env.vendingConf[0])
     let urlAddr =  vendingConfUrl;
     return this.http.get(vendingConfUrl).map(x=>x.json() as VendingConf[]).filter(x=>x.length>0).map(x=>x[0]);
-    // return Observable.of(VENDING).filter(x=>x.length>0).map(x=>x[0]);
-    // .catch(this.handleError)});
   }
 
   getRandom(): string{
@@ -86,7 +64,7 @@ export class PayweixinService {
       let strArr = [timestampstr,randomstr,sec];
       strArr.sort();
       let strArrConc:string = strArr.reduce((acc,val)=>acc+val);
-      let sign = CryptoJS.createHash('md5').update(strArrConc).digest('hex').toUpperCase();
+      let sign = CryptoJS.MD5(strArrConc).toString(CryptoJS.enc.Hex).toUpperCase();
       let ele1:string = 'termNo='+vendingConf.slug;
       let ele2:string = 'slotNo=' + slotNoConcate;
       let ele3:string = 'productName=' + productConcate;
@@ -100,6 +78,7 @@ export class PayweixinService {
       let newArr = [ele1,ele2,ele3,ele4,ele5,ele6,ele7,ele8,ele9]
       let rettemp:string = newArr.reduce((acc,val)=>acc+'&'+val);
       let ret:string = confurl+'?'+rettemp;
+      if(env.isDev) ret = env.payWXQRImgUrl;
       console.log("confurl: " + ret);
       let params:WXPayParams = new WXPayParams();
       params.termNo = vendingConf.slug;
@@ -113,7 +92,7 @@ export class PayweixinService {
   }
 
   toll(tollUrl:string, wxPayParams:WXPayParams):Observable<WXPollRet>{
-    // return Observable.of(ct);
+    if(env.isDev) return Observable.of(env.payWXPollRet as WXPollRet);
     let paramstr = '?termNo='+wxPayParams.termNo+'&slotNo='+wxPayParams.slotNo+'&timestamp='+wxPayParams.timestampstr;
     paramstr = paramstr + '&nonce='+wxPayParams.randomstr+'&sign=' + wxPayParams.sign;
     return this.http.get(tollUrl+paramstr).map((res:Response)=>res.json() as WXPollRet);

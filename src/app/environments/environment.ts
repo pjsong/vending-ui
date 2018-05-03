@@ -119,7 +119,8 @@ export const Environment = {
     vendingStatus: {"ip": "223.74.169.125", "hostname": "pjsong-spring001-001", "omddevice": "ok", "vmtype": "1", "ip_provider": "http://api.scheduler.oursmedia.cn/checkip", "md5": "fba10d5ab4cff3acbc1257acc8416c19", "conf_server": "http://172.16.0.4", "timestamp": "2017-04-25 23:54:17", "vm_slug":"pjsong-spring001-001","cashboxstatus": "ok", "coinmachinestatus":"ok","controlboardstatus":"ok"},
     paycashVars: {"payoutThreshold":90,"payoutCoinThreshold":29},
     deviceUrl: deviceUrl,
-    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":5000,"timeStartAlert":30,"timeAlertEnd":15,
+
+    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":120,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000},
     orderTaskTestRet: {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100},
     chargeCoinRet: 
@@ -132,5 +133,33 @@ export const Environment = {
         "running_status": "1",
         "current_item_num": 11,
         "malfunction_report_count": 0
-      }]
+      }],
+    payWXTimeVars:{
+      timeWithPay: 60,
+      timeWithoutPay: 120,
+      timeStartAlert: 30,
+      timeAlertEnd: 15,
+      timeJumpToFinish: 5,
+      queryInterval: 2000
+    },
+    payWXPollRet:{
+      result: "SUCCESS"
+    },
+    payWXQRImgUrl:"https://s1.ax2x.com/2018/05/03/SuIFe.png",
+    payAliQRImgUrl:"https://s1.ax2x.com/2018/05/03/Sutlq.png",
+    vendingConf:  [
+      {
+        "slug": "pjsong-spring001-001",
+        "sec": "7QL8YYGJy4uFK02YUT4Rl6ay1dihh502fQqV44ZNApx",
+        "vm_type": 1,
+        "charger": 1,
+        "product_category": [
+          1
+        ],
+        "charger_tel": "13509205735",
+        "install_address": "jjj",
+        "install_time": "2016-12-27 12:31:00",
+        "alive_time": "2016-12-27 12:31:00"
+      }
+    ]
 }

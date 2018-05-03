@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container-fluid container-omd">
   <div *ngIf="timeoutMsg">
     <h2>{{timeoutMsg}}</h2>
   </div>
   <div *ngIf="!timeoutMsg">
-    <h1><span class="label label-danger">{{tipMessage}}</span></h1>
+    <span class="label label-danger">{{tipMessage}}</span>
     <div *ngIf="this.transactionStatus == 'started' && wxPayParams != undefined">
       <img [src]="wxPayParams.imgUrl" (load)="startTrx()">
     </div>

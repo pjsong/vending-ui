@@ -66,10 +66,10 @@ export class PaycashService {
 
 
   sendCurrentPayoutAvailable(deviceUrl:string): Observable<CashboxTaskRet>{
+    if(env.isDev) return Observable.of(env.currentPayoutAvailableCmdTest);
     let ct = new CashboxTask("currentPayoutAvailable",0);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "sendCurrentPayoutAvailable" + timeoutTip+", "+deviceUrl);
-        // .catch(x=>Observable.of(currentPayoutAvailableCmdTest));
   }
 
 

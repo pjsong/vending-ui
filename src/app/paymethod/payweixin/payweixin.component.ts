@@ -8,12 +8,11 @@ import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
 import {PayweixinService, VendingConf, WXPollRet, WXPayParams} from "./payweixin.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
-
-// let wxPayServerUrlParam = "width=200&height=200&termNo=spring001&slotNo=001&productName=傲咪迪-甜蜜蜜&totalFee=10&timestamp=14562&nonce=1&signature=83ACD4DD2F1B448553AEF2F48B464AE9";
+import {Environment as env} from "../../environments/environment"
 
 @Component({
   selector: 'payweixin',
-  template: './payweixin.component.html',
+  templateUrl: './payweixin.component.html',
   styleUrls: ['./payweixin.component.scss']
 })
 export class Payweixin implements OnInit{
@@ -28,7 +27,6 @@ export class Payweixin implements OnInit{
 
   buyTask: BuyTask;
   wxPayParams: WXPayParams;// = new WXPayParams();
-  // showPngQR: string;
   intervalSource$:any;
   timeCounterSubs: Subscription;
   intervalSourceSubscription: Subscription;
@@ -57,6 +55,7 @@ export class Payweixin implements OnInit{
 
   doWhenOnline(){
     let vendingstatus: VendingStatus = JSON.parse(localStorage.getItem("vendingstatus"));
+    if(env.isDev) vendingstatus = env.vendingStatus;
     let deviceOk: boolean = vendingstatus.omddevice == 'ok' && vendingstatus.controlboardstatus == 'ok';
     if(!deviceOk ){
       this.tipMessage = "机器故障,请选择其他支付方式";
@@ -69,7 +68,7 @@ export class Payweixin implements OnInit{
       this.confService.getControlBoardUrl().do((x:any)=>this.controlboardLogUrl=x).subscribe((x:any)=>console.log(this.controlboardLogUrl));
       this.confService.getOrdermainUrl().do((x:any)=>this.orderMainUrl=x).subscribe((x:any)=>console.log(this.orderMainUrl));
       this.confService.getSlotStatusUrl().do((x:any)=>this.slotStatusUrl=x).subscribe((x:any)=>console.log(this.slotStatusUrl));
-
+      
       this.intervalSource$ = Observable.interval(this.timeVars.queryInterval).takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish);
       this.timeCounterSubs = this.homeService.waitingCnt$.do(x=>this.waitingCnt = x).subscribe(wc=>{
         if(!this.countdownSubjSubscription){
@@ -131,13 +130,14 @@ export class Payweixin implements OnInit{
   }
 
   startTrx(){
+    console.log("startTx started by img element");
     this.intervalSourceSubscription = this.intervalSource$
       .flatMap((x:any)=>{
         console.log("wx toll operate interval start: " +x);
         return this.paywxservice.toll(this.wxPayPollUrl, this.wxPayParams)})
       .subscribe((dataRet:WXPollRet)=> {
           console.log(dataRet.result);
-          if(dataRet.result == 'SUCCESS'){
+          if(dataRet.result.toUpperCase() == 'SUCCESS'){
             this.transactionStatus = "paid";
           }
         }

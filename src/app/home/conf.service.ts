@@ -4,7 +4,7 @@ import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
 import {TimeVars, TIMEVARS, PaycashVars} from "../paymethod/paycash/paycash.service";
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
-import {WXTIMEVARS, WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
+import {WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
 import { Environment as env} from '../environments/environment';
 
 @Injectable()
@@ -62,6 +62,7 @@ export class ConfService{
     return Observable.of(JSON.parse(ret));
   }
   getWXPayServer(){
+    if(env.isDev) return Observable.of(env.wxPayServer);
     const key = "wxPayUrl";
     let ret = localStorage.getItem(key);
     if(ret == null){
@@ -69,13 +70,12 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=wxpay").map(x=>x.json())
         .map(x=>x[0].conf_value)
-        //.catch(err=>Observable.of(wxPayServer))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
-      // return Observable.of(wxPayServer).do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })}
     return Observable.of(JSON.parse(ret))
   }
   getWXPayPollUrl(){
+    if(env.isDev) return Observable.of(env.wxPayPollUrl);
     const key = "wxPayPollUrl";
     let ret = localStorage.getItem(key);
     if(ret == null){
@@ -83,9 +83,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=wxpoll").map(x=>x.json())
         .map(x=>x[0].conf_value)
-        //.catch(err=>Observable.of(wxPayPollUrl))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
-      // return Observable.of(wxPayPollUrl).do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })}
     return Observable.of(JSON.parse(ret))
   }
@@ -98,7 +96,6 @@ export class ConfService{
       return this.http.get(confUrlPrefix+"confname=paymember-timevars").map(x=>x.json())
           // .timeout(timeoutSetCashbox, "getPayMemberTimeVars" + timeoutTip)
           .map(x=>JSON.parse(x[0].conf_value) as TimeVars)
-        //.catch(x=>Observable.of(TIMEVARS))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
       })}
     return Observable.of(JSON.parse(ret));
@@ -113,7 +110,6 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
           return this.http.get(confUrlPrefix+"confname=slot").map(x=>x.json())
             .map(x=>x[0].conf_value)
-            // .catch(err=>Observable.of(slotUrl))
             .do(x=>localStorage.setItem(key, JSON.stringify(x)));
         })
     }
@@ -129,7 +125,6 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
           return this.http.get(confUrlPrefix + "confname=slotstatus").map(x=>x.json())
           .map(x=>x[0].conf_value)
-          // .catch(err=>Observable.of(slotstatusUrl))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
       });
     }
@@ -147,7 +142,6 @@ export class ConfService{
             .map(res=>res.json())
             // .timeout(timeoutSet, "getSlotSelectDefaultWaiting "+timeoutTip)
             .map(x=>x[0].conf_value);
-            // .catch(x=>Observable.of("20"));
         })
     }
   }
@@ -251,6 +245,7 @@ export class ConfService{
   }
   getPaywxTimeVars(){
     const key = "paywxTimeVars";
+    if(env.isDev) return Observable.of(env.payWXTimeVars);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -422,6 +417,7 @@ export class ConfService{
   }
   getVendingConfUrl(){
     const key = "vendingconf";
+    if(env.isDev) return Observable.of(env.vendingConfUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
