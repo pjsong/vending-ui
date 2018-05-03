@@ -188,6 +188,9 @@ export class ConfService{
   }
 
   getPaymethodDefaultWaiting(){
+    if(env.isDev){
+      return Observable.of(env.paySelectTimeout);
+    }
     const key = "paymethodDefaultWaiting";
     let ret = localStorage.getItem(key);
     if(ret == null) {

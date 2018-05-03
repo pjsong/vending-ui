@@ -104,7 +104,7 @@ export class SlotSelect implements OnInit{
           }
         }
         this.slotService.getSlotProduct(this.slotUrl, +data.slot_no).subscribe((slot:Slot)=>{
-          if(slot.product == null){
+          if(slot == undefined || slot.product == null){
             this.finishWithError = "货道"+ data.slot_no + "未设置商品";
             return;
           }

@@ -12,6 +12,15 @@
         <label class="label-danger" *ngIf="finishWithError"><h2>{{finishWithError}}</h2></label>
           <numKB [maxLength]="maxLength" [tipMessage]="tipMessage" (onFinish)="onFinish($event)"></numKB>
       </div>
+      <div *ngIf="cart.productOrders.length>0" class="col-md-3 offset-md-2">
+        <h1><i class="fa fa-cart-plus fa-2x"></i></h1>
+        <div *ngFor="let productOrder of cart.productOrders" class="row cart">
+          <h3>
+            货道{{productOrder.slotStatus.slot_no}} * 数量 {{ productOrder.itemCnt}}
+            <i class="fa fa-times-circle-o fa-2x" (click)="cartRemoveProductClick(productOrder)"></i>
+          </h3>
+        </div>
+      </div>
     </div>  
     <div class="row row-omd">
       <div *ngIf="slotSelectFinishClicked" class="col-md-3">
@@ -34,15 +43,7 @@
     </div>
 
 
-    <div *ngIf="cart.productOrders.length>0" class="col-md-3">
-      <h1><i class="fa fa-cart-plus fa-2x"></i></h1>
-      <div *ngFor="let productOrder of cart.productOrders" class="row cart">
-        <h3>
-          货道{{productOrder.slotStatus.slotNo}} * 数量 {{ productOrder.itemCnt}}
-          <i class="fa fa-times-circle-o fa-2x" (click)="cartRemoveProductClick(productOrder)"></i>
-        </h3>
-      </div>
-    </div>
+
   </div>
 </div>
 
