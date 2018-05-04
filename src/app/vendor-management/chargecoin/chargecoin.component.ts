@@ -4,7 +4,7 @@ import {HomeService} from "../../home/home.service";
 
 @Component({
   selector: 'chargecoin',
-  template: './chargecoin.component.html',
+  templateUrl: './chargecoin.component.html',
   styleUrls: ['./chargecoin.component.scss']
 })
 

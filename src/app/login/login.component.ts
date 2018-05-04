@@ -8,7 +8,7 @@ const passwordTipMessage :string = "pjsong3101" //"请输入密码"
 
 @Component({
   selector: 'login',
-  template: './login.component.html',
+  templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 

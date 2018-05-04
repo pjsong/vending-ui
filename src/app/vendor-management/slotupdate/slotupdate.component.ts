@@ -7,7 +7,7 @@ import {SlotSelectService, SlotStatus} from "../../slotselect/slotselect.service
 
 @Component({
   selector: 'slotupdate',
-  template: './slotupdate.component.html',
+  templateUrl: './slotupdate.component.html',
   styleUrls: ['./slotupdate.component.scss']
 })
 

@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {HttpUtils} from "../common/http-util";
 import {ConfService} from "../home/conf.service";
+import {Environment as env} from "../environments/environment"
 
 let testLoginRet=[{'token':'123456789'}]
 
@@ -59,16 +60,16 @@ export class AuthService {
   login(up: UserPrinciple){
       this.confService.getAuthUrl().subscribe(x=>{
           this.authUrl = x;
+          if(env.isDev) {
+            this.doLoginSuccceed(env.testLoginRet[0],up);
+            return;
+          }
           let loginRet:Observable<LoginRet> = this.httpUtils.POST<LoginRet>(this.authUrl, up)
               // .timeout(timeoutSetCashbox, "login"+ timeoutTip);
               // .catch(x=>Observable.of(testLoginRet[0]));
           loginRet.subscribe(
               (data:LoginRet)=>{
-                  console.log(data.token);
-                  localStorage.setItem("token", data.token);
-                  localStorage.setItem("username", up.username);
-                  localStorage.setItem("password", up.password);
-                  this.errorEvent.next("loginsucceed");
+                  this.doLoginSuccceed(data,up);
               },
               (err:any) => {
                   console.log("errBody" + JSON.parse(err._body).detail)
@@ -79,6 +80,13 @@ export class AuthService {
       })
   }
 
+  doLoginSuccceed(data: LoginRet, up: UserPrinciple){
+    console.log(data.token);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", up.username);
+    localStorage.setItem("password", up.password);
+    this.errorEvent.next("loginsucceed");
+  }
 
   logout(): void {
     localStorage.removeItem("token")

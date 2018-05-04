@@ -1,20 +1,20 @@
-<div class="container">
+<div class="container-fluid container-omd">
   <div *ngIf="selfcheckfail">
     <h1><span class="label label-danger">{{selfcheckfail}}</span></h1>
   </div>
 
   <div *ngIf = "!selfcheckfail">
-    <h1>会员帐号：<span class="label label-danger">{{accountName}}</span></h1>
+    <div class="label label-danger">会员帐号： {{accountName}}</div>
 
-    <h2>历史余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </h2>
-    <h2>当前支付：<span class="label label-info">{{amountToPay | number:'3.0-0'}}</span></h2>
+    <div class="label label-info">历史余额：{{amountBefore | number:'3.0-0'}}</div> 
+    <div class="label label-info">当前支付：{{amountToPay | number:'3.0-0'}}</div>
     <label *ngIf="payingTipMessage" class="label-warning payingTipMessage" >
-      <h3>{{payingTipMessage}}</h3>
+      {{payingTipMessage}}
     </label>
   </div>
 
   <div class="row">
-    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
+    <footercommand class="col-md-12" [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
                    (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 

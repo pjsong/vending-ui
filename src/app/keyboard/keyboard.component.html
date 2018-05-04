@@ -1,20 +1,22 @@
-<div class="container-fluid">
-  <div class="input-group col-md-12">
-    <span class="input-group-addon" id="tipMessageLabel">{{tipMessage}}</span>
-    <input class="form-control" type="{{inputType}}" name="inputTxt" aria-describedby="tipMessageLabel"
-           readonly [(ngModel)]="inputTxt" (click)="inputboxClicked($event)">
+<div class="container-fluid-omd">
+  <div class="row">
+    <div class="input-group input-group-omd col-md-12">
+      <span class="input-group-addon input-group-addon-omd" id="tipMessageLabel">{{tipMessage}}</span>
+      <input type="{{inputType}}" name="inputTxt" aria-describedby="tipMessageLabel" readonly [(ngModel)]="inputTxt" (click)="inputboxClicked($event)">
+    </div>
   </div>
 
-  <div class="col-md-12">
-    <div *ngIf="keyboardDisplay">
-      <div *ngFor='let u of keyboardRow' >
-        <div class="col-xs-1 col-md-1">
+  <div *ngIf="keyboardDisplay">
+    <div class="row row-keyboardDisplay">
+      <div *ngFor='let u of keyboardRow; index as i'>
+        <!-- {{i}}   -->
+        <div [class.col-md-2]="(i % 10) == 0" [class.col-md-1]="(i % 10) != 0" class="col-md-1-omd"> 
           <button class="btn btn-primary" name="userInput" value="{{u.val}}" (click)="clickButton(u)">
             {{u.displayValue}}
           </button>
         </div>
       </div>
     </div>
+
   </div>
 </div>
-

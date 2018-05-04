@@ -8,10 +8,11 @@ import {ConfService} from "../../home/conf.service";
 import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
 import {VendingStatus} from "../../home-default-button/default-button.services";
+import {Environment as env} from "../../environments/environment";
 
 @Component({
   selector: 'paymember',
-  template: './paymember.component.html',
+  templateUrl: './paymember.component.html',
   styleUrls: ['./paymember.component.scss']
 })
 
@@ -54,6 +55,7 @@ export class Paymember implements OnInit{
 
   ngOnInit(){
     let vendingstatus: VendingStatus = JSON.parse(localStorage.getItem("vendingstatus"));
+    if(env.isDev) vendingstatus = env.vendingStatus;
     let deviceOk: boolean = vendingstatus.omddevice == 'ok' && vendingstatus.controlboardstatus == 'ok';
     if(!deviceOk ){
       this.selfcheckfail = "机器故障,请选择其他支付方式";

@@ -277,6 +277,7 @@ export class ConfService{
 
   getAuthUrl(){
     const key = "authUrl";
+    if(env.isDev) return Observable.of(env.authUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -306,6 +307,7 @@ export class ConfService{
   }
 
   getLoginDefaultWaiting(){
+    if(env.isDev) return Observable.of(env.loginDefaultWaiting);
     const key="loginDefaultWaiting";
     let ret = localStorage.getItem(key);
     if(ret == null){

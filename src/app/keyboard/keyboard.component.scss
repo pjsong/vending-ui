@@ -1,15 +1,17 @@
-.container-fluid{
+.container-fluid-omd{
   width: 65vw;
 }
-.col-md-1{
-  width: 10%;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-bottom: 3px;
+.col-md-1-omd{
+  // width: 10%;
+  // padding-left: 3px;
+  // padding-right: 3px;
+  padding-bottom: 2vh;
 }
-
-.input-group{
-  .input-group-addon{
+.row-keyboardDisplay{
+  margin-top: 10vh;
+}
+.input-group-omd{
+  .input-group-addon-omd{
     width: 12vw;
     border-bottom: 0px;
     vertical-align: text-bottom;
@@ -19,7 +21,7 @@
     border-bottom-width: .2vw;
     border-bottom-color: greenyellow;
   }
-  .input-group-addon, input{
+  .input-group-addon-omd, input{
     color:green;
     background-color: transparent;
     font-size: 3vw;

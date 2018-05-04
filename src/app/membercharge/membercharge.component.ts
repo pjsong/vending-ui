@@ -7,7 +7,7 @@ import {ConfService} from "../home/conf.service";
 
 @Component({
   selector: 'membercharge',
-  template: './membercharge.component.html',
+  templateUrl: './membercharge.component.html',
   styleUrls: ['./membercharge.component.scss']
 })
 

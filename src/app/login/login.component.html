@@ -16,13 +16,13 @@
       <div class="col-md-12">
         <keyboardInput [maxLength]="maxLengthPassword" [tipMessage]="tipMessagePassword"
                        [autohide]="autohidePassword" [inputType]="inputTypePassword" (onFinish)="onPasswordFinish($event)">
-        </keyboardInput>
+        </keyboardInput>k
       </div>
     </div>
   </div>
 
   <div class="row" *ngIf="clickStatus=='passwordClicked'">
-    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retTxt]="retTxt"
+    <footercommand class="col-md-12" [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retTxt]="retTxt"
                    (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 

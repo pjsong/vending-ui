@@ -48,7 +48,7 @@ export const Environment = {
     timeoutTip: ", timeout 200 exceed",
     slotSelectTimeout: "2000",
     paySelectTimeout: "2000",
-     
+    loginDefaultWaiting: "300",
     mainButton : [
     {id: 1, imgUrl: pic1, buttonTxt:'货道购买', linkTarget:'../slotselect'}
     ,{id: 2,imgUrl: pic2, buttonTxt:'终端管理', linkTarget:'../vendor-management'}
@@ -161,5 +161,6 @@ export const Environment = {
         "install_time": "2016-12-27 12:31:00",
         "alive_time": "2016-12-27 12:31:00"
       }
-    ]
+    ],
+    testLoginRet: [{'token':'123456789'}]
 }
