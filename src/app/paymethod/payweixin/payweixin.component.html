@@ -1,14 +1,14 @@
 <div class="container-fluid container-omd">
-  <div *ngIf="timeoutMsg">
-    <h2>{{timeoutMsg}}</h2>
-  </div>
-  <div *ngIf="!timeoutMsg">
-    <span class="label label-danger">{{tipMessage}}</span>
-    <div *ngIf="this.transactionStatus == 'started' && wxPayParams != undefined">
-      <img [src]="wxPayParams.imgUrl" (load)="startTrx()">
+  <div class="subcontainer">
+    <div *ngIf="timeoutMsg">
+      <h2>{{timeoutMsg}}</h2>
+    </div>
+    <div *ngIf="!timeoutMsg">
+      <span class="label label-danger">{{tipMessage}}</span>
+      <div *ngIf="this.transactionStatus == 'started' && wxPayParams != undefined">
+        <img [src]="wxPayParams.imgUrl" (load)="startTrx()">
+      </div>
     </div>
   </div>
-
-  <footercommand [retTxt]="retTxt" [retAddress]="retAddress" [retDisabled]="retDisabled" [cmdDisplay]="false"
-                 (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+  <footercommand class="row" [retTxt]="retTxt" [retAddress]="retAddress" [retDisabled]="retDisabled" [cmdDisplay]="false" (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
 </div>

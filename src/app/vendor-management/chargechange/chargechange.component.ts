@@ -5,10 +5,11 @@ import {HomeService} from "../../home/home.service";
 import {ChargeChangeService} from "./chargechange.services";
 import {ConfService} from "../../home/conf.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
+import {Environment as env } from "../../environments/environment"
 
 @Component({
   selector: 'chargechange',
-  template: './chargechange.component.html',
+  templateUrl: './chargechange.component.html',
   styleUrls: ['./chargechange.component.scss']
 })
 
@@ -52,6 +53,7 @@ export class ChargeChange implements OnInit{
 
   ngOnInit(){
     let vendingstatus: VendingStatus = JSON.parse(localStorage.getItem("vendingstatus"));
+    if(env.isDev) vendingstatus = env.vendingStatus;
     this.machineStatus = vendingstatus.omddevice == 'ok' && vendingstatus.cashboxstatus == 'ok';
     if(!this.machineStatus){
       this.chargingTipMessage = "纸币器本地服务故障";

@@ -112,6 +112,7 @@ export const Environment = {
       {"id":4, "imgUrl":"","buttonTxt":"货道测试","linkTarget":"./slottest"},
       {"id":5, "imgUrl":"","buttonTxt":"软件更新","linkTarget":"./vendorupdate"},
     ],
+    vendorManagementLoginRet: [{"detail":"OK"}],
     productTest: [
         {"id":1,"image_list_url":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
           "product_name":"避孕套","sale_unit_price":9,"product_summary":"避孕套避孕套","product_desc":"避孕套避孕套避孕套"}
@@ -154,8 +155,8 @@ export const Environment = {
     payWXPollRet:{
       result: "SUCCESS"
     },
-    payWXQRImgUrl:"https://s1.ax2x.com/2018/05/03/SuIFe.png",
-    payAliQRImgUrl:"https://s1.ax2x.com/2018/05/03/Sutlq.png",
+    payWXQRImgUrl:"assets/img/paymethod/wx_pay.png",
+    payAliQRImgUrl:"assets/img/paymethod/ali_pay.png",
     paymemberTimeVars: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000},
     vendingConf:  [

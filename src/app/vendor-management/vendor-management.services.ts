@@ -39,16 +39,17 @@ export class VendorManagementService{
   // }
 
   getAdminLoginUrl(){
+    if(env.isDev) return Observable.of(env.adminloginUrl);
     return this.http.get(env.confUrlPrefix+"confname=adminloginurl").map(x=>x.json)
         // .timeout(timeoutSet, "vendormanagement.getAdminUrl" + timeoutTip)
         .map(x=>x[0].conf_value).catch(x=>Observable.of(env.adminloginUrl))
   }
   adminLogin(adminLoginUrl:string){
+    if(env.isDev) return Observable.of(env.vendorManagementLoginRet[0])
     let adminLoginRet: Observable<AdminLoginRet> = this.httpUtils
         .GetWithToken<AdminLoginRet>(adminLoginUrl)
       // .filter(x=>x != null && x.detail != undefined)
-      //   .timeout(timeoutSet, "vendormanagement.adminLogin" + timeoutTip)
-        .catch(error=>Observable.of(ADMINLOGINRET[0]));
+        .catch(error=>Observable.of(env.vendorManagementLoginRet[0]));
     adminLoginRet.subscribe(
       x=>{
         if(x.detail == "OK")
