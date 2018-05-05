@@ -6,8 +6,8 @@ import 'rxjs/add/operator/delay';
 import {Http, Response,} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
 import {Observable} from "rxjs";
-import * as CryptoJS from "crypto-js"
-import {Environment as env} from "../../environments/environment"
+import * as CryptoJS from "crypto-js";
+import {Environment as env} from "../../environments/environment";
 
 export class VendingConf{
   slug:string;sec:string;vm_type:number;charger:number;product_category:number[];
