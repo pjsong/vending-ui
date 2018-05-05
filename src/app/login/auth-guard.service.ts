@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    console.log('AuthGuard#canActivate called');
     let url: string = state.url;
     return this.checkLogin(url);
   }
@@ -30,6 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   checkLogin(url: string): boolean {
+    console.log("auth-guard.service: checkLogin")
     if (localStorage.getItem("token")) { return true; }
 
     // Store the attempted URL for redirecting
@@ -42,7 +44,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       queryParams: { 'session_id': sessionId },
       fragment: 'anchor'
     };
-
     // Navigate to the login page with extras
     this.router.navigate(['/login']);
     return false;

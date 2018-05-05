@@ -72,7 +72,6 @@ export class ChargeCoinService{
     if(error instanceof Response){
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
-      // errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
       errMsg = "更新失败";
     }else{
       errMsg = error.message?error.message:error.toString();

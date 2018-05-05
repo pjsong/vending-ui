@@ -18,10 +18,7 @@ export class VendorManagement implements OnInit {
   adminLoginUrl: string;
 
   tButtons: MainButton[];
-  disabled: boolean = false;
-  isDisabled() {
-    return this.disabled;
-  }
+  disabled: boolean = false;//when job is running, navigation is disabled
   constructor(
     private route: ActivatedRoute, private router: Router, private service: VendorManagementService, private homeService: HomeService) { }
 
@@ -29,7 +26,6 @@ export class VendorManagement implements OnInit {
     this.service.getAdminLoginUrl().subscribe((x: any) => {
       this.adminLoginUrl = x;
       this.service.loginRetOKEvent.subscribe(x => {
-        
         if (x == "OK") {
           this.homeService.lockAcquired$.subscribe(
             (x: number) => {
@@ -39,13 +35,11 @@ export class VendorManagement implements OnInit {
           );
           this.service.getButtons().subscribe(x => this.tButtons = x);
         } else {
-          console.log("loginRetOKEVent:" + x);
+          console.log("loginRetOKEvent:" + x);
           this.router.navigate(["/"])
         }
       });
       this.service.adminLogin(this.adminLoginUrl);
     });
-
-
   }
 }

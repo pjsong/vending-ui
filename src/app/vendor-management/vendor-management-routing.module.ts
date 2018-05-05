@@ -7,18 +7,15 @@ import { VendorManagement } from "./vendor-management.component";
 import { SlotUpdate } from "./slotupdate/slotupdate.component";
 import { ChargeCoin } from "./chargecoin/chargecoin.component";
 import { Upgrade } from "./upgrade/upgrade.component";
+import {AuthGuard} from "../login/auth-guard.service"
 
+//https://angular.io/guide/router#canactivate-requiring-authentication
 const VendorManagementRoutes: Routes = [
   {
     path: '',
     component: VendorManagement,
-
+    canActivate: [AuthGuard],
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'chargechange',
-      //   pathMatch: 'full'
-      // },
       {
         path: 'chargechange',
         component: ChargeChange

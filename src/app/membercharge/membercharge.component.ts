@@ -69,7 +69,7 @@ export class MemberCharge implements OnInit{
       this.startChargeRetSubjSubscription = this.startChargeRetSubj.asObservable().subscribe((operateId)=>this.doTollRet(operateId));
       this.countdownSubjSubscription = this.countdownSubj.asObservable().subscribe((waitingCnt=>this.doWaitingCnt(waitingCnt)));
     });
-    this.service.balanceSub.asObservable().subscribe(
+    this.service.balanceSub.asObservable().filter(x=>x!=undefined).subscribe(
       x=>{this.amountBefore = x.balance;this.miu.id = x.id; this.miu.balance = x.balance; this.miu.owner = x.owner;this.miu.user = x.user});
   }
 
@@ -83,7 +83,6 @@ export class MemberCharge implements OnInit{
                 dataRet =env.CashboxLogTestTerm[0];
               }
               this.doToll(dataRet);
-
             }
         );
   }

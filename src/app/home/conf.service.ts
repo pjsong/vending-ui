@@ -340,6 +340,7 @@ export class ConfService{
 
   getSlotTestUrl(){
     const key = "slotTestUrl";
+    if(env.isDev) return Observable.of(env.slotTestUrl)
     let ret = localStorage.getItem(key);
     if(ret == null){
       return this.confUrlPrefixWithVmtype()
@@ -449,6 +450,7 @@ export class ConfService{
 
   getPullcodeUrl(){
     const key = "pullcodeUrl";
+    if(env.isDev) return Observable.of(env.pullcodeUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()
@@ -463,6 +465,7 @@ export class ConfService{
 
   getShutdownUrl(){
     const key = "shutdownUrl";
+    if(env.isDev) return Observable.of(env.shutdownUrl);
     let ret = localStorage.getItem(key);
     if(ret == null) {
       return this.confUrlPrefixWithVmtype()

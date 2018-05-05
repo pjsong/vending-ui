@@ -45,8 +45,12 @@ export class Upgrade implements OnInit{
     this.intervalSource$ = Observable.interval(2000);
   }
 
+  onCmdClicked(cmdNum: string){
+    if(cmdNum == "return") {
+       //placeHolder, no use for now
+    }
+  }
   cmdClicked(cmdNum: number){
-    console.log(cmdNum)
     if(cmdNum == 0){//upgrade
       this.intervalSourceSubscription = this.intervalSource$
         .flatMap((x:any)=>{console.log("do operate interval start: " +x);return this.upgradeService.getUpdateMsg(this.pullcodeUrl)})
