@@ -91,16 +91,13 @@ export class ChargeChange implements OnInit{
   }
 
   doToll(data:CashboxLog){
-    this.homeService.setPageWaiting("chargeChange->doToll", this.timeVars.timeWithPay);
     console.log(data);
     if(data.ret_data > 0){
       this.lastLogId = data.id;
       this.amountCharging += data.ret_data;
-    }else if(data.ret_data == 0){
-      this.chargingTipMessage = "充值已成功";
-    }else{
-      this.chargingTipMessage = "充值已终止";
+      this.homeService.setPageWaiting("chargeChange->doToll", this.timeVars.timeWithPay);
     }
+    this.chargingTipMessage = data.ret_data >= 0 ? "充值已成功":"充值已终止";
   }
 
   firstUnSubscribe(){
@@ -119,7 +116,7 @@ export class ChargeChange implements OnInit{
     if(waitingCnt > this.timeVars.timeStartAlert){
       this.cmdDisplay = true;
       if(this.amountCharging>0){
-        if((this.amountBefore + this.amountCharging<300)){
+        if((this.amountBefore + this.amountCharging<300)){//300 is the upper limit
           this.chargingTipMessage = "正在充值...";
           this.retDisabled = true;
         }else{
@@ -149,6 +146,9 @@ export class ChargeChange implements OnInit{
             console.log(JSON.stringify(x));
           },
           (error)=>console.log(error));
+      }
+      if(this.intervalSourceSubscription && env.isDev){
+        this.intervalSourceSubscription.unsubscribe();
       }
       this.chargingTipMessage = "正在关闭充值";
       this.cmdDisplay = false;

@@ -113,6 +113,8 @@ export const Environment = {
       {"id":5, "imgUrl":"","buttonTxt":"软件更新","linkTarget":"./vendorupdate"},
     ],
     vendorManagementLoginRet: [{"detail":"OK"}],
+    chargeTestCmdRet: {"id": 99, "operate_name":"charge", "operate_data":10, "create_time":"2016-12-29 09:38:21"},
+
     productTest: [
         {"id":1,"image_list_url":"http://172.18.0.3/static/images/vendor/front/604.jpeg",
           "product_name":"避孕套","sale_unit_price":9,"product_summary":"避孕套避孕套","product_desc":"避孕套避孕套避孕套"}

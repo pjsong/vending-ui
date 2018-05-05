@@ -1,5 +1,4 @@
 let ctCurrentPayoutAvailable = [{ "id": 5586,  "operate": 140,  "operateStatus": "succeed",  "retData": 130,  "createTime": "2016-12-29 06:52:55"}]
-let chargeTestCmdRet = {"id": 99, "operate_name":"charge", "operate_data":10, "create_time":"2016-12-29 09:38:21"}
 
 import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
@@ -25,7 +24,10 @@ export class ChargeChangeService{
           return JSON.parse(x[0].conf_value) as TimeVars}).map(x=>{if(x == undefined) Observable.throw("undefined"); return x})
         .catch(x=>{return Observable.of(env.paycashTimeVar)});
   }
+
+
   sendChargeCmd(deviceUrl:string):Observable<CashboxTaskRet>{
+    if(env.isDev) return Observable.of(env.chargeTestCmdRet)
     let ct = new CashboxTask("charge",0);
       return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
           // .timeout(timeoutSet, "sendChargeCmd"+timeoutTip)
