@@ -5,9 +5,9 @@ const fileserveraddr = "http://static.oursmedia.cn/";
 const wxServer = "https://api.scheduler.oursmedia.cn/";
 const deviceUrl= "http://localhost:8000/api/data/cashmachine/cashbox/?format=json"
 
-const pic1 = "https://s1.ax2x.com/2018/05/02/SVBMe.png";//"https://simimg.com/i/SmRlX";
-const pic2 = "https://s1.ax2x.com/2018/05/01/SmRlX.png";//"https://simimg.com/i/SmnBl";
-const pic3 = "https://s1.ax2x.com/2018/05/01/SmosJ.png";//"https://simimg.com/i/Sm7vy";
+const pic1 = "assets/img/defaultbutton/slotbuy.png";//"https://simimg.com/i/SmRlX";
+const pic2 = "assets/img/defaultbutton/membership.png";//"https://simimg.com/i/SmnBl";
+const pic3 = "assets/img/defaultbutton/vendor-management.png";//"https://simimg.com/i/Sm7vy";
 
 export const Environment = {
     isDev: true,

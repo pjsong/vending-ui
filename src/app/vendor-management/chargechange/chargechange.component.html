@@ -1,11 +1,11 @@
-<!--<div class="container">-->
+<div class="container container-omd">
 
-  <h2 *ngIf="amountBefore">历史余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </h2>
-  <h2 *ngIf="amountCharging">当前充值：<span class="label label-info">{{amountCharging | number:'3.0-0'}}</span></h2>
-  <h2 *ngIf="amountBefore">当前余额：<span class="label label-info">{{(amountBefore+amountCharging) | number:'3.0-0'}}</span></h2>
+  <div *ngIf="amountBefore">历史余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </div>
+  <div *ngIf="amountCharging">当前充值：<span class="label label-info">{{amountCharging | number:'3.0-0'}}</span></div>
+  <div *ngIf="amountBefore">当前余额：<span class="label label-info">{{(amountBefore+amountCharging) | number:'3.0-0'}}</span></div>
 
   <label *ngIf="chargingTipMessage" class="label-warning chargingTipMessage" >
-    <h2>{{chargingTipMessage}}</h2>
+    {{chargingTipMessage}}
   </label>
 
   <div class="row" *ngIf="cmdDisplay">
@@ -13,5 +13,5 @@
                    (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 
-<!--</div>-->
+</div>
 

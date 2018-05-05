@@ -1,19 +1,16 @@
-<!--<div class="container">-->
-  <label class="label-danger" *ngIf="finishedWithError"><h3>{{finishedWithError}}</h3></label>
+<div class="container container-omd">
+  <label class="label-danger" *ngIf="finishedWithError">{{finishedWithError}}</label>
 
-  <h2>当前余额：<span class="label label-info">{{amountBefore | number:'3.0-0'}}</span> </h2>
+  <div>当前余额：
+    <span class="label label-info">{{amountBefore | number:'3.0-0'}}</span>
+  </div>
 
   <div class="container-fluid">
-    <numKB [maxLength] = "coinMaxLength" [autohide] = "coinAutohide" [tipMessage] = "coinTipMessage"
-           (onFinish)="onInputFinish($event)"></numKB>
+    <numKB [maxLength]="coinMaxLength" [autohide]="coinAutohide" [tipMessage]="coinTipMessage" (onFinish)="onInputFinish($event)"></numKB>
   </div>
 
   <div class="row" *ngIf="currentItemCntFinishClicked">
-    <footercommand class="col-md-12" [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retTxt]="retTxt"
-                   (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
+    <footercommand class="col-md-12" [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retTxt]="retTxt" (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 
-<!--</div>-->
-
-
-
+</div>

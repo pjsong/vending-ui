@@ -1,27 +1,27 @@
-<div class="container">
+<div class="container-fluid container-omd">
   <div class="row">
-    <div class="col-md-offset-1 col-md-2">  <h4>界面版本号：1.0.0<br>{{uiVersion}}</h4></div>
-    <div class="col-md-offset-1 col-md-2">  <h4>设备版本号：1.0.0<br>{{deviceVersion}}</h4></div>
-    <div class="col-md-offset-1 col-md-2">  <h4>服务版本号：1.0.0<br>{{dataVersion}}</h4></div>
+    <div class="col-md-4">  <label>界面版本<br>{{uiVersion?uiVersion:'1.0.0'}}</label></div>
+    <div class="col-md-4">  <label>设备版本<br>{{deviceVersion?deviceVersion:'1.0.0'}}</label></div>
+    <div class="col-md-4">  <label>服务版本<br>{{dataVersion?dataVersion:'1.0.0'}}</label></div>
   </div>
   <hr>
-  <div class="row subcontainer" >
-    <div class="col-md-2 col-md-offset-1">
-      <label class="btn btn-success" (click)="cmdClicked(0)"><h4>升级系统</h4></label>
+  <div class="row row-omd" >
+    <div class="col-md-3 offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(0)"><label>升级系统</label></label>
     </div>
-    <div class="col-md-2 col-md-offset-1">
-      <label class="btn btn-success" (click)="cmdClicked(1)"><h4>关闭设备</h4></label>
+    <div class="col-md-3 offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(1)"><label>关闭设备</label></label>
     </div>
-    <div class="col-md-2 col-md-offset-1">
-      <label class="btn btn-success" (click)="cmdClicked(2)"><h4>重启设备</h4></label>
+    <div class="col-md-3 offset-1">
+      <label class="btn btn-success" (click)="cmdClicked(2)"><label>重启设备</label></label>
     </div>
   </div>
-  <div class="subcontainer" >
-    <h3>{{processMsg}}</h3>
+  <div>
+    <label>{{processMsg}}</label>
   </div>
 
   <div class="row">
-    <footercommand [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
+    <footercommand class="col-12" [retDisabled]="retDisabled" [cmdDisplay]="cmdDisplay"
                    (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 </div>

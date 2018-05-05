@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit{
 
   login(up: UserPrinciple): boolean{
     if(localStorage.getItem("token")){
+      console.log(this.authService.redirectUrl);
       let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
       this.router.navigate([redirect]);
       return true;

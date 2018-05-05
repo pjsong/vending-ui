@@ -37,26 +37,6 @@ export class AuthService {
     this.httpUtils = new HttpUtils(http);
   }
 
-
-  // loginTest(up: UserPrinciple){
-  //   let testData:Observable<LoginRet> = Observable.create((subscriber:any)=>{subscriber.next(testLoginRet[0])}).subscribe(
-  //     (data:LoginRet)=>{
-  //       console.log(data.token);
-  //       localStorage.setItem("token", data.token);
-  //       localStorage.setItem("username", up.username);
-  //       localStorage.setItem("password", up.password);
-  //       console.log("authservice.redirect: " + this.redirectUrl)
-  //       let redirect = this.redirectUrl ? this.redirectUrl : '/';
-  //       this.router.navigate([redirect]);
-  //     },
-  //     (err:Error) => {
-  //       console.log("error happend: "+ err);
-  //       this.errorEvent.next("loginerr")
-  //     }
-  //   );
-  // }
-
-
   login(up: UserPrinciple){
       this.confService.getAuthUrl().subscribe(x=>{
           this.authUrl = x;
@@ -66,7 +46,6 @@ export class AuthService {
           }
           let loginRet:Observable<LoginRet> = this.httpUtils.POST<LoginRet>(this.authUrl, up)
               // .timeout(timeoutSetCashbox, "login"+ timeoutTip);
-              // .catch(x=>Observable.of(testLoginRet[0]));
           loginRet.subscribe(
               (data:LoginRet)=>{
                   this.doLoginSuccceed(data,up);

@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container container-omd">
   <label class="label-danger" *ngIf="loginErrorMessage"><h3>{{loginErrorMessage}}</h3></label>
 
   <div class="row">
     <!--<span class="col-md-1"></span>-->
     <div class="col-md-2">
       <div class="row">
-        <a *ngFor="let tb of tButtons" class="btn col-md-10 col-md-offset-2" [class.disabled]="disabled? true:null"
+        <a *ngFor="let tb of tButtons" class="btn btn-omd col-md-10 offset-2" [class.disabled]="disabled? true:null"
            routerLink={{tb.linkTarget}} routerLinkActive="active" ><h4>{{tb.buttonTxt}}</h4></a>
       </div>
     </div>

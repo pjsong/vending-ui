@@ -1,14 +1,16 @@
-.container{
+.container-omd{
   height: 68vh;
   hr{
     border-color:darkorchid;
   }
-  .subcontainer{
+  font-size: 3em;
+  .row-omd{
     //margin-top:5vh;
     height:15vh;
-    h3{
-      text-align: left;
-      padding-left: 30vw;
+    label{
+      // text-align: left;
+      // padding-left: 30vw;
+      font-size: 1em;
     }
   }
 

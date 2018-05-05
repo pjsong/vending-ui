@@ -10,14 +10,6 @@ export class AdminLoginRet{
 }
 let ADMINLOGINRET:AdminLoginRet[]=[{"detail":"OK"}]
 
-// let BUTTONS = [
-//    new MainButton(1,'', '纸币找零', './chargechange')
-//   ,new MainButton(2,'', '硬币找零', './chargecoin')
-//   ,new MainButton(3,'', '货道维护', './slotupdate')
-//   ,new MainButton(4, '', '货道测试', './slottest')
-//   ,new MainButton(5, '', '软件更新', './vendorupdate')
-// ];
-
 @Injectable()
 export class VendorManagementService{
   httpUtils:HttpUtils;
@@ -28,6 +20,7 @@ export class VendorManagementService{
   }
 
   getButtons(){
+    if(env.isDev) return Observable.of(env.vnedorManagementButton as MainButton[]);
     return this.http.get(env.confUrlPrefix+"confname=vendormanagement-button").map(x=>x.json())
         // .timeout(timeoutSet, "vendormanagement.getButtons" + timeoutTip)
         .map(x=>JSON.parse(x[0].conf_value) as MainButton[])
@@ -45,7 +38,7 @@ export class VendorManagementService{
         .map(x=>x[0].conf_value).catch(x=>Observable.of(env.adminloginUrl))
   }
   adminLogin(adminLoginUrl:string){
-    if(env.isDev) return Observable.of(env.vendorManagementLoginRet[0])
+    if(env.isDev) {this.loginRetOKEvent.next("OK");return;}
     let adminLoginRet: Observable<AdminLoginRet> = this.httpUtils
         .GetWithToken<AdminLoginRet>(adminLoginUrl)
       // .filter(x=>x != null && x.detail != undefined)
