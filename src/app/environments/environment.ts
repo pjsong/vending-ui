@@ -71,6 +71,7 @@ export const Environment = {
     tollTestCmdRet : {"id": 99, "operate_name":"toll", "operate_data":9, "create_time":"2016-12-29 09:38:21"},
     terminateTestCmdRet : {"id": 99, "operate_name":"terminate", "operate_data":9, "create_time":"2016-12-29 09:38:21"},
     CashboxLogTest : [{"id":100,"operate": 99,   "operate_status": "succeed",  "ret_data": 20, "create_time":"2016-12-29 06:52:55"}],
+    CashboxLogTestTerm : [{"id":100,"operate": 99,   "operate_status": "succeed",  "ret_data": -1, "create_time":"2016-12-29 06:52:55"}],
     CashboxLogTest1 : [{"id":39015,"operate":99,"operate_status":"processing","ret_data":10,"create_time":"2016-12-31 08:06:01"}],
     slotStatusTest : [
         {id: 1, slot: 1,running_status:"1", before_item_num: 12, variation_num: 2, current_item_num: 10, malfunction_report_count: 0, slot_no: "001", user:1, create_time:"2016-04-04 01:01:01", update_time: "2016-04-04 01:01:01"},
@@ -120,9 +121,17 @@ export const Environment = {
     paycashVars: {"payoutThreshold":90,"payoutCoinThreshold":29},
     deviceUrl: deviceUrl,
 
-    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":120,"timeStartAlert":30,"timeAlertEnd":15,
+    paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000},
     orderTaskTestRet: {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100},
+    memberChargeTimeVar: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
+    "timeJumpToFinish":5,"queryInterval":2000},
+    memberInfoUpdate: {
+        "id": 2,
+        "owner": 1,
+        "user": 3,
+        "balance": 98
+      },
     chargeCoinRet: 
     [
       {"id":2, "user":1, "amount_before":100,"amount_data":-5, "amount_after":95, "create_time":"2017-01-05 10:01:09"}
@@ -147,6 +156,8 @@ export const Environment = {
     },
     payWXQRImgUrl:"https://s1.ax2x.com/2018/05/03/SuIFe.png",
     payAliQRImgUrl:"https://s1.ax2x.com/2018/05/03/Sutlq.png",
+    paymemberTimeVars: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
+"timeJumpToFinish":5,"queryInterval":2000},
     vendingConf:  [
       {
         "slug": "pjsong-spring001-001",

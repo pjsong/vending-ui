@@ -9,7 +9,7 @@
   </label>
 
   <div class="row" *ngIf="cmdDisplay">
-    <footercommand [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled"
+    <footercommand class="col-md-12"  [cmdStart]="cmdStart" [cmdStop]="cmdStop" [retDisabled]="retDisabled"
                    (cmdClickedEmitter)="onCmdClicked($event)"></footercommand>
   </div>
 

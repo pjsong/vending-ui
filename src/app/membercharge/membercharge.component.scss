@@ -1,10 +1,15 @@
-.container{
+.container-omd{
   height: 68vh;
-  margin-top: 3vh;
-  .row{
-    margin-top: 5vh;
+  padding-top: 5vh;
+  .subcontainer{
+    height: 50vh;
   }
+  .row{
+    margin-top: 2vh;
+  }
+  font-size: 5vh;
   .chargingTipMessage{
+    margin-top: 5vh;
     background-color: transparent;
   }
 }

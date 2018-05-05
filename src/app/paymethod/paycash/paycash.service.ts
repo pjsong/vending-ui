@@ -54,9 +54,6 @@ export class PaycashVars{
 }
 
 
-export const TIMEVARS={"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
-"timeJumpToFinish":5,"queryInterval":2000};
-
 @Injectable()
 export class PaycashService {
   httpUtils:HttpUtils;
@@ -120,6 +117,7 @@ export class PaycashService {
 
   terminate(deviceUrl:string):Observable<CashboxTaskRet>{
     let ct = new CashboxTask("terminate",0);
+    if(env.isDev) return Observable.of(env.terminateTestCmdRet);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "terminate" + timeoutTip)
         // .catch(x=>Observable.of(terminateTestCmdRet));

@@ -4,7 +4,7 @@ let chargeTestCmdRet = {"id": 99, "operate_name":"charge", "operate_data":10, "c
 import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable} from "rxjs";
-import {CashboxTask, CashboxTaskRet, CashboxLog, TimeVars, TIMEVARS} from "../../paymethod/paycash/paycash.service";
+import {CashboxTask, CashboxTaskRet, CashboxLog, TimeVars} from "../../paymethod/paycash/paycash.service";
 import {HttpUtils} from "../../common/http-util";
 import { Environment as env} from "../../environments/environment"
 
@@ -17,12 +17,13 @@ export class ChargeChangeService{
     this.httpUtils = new HttpUtils(http);
   }
   getTimeVars(){
+    if(env.isDev) return Observable.of(env.paycashTimeVar)
     return this.http.get(env.confUrlPrefix+"confname=chargechange-timevars").map(x=>x.json())
         // .filter(x=>x.length>0)
         // .timeout(timeoutSet, "chargechange.getTimeVars" + timeoutTip)
         .map(x=>{
           return JSON.parse(x[0].conf_value) as TimeVars}).map(x=>{if(x == undefined) Observable.throw("undefined"); return x})
-        .catch(x=>{return Observable.of(TIMEVARS)});
+        .catch(x=>{return Observable.of(env.paycashTimeVar)});
   }
   sendChargeCmd(deviceUrl:string):Observable<CashboxTaskRet>{
     let ct = new CashboxTask("charge",0);

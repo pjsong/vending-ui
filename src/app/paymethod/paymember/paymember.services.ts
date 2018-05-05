@@ -4,7 +4,7 @@
 // import {MemberInfoUpdateReq, Member} from "../../membercharge/membercharge.services";
 // import {HttpUtils} from "../../common/http-util";
 // import {confUrlPrefix} from "../../home/home.service";
-// import {TimeVars, TIMEVARS} from "../paycash/paycash.service";
+// import {TimeVars} from "../paycash/paycash.service";
 //
 //
 // let MEMBERTEST=[{
@@ -15,14 +15,6 @@
 //   "date_joined": "2017-01-07 14:04:20",
 //   "username": "buyer"}]
 //
-// let MEMBERINFOUPDATE = [
-//   {
-//     "id": 2,
-//     "owner": 1,
-//     "user": 3,
-//     "balance": 98
-//   }
-// ]
 //
 // @Injectable()
 // export class PaymemberService{

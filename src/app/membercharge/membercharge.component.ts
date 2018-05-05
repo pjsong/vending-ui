@@ -4,6 +4,7 @@ import {Subject, Subscription, Observable} from "rxjs";
 import {HomeService} from "../home/home.service";
 import {PaycashService, CashboxLog, CashboxTaskRet, TimeVars} from "../paymethod/paycash/paycash.service";
 import {ConfService} from "../home/conf.service";
+import {Environment as env } from "../environments/environment"
 
 @Component({
   selector: 'membercharge',
@@ -73,28 +74,32 @@ export class MemberCharge implements OnInit{
   }
 
   doTollRet(operateId:number){
+    console.log("doTollRet: waitingCnt" + this.waitingCnt);
     this.intervalSourceSubscription = this.intervalSource$
         .flatMap((x:any)=>this.paycashService.tollLog(this.deviceLogUrl, this.lastLogId,operateId))
         .subscribe(
             (dataRet:CashboxLog)=> {
+              if(env.isDev && this.waitingCnt <= this.timeVars.timeAlertEnd){
+                dataRet =env.CashboxLogTestTerm[0];
+              }
               this.doToll(dataRet);
+
             }
         );
   }
 
   doToll(data:CashboxLog){
-    this.homeService.setPageWaiting("chargeChange->doToll", this.timeVars.timeWithPay);
-    // console.log(data);
+    console.log(data);
     if(data.ret_data > 0){
       this.lastLogId = data.id;
       this.amountCharging += data.ret_data;
       this.miu.balance += data.ret_data;
-    }else if(data.ret_data == 0){
-      this.chargingTipMessage = "充值已成功";
-    }else{
-      this.chargingTipMessage = "充值已终止";
+      this.homeService.setPageWaiting("chargeChange->doToll", this.timeVars.timeWithPay);
+      return;
     }
+    this.chargingTipMessage = data.ret_data == 0 ? "充值已成功":"充值已终止";
   }
+
   firstUnSubscribe(){
     if(this.startChargeRetSubjSubscription)this.startChargeRetSubjSubscription.unsubscribe();
     if(this.currentPayoutAvailableSubscription)this.currentPayoutAvailableSubscription.unsubscribe();
@@ -111,7 +116,7 @@ export class MemberCharge implements OnInit{
     if(waitingCnt > this.timeVars.timeStartAlert){
       if(this.amountCharging>0){
         this.chargingTipMessage = "正在充值...";
-        if(this.cmdDisplay == false)this.cmdDisplay=true;
+        this.cmdDisplay=true;
       }else{
         this.chargingTipMessage = "";
       }

@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Http} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
-import {TimeVars, TIMEVARS, PaycashVars} from "../paymethod/paycash/paycash.service";
+import {TimeVars, PaycashVars} from "../paymethod/paycash/paycash.service";
 import {MainButton, VendingStatus, Conf} from "../home-default-button/default-button.services";
 import {WXPayParams, WXPayTimeVars} from "../paymethod/payweixin/payweixin.service";
 import { Environment as env} from '../environments/environment';
@@ -33,6 +33,7 @@ export class ConfService{
   }
 
   getMemberchargeTimeVars(){
+    if(env.isDev) return Observable.of(env.memberChargeTimeVar)
     const key = "membercharge-timevars";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -40,7 +41,6 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
     return this.http.get(confUrlPrefix+"confname=membercharge-timevars").map(x=>x.json())
         .map(x=>JSON.parse(x[0].conf_value) as TimeVars)
-        // .catch(x=>Observable.of(TIMEVARS))
         .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })}
     return Observable.of(JSON.parse(ret));
@@ -88,6 +88,7 @@ export class ConfService{
     return Observable.of(JSON.parse(ret))
   }
   getPayMemberTimeVars(){
+    if(env.isDev) return Observable.of(env.paymemberTimeVars);
     const key = "payMemberTimeVars";
     let ret = localStorage.getItem(key);
     if(ret == null) {
@@ -238,7 +239,7 @@ export class ConfService{
         .flatMap(confUrlPrefix=>{
       return this.http.get(confUrlPrefix+"confname=paycash-timevars").map(x=>x.json())
           // .timeout(timeoutSet, "getTimeVars" + timeoutTip)
-          .map(x=>JSON.parse(x[0].conf_value) as TimeVars).catch(x=>Observable.of(TIMEVARS))
+          .map(x=>JSON.parse(x[0].conf_value) as TimeVars).catch(x=>Observable.of(env.paycashTimeVar))
           .do(x=>localStorage.setItem(key, JSON.stringify(x)));
     })};
     return Observable.of(JSON.parse(ret));
