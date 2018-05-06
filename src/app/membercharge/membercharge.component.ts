@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MemberChargeService, MemberInfoUpdateReq} from "./membercharge.services";
 import {Subject, Subscription, Observable, interval} from "rxjs";
-import {filter,takeWhile} from "rxjs/operators"
+import {filter,takeWhile,flatMap} from "rxjs/operators"
 import {HomeService} from "../home/home.service";
 import {PaycashService, CashboxLog, CashboxTaskRet, TimeVars} from "../paymethod/paycash/paycash.service";
 import {ConfService} from "../home/conf.service";
@@ -77,7 +77,7 @@ export class MemberCharge implements OnInit{
   doTollRet(operateId:number){
     console.log("doTollRet: waitingCnt" + this.waitingCnt);
     this.intervalSourceSubscription = this.intervalSource$
-        .flatMap((x:any)=>this.paycashService.tollLog(this.deviceLogUrl, this.lastLogId,operateId))
+        .pipe(flatMap((x:any)=>this.paycashService.tollLog(this.deviceLogUrl, this.lastLogId,operateId)))
         .subscribe(
             (dataRet:CashboxLog)=> {
               if(env.isDev && this.waitingCnt <= this.timeVars.timeAlertEnd){

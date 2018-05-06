@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription, Subject, Observable, interval} from "rxjs";
-import {takeWhile} from "rxjs/operators"
+import {takeWhile,flatMap} from "rxjs/operators"
 import {CashboxLog, PaycashService, CashboxTaskRet, TimeVars} from "../../paymethod/paycash/paycash.service";
 import {HomeService} from "../../home/home.service";
 import {ChargeChangeService} from "./chargechange.services";
@@ -83,7 +83,7 @@ export class ChargeChange implements OnInit{
 
   doTollRet(operateId:number){
     this.intervalSourceSubscription = this.intervalSource$
-        .flatMap((x:any)=>this.service.tollLog(this.deviceLogUrl,this.lastLogId, operateId))
+        .pipe(flatMap((x:any)=>this.service.tollLog(this.deviceLogUrl,this.lastLogId, operateId)))
       .subscribe(
         (dataRet:CashboxLog)=> {
           this.doToll(dataRet);

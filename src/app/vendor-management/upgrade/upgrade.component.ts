@@ -55,7 +55,7 @@ export class Upgrade implements OnInit{
   cmdClicked(cmdNum: number){
     if(cmdNum == 0){//upgrade
       this.intervalSourceSubscription = this.intervalSource$
-        .flatMap((x:any)=>{console.log("do operate interval start: " +x);return this.upgradeService.getUpdateMsg(this.pullcodeUrl)})
+        .pipe(flatMap((x:any)=>{console.log("do operate interval start: " +x);return this.upgradeService.getUpdateMsg(this.pullcodeUrl)}))
         .subscribe(
           (dataRet:UpdateMsgRet)=> {
             this.processMsg = (dataRet.return);

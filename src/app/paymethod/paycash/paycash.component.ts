@@ -325,7 +325,7 @@ export class Paycash implements OnInit{
   doOperate(operateId:number){
     console.log("start doOperate: " + operateId);
     this.intervalSourceSubscription = this.intervalSource$
-        .flatMap((x:any)=>{console.log("do operate interval start: " +x);return this.service.tollLog(this.deviceLogUrl,this.lastLogId, operateId)})
+        .pipe(flatMap((x:any)=>{console.log("do operate interval start: " +x);return this.service.tollLog(this.deviceLogUrl,this.lastLogId, operateId)}))
        .subscribe(
        (dataRet:CashboxLog)=> {
          this.doToll(dataRet);

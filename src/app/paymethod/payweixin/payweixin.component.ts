@@ -135,9 +135,9 @@ export class Payweixin implements OnInit{
   startTrx(){
     console.log("startTx started by img element");
     this.intervalSourceSubscription = this.intervalSource$
-      .flatMap((x:any)=>{
+      .pipe(flatMap((x:any)=>{
         console.log("wx toll operate interval start: " +x);
-        return this.paywxservice.toll(this.wxPayPollUrl, this.wxPayParams)})
+        return this.paywxservice.toll(this.wxPayPollUrl, this.wxPayParams)}))
       .subscribe((dataRet:WXPollRet)=> {
           console.log(dataRet.result);
           if(dataRet.result.toUpperCase() == 'SUCCESS'){
