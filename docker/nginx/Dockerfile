@@ -1,4 +1,4 @@
 FROM nginx
-COPY conf /etc/nginx
-COPY html /usr/share/nginx/
+COPY docker/nginx/conf /etc/nginx
+COPY dist /usr/share/nginx/html/
 

@@ -101,9 +101,9 @@ export const environment = {
     ],
     payButtons: 
     [
-      {"id":1, "imgUrl":"https://s1.ax2x.com/2018/05/03/Sb4CA.png","buttonTxt":"现金支付","linkTarget":"../paycash"},
-      {"id":2, "imgUrl":"https://s1.ax2x.com/2018/05/03/SbJ2O.png","buttonTxt":"微信支付","linkTarget":"../payweixin"},
-      {"id":3, "imgUrl":"https://s1.ax2x.com/2018/05/01/SmRlX.png","buttonTxt":"会员支付","linkTarget":"../paymember"},
+      {"id":1, "imgUrl":"assets/img/paymethod/money-icon-58243.png","buttonTxt":"现金支付","linkTarget":"../paycash"},
+      {"id":2, "imgUrl":"assets/img/paymethod/wechat.png","buttonTxt":"微信支付","linkTarget":"../payweixin"},
+      {"id":3, "imgUrl":"assets/img/defaultbutton/membership.png","buttonTxt":"会员支付","linkTarget":"../paymember"},
     ],
     vnedorManagementButton: 
     [

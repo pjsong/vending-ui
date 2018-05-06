@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-docker build -t images-nginx .
-docker run --name images-nginx -d -h images images-nginx
-sudo docker run --name images-nginx -d -v ~/Documents/git/oschina/pics/html:/usr/share/nginx/html -h images --restart unless-stopped images-nginx
+cd ../
+docker build -t pjsong/vending-ui_demo -f docker/nginx/Dockerfile .
+docker run --name vending-ui_demo --rm --network omd-network --ip 172.18.0.200 pjsong/vending-ui_demo
 
-docker cp image-nginx:/etc/nginx/nginx.conf ./conf
-docker cp image-nginx:/etc/nginx/conf.d ./conf
