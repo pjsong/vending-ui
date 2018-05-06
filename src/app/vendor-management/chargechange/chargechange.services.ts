@@ -6,7 +6,7 @@ import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 import {CashboxTask, CashboxTaskRet, CashboxLog, TimeVars} from "../../paymethod/paycash/paycash.service";
 import {HttpUtils} from "../../common/http-util";
-import { Environment as env} from "../../environments/environment"
+import { environment as env} from "../../../environments/environment"
 
 
 @Injectable()

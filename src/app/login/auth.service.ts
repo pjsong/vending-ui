@@ -6,7 +6,7 @@ import {Http, Response} from "@angular/http";
 import {Router} from "@angular/router";
 import {HttpUtils} from "../common/http-util";
 import {ConfService} from "../home/conf.service";
-import {Environment as env} from "../environments/environment"
+import {environment as env} from "../../environments/environment"
 
 let testLoginRet=[{'token':'123456789'}]
 

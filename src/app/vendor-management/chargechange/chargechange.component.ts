@@ -6,7 +6,7 @@ import {HomeService} from "../../home/home.service";
 import {ChargeChangeService} from "./chargechange.services";
 import {ConfService} from "../../home/conf.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
-import {Environment as env } from "../../environments/environment"
+import {environment as env } from "../../../environments/environment"
 
 @Component({
   selector: 'chargechange',

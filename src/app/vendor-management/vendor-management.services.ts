@@ -4,7 +4,7 @@ import {map,flatMap, filter} from "rxjs/operators";
 import {Http, Response} from "@angular/http";
 import {HttpUtils} from "../common/http-util";
 import {MainButton} from "../home-default-button/default-button.services";
-import { Environment as env} from "../environments/environment"
+import { environment as env} from "../../environments/environment"
 
 export class AdminLoginRet{
   detail: string;

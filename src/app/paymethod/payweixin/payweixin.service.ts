@@ -5,7 +5,7 @@ import {HttpUtils} from "../../common/http-util";
 import {Observable,of} from "rxjs";
 import {map,flatMap,filter} from "rxjs/operators"
 import * as CryptoJS from "crypto-js";
-import {Environment as env} from "../../environments/environment";
+import {environment as env} from "../../../environments/environment";
 
 export class VendingConf{
   slug:string;sec:string;vm_type:number;charger:number;product_category:number[];

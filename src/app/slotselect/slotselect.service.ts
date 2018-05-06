@@ -4,7 +4,7 @@ import { Observable, of} from 'rxjs';
 import {map,flatMap} from "rxjs/operators"
 import {Http, Response} from "@angular/http";
 import {Observer} from "rxjs";
-import {Environment as env} from "../environments/environment"
+import {environment as env} from "../../environments/environment"
 
 export class ProductOrder{
   slotStatus: SlotStatus;

@@ -6,7 +6,7 @@ import {map, flatMap,catchError} from "rxjs/operators"
 import {CashboxTaskRet} from "./paycash/paycash.service";
 import {MainButton} from "../home-default-button/default-button.service";
 import {HttpUtils} from "../common/http-util";
-import {Environment as env} from "../environments/environment"
+import {environment as env} from "../../environments/environment"
 
 let OrderTaskTestRet = {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100};
 

@@ -4,7 +4,7 @@ import { Subject, Observable, Subscription, of } from "rxjs";
 import {map, filter, catchError} from 'rxjs/operators'
 import { HttpUtils } from "../common/http-util";
 import { TimeVars, CashboxTaskRet, CashboxTask } from "../paymethod/paycash/paycash.service";
-import { Environment as env } from '../environments/environment';
+import { environment as env } from '../../environments/environment';
 
 export class Member {
   "id": number;

@@ -6,7 +6,7 @@ import {Observable, of, Subject} from "rxjs";
 import {map, filter, timeoutWith,retryWhen,catchError} from 'rxjs/operators'
 import {HomeService} from "../home/home.service";
 import {ConfService} from "../home/conf.service";
-import { Environment as env} from '../environments/environment';
+import { environment as env} from '../../environments/environment';
 
 @Component({
   selector: 'default-button',

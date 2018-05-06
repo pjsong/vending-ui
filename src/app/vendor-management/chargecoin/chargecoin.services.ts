@@ -4,7 +4,7 @@ import {Observable, of} from "rxjs";
 import {map,flatMap} from "rxjs/operators";
 import {HttpUtils} from "../../common/http-util";
 import {ConfService} from "../../home/conf.service";
-import { Environment as env} from "../../environments/environment"
+import { environment as env} from "../../../environments/environment"
 
 export class ChargeCoinReq{
   "amount_before": number;

@@ -3,7 +3,7 @@ import {HomeService} from "../../home/home.service";
 import {ConfService} from "../../home/conf.service";
 import {UpgradeService, VersionAPIRet, UpdateMsgRet} from "./upgrade.service";
 import {Observable, Subscription, interval} from "rxjs";
-
+import {flatMap} from "rxjs/operators"
 
 @Component({
   selector: 'upgrade',
@@ -19,10 +19,11 @@ export class Upgrade implements OnInit{
   shutdownUrl: string;
   rebootUrl: string;
   processMsg: string;
-
-  // uiVersion: string;
-  // deviceVersion: string;
-  // dataVersion: string;
+  cmdDisplay:boolean = true;
+  retDisabled:boolean = false;
+  uiVersion: string;
+  deviceVersion: string;
+  dataVersion: string;
 
   intervalSource$:any;
   intervalSourceSubscription: Subscription;
@@ -32,12 +33,13 @@ export class Upgrade implements OnInit{
 
   ngOnInit(){
     this.homeService.setPageWaiting('chargeChange->ngOnInit', 60);
-    // this.confService.getVersionUrl().flatMap(versionUrl=>this.upgradeService.getVersion(versionUrl))
-    //   .subscribe((versionAPIRet: VersionAPIRet)=>{
-    //   this.uiVersion = versionAPIRet.vendingui;
-    //   this.deviceVersion = versionAPIRet.omddevice;
-    //   this.dataVersion = versionAPIRet.omddata;
-    // });
+    this.confService.getVersionUrl().pipe(
+      flatMap(versionUrl=>this.upgradeService.getVersion(versionUrl)))
+      .subscribe((versionAPIRet: VersionAPIRet)=>{
+      this.uiVersion = versionAPIRet.vendingui;
+      this.deviceVersion = versionAPIRet.omddevice;
+      this.dataVersion = versionAPIRet.omddata;
+    });
     this.confService.getPullcodeUrl().subscribe(pullcodeUrl=>this.pullcodeUrl = pullcodeUrl);
     this.confService.getShutdownUrl().subscribe(sdUrl=>this.shutdownUrl = sdUrl);
     this.confService.getRebootUrl().subscribe(sdUrl=>this.rebootUrl = sdUrl);

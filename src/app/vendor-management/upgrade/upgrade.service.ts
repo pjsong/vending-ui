@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 
 import {Http, } from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
+import { environment as env} from '../../../environments/environment';
 
 export class VersionAPIRet{
   pics:string;
@@ -25,6 +26,7 @@ export class UpgradeService {
   }
 
   getVersion(versionUrl:string): Observable<VersionAPIRet>{
+    if(env.isDev) return of(env.versionRet);
     return this.http.get(versionUrl).pipe(map(x=>x.json() as VersionAPIRet))
   }
 

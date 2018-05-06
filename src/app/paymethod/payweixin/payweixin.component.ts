@@ -9,7 +9,7 @@ import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
 import {PayweixinService, VendingConf, WXPollRet, WXPayParams} from "./payweixin.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
-import {Environment as env} from "../../environments/environment"
+import {environment as env} from "../../../environments/environment"
 
 @Component({
   selector: 'payweixin',

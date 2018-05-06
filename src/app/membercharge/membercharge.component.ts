@@ -5,7 +5,7 @@ import {filter,takeWhile} from "rxjs/operators"
 import {HomeService} from "../home/home.service";
 import {PaycashService, CashboxLog, CashboxTaskRet, TimeVars} from "../paymethod/paycash/paycash.service";
 import {ConfService} from "../home/conf.service";
-import {Environment as env } from "../environments/environment"
+import {environment as env } from "../../environments/environment"
 
 @Component({
   selector: 'membercharge',

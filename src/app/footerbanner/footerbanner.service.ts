@@ -4,7 +4,7 @@ import {Observable, of, Subject} from "rxjs";
 import {map, filter} from 'rxjs/operators'
 import {HttpUtils} from "../common/http-util";
 import {Member} from "../membercharge/membercharge.services";
-import { Environment as env} from '../environments/environment';
+import { environment as env} from '../../environments/environment';
 
 let MEMBERTEST=[{
   "id": 2,

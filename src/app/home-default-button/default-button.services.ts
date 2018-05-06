@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable, of, Subject} from "rxjs";
 import {map, filter} from 'rxjs/operators'
-import { Environment as env} from '../environments/environment';
+import { environment as env} from '../../environments/environment';
 
 export class MainButton{
   // public id: number; public imgUrl: string; public buttonTxt: string; public linkTarget: string;

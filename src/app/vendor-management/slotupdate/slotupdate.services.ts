@@ -3,7 +3,7 @@ import {Http, Response} from "@angular/http";
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import {map, filter} from 'rxjs/operators'
 import {HttpUtils} from "../../common/http-util";
-import {Environment as env} from "../../environments/environment"
+import {environment as env} from "../../../environments/environment"
 
 export class SlotUpdateReq{
   "slot_no": string;

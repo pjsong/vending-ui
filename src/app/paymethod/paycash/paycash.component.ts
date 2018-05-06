@@ -12,7 +12,7 @@ import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupda
 import {ConfService} from "../../home/conf.service";
 import {Cart} from "../../slotselect/slotselect.service";
 import {VendingStatus} from "../../home-default-button/default-button.services";
-import {Environment as env} from "../../environments/environment"
+import {environment as env} from "../../../environments/environment"
 
 const only20DownSupport = 20;
 const only50DownSupport = 50;

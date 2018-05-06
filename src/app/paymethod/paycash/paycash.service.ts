@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import {map, flatMap,tap,filter,catchError} from "rxjs/operators"
 import {Http, Response} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
-import {Environment as env} from "../../environments/environment"
+import {environment as env} from "../../../environments/environment"
 
 export class OrderTaskSendRet{
 id:number;input: number;output_desc: Array<Array<string>>;create_time:string;

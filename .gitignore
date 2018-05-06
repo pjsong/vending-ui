@@ -61,4 +61,3 @@ _temp
 !typings/typings.d.ts
 !wallaby.js
 typings/
-package-lock.json

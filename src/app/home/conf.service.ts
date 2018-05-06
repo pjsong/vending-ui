@@ -6,7 +6,7 @@ import { HttpUtils } from "../common/http-util";
 import { TimeVars, PaycashVars } from "../paymethod/paycash/paycash.service";
 import { MainButton, VendingStatus, Conf } from "../home-default-button/default-button.services";
 import { WXPayParams, WXPayTimeVars } from "../paymethod/payweixin/payweixin.service";
-import { Environment as env } from '../environments/environment';
+import { environment as env } from '../../environments/environment';
 
 @Injectable()
 export class ConfService {
@@ -462,6 +462,7 @@ export class ConfService {
         return of(JSON.parse(ret));
     }
     getVersionUrl() {
+        if(env.isDev) return of(env.versionUrl);
         const key = "versionUrl";
         let ret = localStorage.getItem(key);
         if (ret == null) {
