@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import { Observable, of} from 'rxjs';
+import {map,flatMap} from "rxjs/operators"
 import {Http, Response} from "@angular/http";
 import {Observer} from "rxjs";
 import {Environment as env} from "../environments/environment"
@@ -85,33 +83,25 @@ export class SlotSelectService {
 
   slotselect(slotStatusUrl:string, slotNo: number): Observable<SlotStatus> {
     if(env.isDev){
-      return Observable.of(env.slotStatusTest[slotNo-1] as SlotStatus)
+      return of(env.slotStatusTest[slotNo-1] as SlotStatus)
     }
     let reqStr = slotStatusUrl + '?format=json&slotNo=' + slotNo;
     console.log(reqStr);
     return this.http.get(reqStr)
-      .map((res:Response)=>{console.log(res.json);return res.json() as SlotStatus[];})
-      .map((slotstatus: SlotStatus[])=>{console.log(JSON.stringify(slotstatus));return slotstatus[0]})
-      // .timeout(timeoutSet, "slotselect "+timeoutTip)
-        .catch((err:any)=>{
-            return this.handleError(err);
-        // return Observable.of(slotStatusTest[slotNo-1] as SlotStatus).catch(error=>this.handleError(error))
-          }
+      .pipe(map((res:Response)=>{console.log(res.json);return res.json() as SlotStatus[];}),
+      map((slotstatus: SlotStatus[])=>{console.log(JSON.stringify(slotstatus));return slotstatus[0]})
       )
   }
 
   getSlotProduct(slotUrl: string, slotNo: number): Observable<Slot>{
     if(env.isDev){
       console.log(slotNo);
-      return Observable.of(env.slotProduct[slotNo-1] as Slot);
+      return of(env.slotProduct[slotNo-1] as Slot);
     }
     let reqStr = slotUrl + slotNo+'/?format=json';
     console.log(reqStr);
     return this.http.get(reqStr)
-      .map((res:Response)=>res.json() as Slot)
-      .catch((err:any)=>{
-          return this.handleError(err);
-        }
+      .pipe(map((res:Response)=>res.json() as Slot)
       );
   }
 

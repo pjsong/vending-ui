@@ -126,7 +126,7 @@ export const Environment = {
 
     paycashTimeVar: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
 "timeJumpToFinish":5,"queryInterval":2000},
-    orderTaskTestRet: {"user":1, "slot":9, "product":1,"itemCount":2, "payType":0, "status":2, "totalPaid": 29,"changeLeft": 100},
+    orderTaskTestRet: {"controlboard_input_id": 1,"user":1, "slot":9, "product":1,"item_count":2, "pay_type":0, "status":2, "total_paid": 29,"changeLeft": 100},
     memberChargeTimeVar: {"timeWithPay":60,"timeWithoutPay":50,"timeStartAlert":30,"timeAlertEnd":15,
     "timeJumpToFinish":5,"queryInterval":2000},
     memberInfoUpdate: {

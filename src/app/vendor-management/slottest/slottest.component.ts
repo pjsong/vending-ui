@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SlotTestService, SlotTestReq, SlotTestRet, SlotQueryRet} from "./slottest.services";
 import {HomeService} from "../../home/home.service";
-import {Subscription, Subject, Observable} from "rxjs";
+import {Subscription, Subject, Observable, interval} from "rxjs";
+import {flatMap,map,filter} from "rxjs/operators"
 import {ConfService} from "../../home/conf.service";
 
 const queryInterval = 2000;
@@ -36,7 +37,7 @@ export class SlotTest implements OnInit{
   cmdStart:string =  "开始货道测试";
   cmdStop:string = this.cmdStart;
 
-  intervalSource$ = Observable.interval(queryInterval);//.takeWhile(val => this.waitingCnt > timeJumpToFinish);
+  intervalSource$ = interval(queryInterval);//.takeWhile(val => this.waitingCnt > timeJumpToFinish);
 
   testRetSubj:Subject<number> = new Subject<number>();
   finishTestSubj:Subject<number> = new Subject<number>();
@@ -65,11 +66,12 @@ export class SlotTest implements OnInit{
 
   }
   doCheckRet(inputId:number){
-    this.intervalSourceSubscription = this.intervalSource$.flatMap((x)=>this.slotTestService.slotTestQuery(this.deviceUrl, inputId))
-      .filter((data)=>data.length > 0)
-      .filter((data)=>data[0] != undefined)
-      .filter(data=>data[0] != null)
-      .map((data)=>data.slice(0,1))
+    this.intervalSourceSubscription = this.intervalSource$
+    .pipe(flatMap((x)=>this.slotTestService.slotTestQuery(this.deviceUrl, inputId))
+      ,filter((data)=>data.length > 0)
+      ,filter((data)=>data[0] != undefined)
+      ,filter(data=>data[0] != null)
+      ,map((data)=>data.slice(0,1)))
       .subscribe(
         (dataRet:SlotQueryRet[])=> {
           let outputdesc:string = dataRet[0].output_desc.replace(/'/g,'"');
@@ -125,7 +127,8 @@ export class SlotTest implements OnInit{
       this.finishedWithError = "";
       let su:SlotTestReq = new SlotTestReq();
       su.slot_no = this.slotNo;su.turn_cnt = this.turnCnt;
-      this.startTestTaskSubscription = this.slotTestService.slotTest(this.deviceUrl, su).catch(e=>this.finishedWithError=e).subscribe((data:SlotTestRet)=> {
+      this.startTestTaskSubscription = this.slotTestService.slotTest(this.deviceUrl, su)
+      .subscribe((data:SlotTestRet)=> {
         if (data == undefined) {
           this.finishedWithError = "货道无效";
         } else {

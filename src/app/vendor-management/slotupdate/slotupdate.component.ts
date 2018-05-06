@@ -94,7 +94,6 @@ export class SlotUpdate implements OnInit{
       localStorage.removeItem("token");
     }else{
       this.slotselectService.slotselect(this.slotStatusUrl, +this.slotNo)
-        .catch((err:any)=>{return this.doLog(null)})
         .subscribe(
         (slotStatus: SlotStatus)=>{
           this.doLog(slotStatus);

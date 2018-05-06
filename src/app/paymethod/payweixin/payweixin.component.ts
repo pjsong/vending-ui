@@ -3,7 +3,8 @@ import {HomeService} from "../../home/home.service";
 import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.service";
 import {TimeVars, PaycashService} from "../paycash/paycash.service";
 import {ConfService} from "../../home/conf.service";
-import {Observable, Subscription, Subject} from "rxjs";
+import {Observable, Subscription, Subject, of, interval, from} from "rxjs";
+import {map,flatMap,filter,tap,takeWhile,timeoutWith,catchError} from "rxjs/operators"
 import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
 import {PayweixinService, VendingConf, WXPollRet, WXPayParams} from "./payweixin.service";
@@ -63,14 +64,15 @@ export class Payweixin implements OnInit{
       this.retAddress = "paymethod";
       return;
     }
-    this.confService.getPaywxTimeVars().do((timevar:any)=>this.timeVars = timevar).subscribe((timevar:any)=>{
+    this.confService.getPaywxTimeVars()
+    .pipe(tap((timevar:any)=>this.timeVars = timevar)).subscribe((timevar:any)=>{
       this.homeService.setPageWaiting('paywx', this.timeVars.timeWithoutPay);
-      this.confService.getControlBoardUrl().do((x:any)=>this.controlboardLogUrl=x).subscribe((x:any)=>console.log(this.controlboardLogUrl));
-      this.confService.getOrdermainUrl().do((x:any)=>this.orderMainUrl=x).subscribe((x:any)=>console.log(this.orderMainUrl));
-      this.confService.getSlotStatusUrl().do((x:any)=>this.slotStatusUrl=x).subscribe((x:any)=>console.log(this.slotStatusUrl));
+      this.confService.getControlBoardUrl().pipe(tap((x:any)=>this.controlboardLogUrl=x)).subscribe((x:any)=>console.log(this.controlboardLogUrl));
+      this.confService.getOrdermainUrl().pipe(tap((x:any)=>this.orderMainUrl=x)).subscribe((x:any)=>console.log(this.orderMainUrl));
+      this.confService.getSlotStatusUrl().pipe(tap((x:any)=>this.slotStatusUrl=x)).subscribe((x:any)=>console.log(this.slotStatusUrl));
       
-      this.intervalSource$ = Observable.interval(this.timeVars.queryInterval).takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish);
-      this.timeCounterSubs = this.homeService.waitingCnt$.do(x=>this.waitingCnt = x).subscribe(wc=>{
+      this.intervalSource$ = interval(this.timeVars.queryInterval).pipe(takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish));
+      this.timeCounterSubs = this.homeService.waitingCnt$.pipe(tap(x=>this.waitingCnt = x)).subscribe(wc=>{
         if(!this.countdownSubjSubscription){
           console.log("this.countdownSubjSubscription registing")
           this.countdownSubjSubscription = this.countdownSubj.asObservable().subscribe((waitingCnt=>this.getMessage(waitingCnt)));
@@ -95,7 +97,7 @@ export class Payweixin implements OnInit{
         return orderTask;
       });
 
-      this.confService.getVendingConfUrl().do((vendingConfUrl:string)=>this.vendingConfUrl=vendingConfUrl).subscribe(vendingConfUrl=>{
+      this.confService.getVendingConfUrl().pipe(tap((vendingConfUrl:string)=>this.vendingConfUrl=vendingConfUrl)).subscribe(vendingConfUrl=>{
         console.log("getVendingConfUrl() " + vendingConfUrl);
         this.paywxservice.getVendingConf(vendingConfUrl).subscribe(
           (vendingconf:VendingConf)=>{
@@ -115,15 +117,16 @@ export class Payweixin implements OnInit{
   }
 
   ngOnInit(){
-    this.confService.initWXPayConnection().timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
-      .catch(err=>{
-        if(err.name == 'TimeoutError'){
-          this.timeoutMsg = '网络超时';
-        }else{
-          console.log('initWXPayConnection err:' + err.name);this.timeoutMsg = '网络连接异常';
-        }
-        this.homeService.setPageWaiting('paymethod->ngOninit->initWXPayConnection', 5);
-        return Observable.throw(err);})
+    this.confService.initWXPayConnection()
+    .pipe(timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
+    , catchError(err=>{
+      if(err.name == 'TimeoutError'){
+        this.timeoutMsg = '网络超时';
+      }else{
+        console.log('initWXPayConnection err:' + err.name);this.timeoutMsg = '网络连接异常';
+      }
+      this.homeService.setPageWaiting('paymethod->ngOninit->initWXPayConnection', 5);
+      return Observable.throw(err);}))
       .subscribe((x)=>{
       this.doWhenOnline();
       })
@@ -192,7 +195,7 @@ export class Payweixin implements OnInit{
 
   sendOrder(){
     let productOrders = (JSON.parse(localStorage.getItem("cart")) as Cart).productOrders;
-    Observable.from(productOrders).flatMap(productOrder=>{
+    from(productOrders).pipe(flatMap(productOrder=>{
       let su:SlotUpdateReq = new SlotUpdateReq();
       let slotStatus = productOrder.slotStatus;
       su.slot_no = slotStatus.slot_no;
@@ -201,7 +204,7 @@ export class Payweixin implements OnInit{
       su.current_item_num = slotStatus.current_item_num - productOrder.itemCnt;
       su.running_status="1";
       return this.slotUpdateService.slotCreate(this.slotStatusUrl, su);
-    }).subscribe(x=>console.log("slotUpdateReturned: " + x));
+    })).subscribe(x=>console.log("slotUpdateReturned: " + x));
 
     let sendTaskSub:Subject<number> = new Subject<number>();
 
@@ -210,14 +213,13 @@ export class Payweixin implements OnInit{
         let orderTask = this.buyTask.orderTasks[indexOfOrderTask];
         console.log("indexOfOrderTask: " + indexOfOrderTask + '\norderTask' + JSON.stringify(orderTask));
         this.paymethodService.sendOrder(this.orderMainUrl, orderTask)
-          .map((orderTaskRet:OrderTaskRet)=>orderTaskRet.controlboard_input_id)
           .subscribe(
             controlboardInputId=>{
               console.log("now querying controlboardInputId: "+ controlboardInputId);
-              let orderIntervalSource$ = Observable.interval(this.timeVars.queryInterval)
-                .takeWhile(val=> this.transactionStatus == "paid")
-                .flatMap(x=>{
-                  return this.paycashservice.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)})
+              let orderIntervalSource$ = interval(this.timeVars.queryInterval)
+                .pipe(takeWhile(val=> this.transactionStatus == "paid"),
+                flatMap(x=>{
+                  return this.paycashservice.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)}))
                 .subscribe((dataRet:any)=> {
                   orderIntervalSource$.unsubscribe();
                   console.log("this.buyTask.orderTasks.length"+this.buyTask.orderTasks.length + "?=" + indexOfOrderTask);

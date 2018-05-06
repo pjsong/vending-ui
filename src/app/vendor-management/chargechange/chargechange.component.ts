@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Subscription, Subject, Observable} from "rxjs";
+import {Subscription, Subject, Observable, interval} from "rxjs";
+import {takeWhile} from "rxjs/operators"
 import {CashboxLog, PaycashService, CashboxTaskRet, TimeVars} from "../../paymethod/paycash/paycash.service";
 import {HomeService} from "../../home/home.service";
 import {ChargeChangeService} from "./chargechange.services";
@@ -72,8 +73,8 @@ export class ChargeChange implements OnInit{
       console.log(x);
       this.timeVars = x;
       this.homeService.setPageWaiting('chargeChange->ngOnInit', this.timeVars.timeWithoutPay);
-      this.intervalSource$ = Observable.interval(this.timeVars.queryInterval)
-          .takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish)
+      this.intervalSource$ = interval(this.timeVars.queryInterval)
+          .pipe(takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish))
           // .takeWhile(val => this.amountCharging+this.amountBefore<300);
       this.countdownSubjSubscription = this.countdownSubj.asObservable().subscribe((waitingCnt=>this.doWaitingCnt(waitingCnt)));
       this.startChargeRetSubjSubscription = this.startChargeRetSubj.asObservable().subscribe((operateId)=>this.doTollRet(operateId));

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import { Observable} from "rxjs";
+import {Observable, of, Subject} from "rxjs";
+import {map, filter} from 'rxjs/operators'
 import {HttpUtils} from "../common/http-util";
 import {Member} from "../membercharge/membercharge.services";
 import { Environment as env} from '../environments/environment';
@@ -27,14 +28,14 @@ export class FooterBannerService{
   }
 
   getManagerInfo(memberUrl:string){
-    if(env.isDev) return Observable.of(env.MANAGER_TEST[0]);
+    if(env.isDev) return of(env.MANAGER_TEST[0]);
 
     console.log("footbanner memberUrl" + memberUrl);
     return this.http.get(memberUrl+"?format=json&isManager")
       // .timeout(timeoutSet, "getManagerInfo" + timeoutTip)
       // .filter((x:any)=>x!=undefined && x.length==1)
-      .map((res:Response)=>res.json() as Member[])
-      .map(x=>x[0] as Member);
-      // .catch(x=>Observable.of(MEMBERTEST[0]));
+      .pipe(map((res:Response)=>res.json() as Member[]),
+      map(x=>x[0] as Member));
+      // .catch(x=>ofMEMBERTEST[0]));
   }
 }

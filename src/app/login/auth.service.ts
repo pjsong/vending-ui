@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import {Observable, of, Subject} from "rxjs";
+import {map, filter} from 'rxjs/operators'
 import {Http, Response} from "@angular/http";
 import {Router} from "@angular/router";
-import {Subject} from "rxjs";
 import {HttpUtils} from "../common/http-util";
 import {ConfService} from "../home/conf.service";
 import {Environment as env} from "../environments/environment"

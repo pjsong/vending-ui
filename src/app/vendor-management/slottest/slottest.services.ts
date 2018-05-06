@@ -1,7 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
 import {HttpUtils} from "../../common/http-util";
 
 export class SlotTestReq{
@@ -47,21 +48,14 @@ export class SlotTestService{
 
   slotTest(deviceUrl:string, su: SlotTestReq): Observable<SlotTestRet>{
     console.log(su);
-    return new HttpUtils(this.http).POST<SlotTestRet>(deviceUrl+"testrun/?format=json", su).catch(error=>Observable.of(SLOTTEST)
-      .catch(this.handleError));
+    return new HttpUtils(this.http).POST<SlotTestRet>(deviceUrl+"testrun/?format=json", su);
   }
 
-  // http://127.0.0.1:8000/api/data/controlboard/outputlist/?inputId=53
-  // slotTestQueryTest(inputId:number):Observable<SlotQueryRet[]>{
-  //   let testData:Observable<SlotQueryRet[]> = Observable.create((subscriber:any)=>{subscriber.next(SLOTTESTQUERYRET)});
-  //   return testData;
-  // }
 
   slotTestQuery(deviceUrl:string, inputId:number): Observable<SlotQueryRet[]>{
     let urlAddr =  deviceUrl + 'outputlist/?inputId='+inputId+"&format=json";
     return this.http.get(urlAddr)
-      .map((res:Response)=>res.json() as SlotQueryRet[] || {}).catch(error=>Observable.of(SLOTTESTQUERYRET)
-      .catch(this.handleError));
+      .pipe(map((res:Response)=>res.json() as SlotQueryRet[]));
   }
 
   private handleError(error: Response | any){

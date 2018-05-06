@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from "../../home/home.service";
 import {ConfService} from "../../home/conf.service";
 import {UpgradeService, VersionAPIRet, UpdateMsgRet} from "./upgrade.service";
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subscription, interval} from "rxjs";
 
 
 @Component({
@@ -42,7 +42,7 @@ export class Upgrade implements OnInit{
     this.confService.getShutdownUrl().subscribe(sdUrl=>this.shutdownUrl = sdUrl);
     this.confService.getRebootUrl().subscribe(sdUrl=>this.rebootUrl = sdUrl);
 
-    this.intervalSource$ = Observable.interval(2000);
+    this.intervalSource$ = interval(2000);
   }
 
   onCmdClicked(cmdNum: string){

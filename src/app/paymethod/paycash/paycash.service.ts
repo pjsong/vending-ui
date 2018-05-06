@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
+import { Observable, of } from 'rxjs';
+import {map, flatMap,tap,filter,catchError} from "rxjs/operators"
 import {Http, Response} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
 import {Environment as env} from "../../environments/environment"
@@ -63,7 +61,7 @@ export class PaycashService {
 
 
   sendCurrentPayoutAvailable(deviceUrl:string): Observable<CashboxTaskRet>{
-    if(env.isDev) return Observable.of(env.currentPayoutAvailableCmdTest);
+    if(env.isDev) return of(env.currentPayoutAvailableCmdTest);
     let ct = new CashboxTask("currentPayoutAvailable",0);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "sendCurrentPayoutAvailable" + timeoutTip+", "+deviceUrl);
@@ -71,56 +69,59 @@ export class PaycashService {
 
 
   getCurrentPayoutAvailable(deviceLogUrl:string): Observable<CashboxLog[]>{
-    if(env.isDev) return Observable.of(env.ctCurrentPayoutAvailable);
+    if(env.isDev) return of(env.ctCurrentPayoutAvailable);
     let urlAddr =  deviceLogUrl+"&operateName=currentPayoutAvailable&limit=1";
     return this.http.get(urlAddr)
-      .map((res:Response)=>res.json() as CashboxLog[])
+      .pipe(map((res:Response)=>res.json() as CashboxLog[]))
         // .timeout(timeoutSetCashbox, "getCurrentPayoutAvailable" + timeoutTip);
-        // .catch(x=>{return Observable.of(ctCurrentPayoutAvailable)
+        // .catch(x=>{return ofctCurrentPayoutAvailable)
         // .catch(this.handleError)});
   }
 
 
   toll(deviceUrl:string, tollAmount: number):Observable<CashboxTaskRet>{
-    if(env.isDev) return Observable.of(env.tollTestCmdRet)
+    if(env.isDev) return of(env.tollTestCmdRet)
     let ct = new CashboxTask("toll",tollAmount);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "toll" + timeoutTip)
-        // .catch(x=>Observable.of(tollTestCmdRet));
+        // .catch(x=>oftollTestCmdRet));
   }
 
 
   tollLog(deviceLogUrl:string, lastLogId:number, operateId:number):Observable<CashboxLog>{
     let urlAddr =  deviceLogUrl+"&operate="+operateId;
-    if(env.isDev) return Observable.of(env.CashboxLogTest1[0]);
+    if(env.isDev) return of(env.CashboxLogTest1[0]);
     return this.http.get(urlAddr)
-      .map((res:Response)=>res.json() as CashboxLog[]).do(x=>console.log("toll return: " + x))
+      .pipe(map((res:Response)=>res.json() as CashboxLog[]),
+      tap(x=>console.log("toll return: " + x)),
       // .timeout(timeoutSetCashbox, "tollLog" + timeoutTip)
-        .filter((data:any)=>data.length > 0)
-        .map(data=>data[0])
-        .filter(data=>data != undefined)
-        .filter((data:any)=>data.ret_data>0)
-        .filter((data:any)=>data.operate_status != "terminated")
-        .filter(((data:any)=> data.id != lastLogId))
-        // .catch(x=>Observable.of(CashboxLogTest1[0])
-      .catch(this.handleError);
+        filter((data:any)=>data.length > 0),
+        map(data=>data[0]),
+        filter(data=>data != undefined),
+        filter((data:any)=>data.ret_data>0),
+        filter((data:any)=>data.operate_status != "terminated"),
+        filter(((data:any)=> data.id != lastLogId)),
+        // .catch(x=>ofCashboxLogTest1[0])
+      catchError(this.handleError));
   }
 
   orderTaskSendLog(controlboardLogUrl:string, controlboardInputId:number){
-    if(env.isDev) return Observable.of(env.orderTaskTestRet);
+    if(env.isDev) return of(env.orderTaskTestRet);
     let urlAddr = controlboardLogUrl+"outputlist/?format=json&inputId="+controlboardInputId
-    return this.http.get(urlAddr).map((res:Response)=>res.json() as OrderTaskSendRet[]).filter(data=>data.length>0)
-      .map(data=>data[0].output_desc[0])
-      .filter(data=>data.length>0)
-      .catch(this.handleError);
+    return this.http.get(urlAddr).pipe(
+      map((res:Response)=>res.json() as OrderTaskSendRet[]),
+      filter(data=>data.length>0),
+      map(data=>data[0].output_desc[0]),
+      filter(data=>data.length>0),
+      catchError(this.handleError));
   }
 
   terminate(deviceUrl:string):Observable<CashboxTaskRet>{
     let ct = new CashboxTask("terminate",0);
-    if(env.isDev) return Observable.of(env.terminateTestCmdRet);
+    if(env.isDev) return of(env.terminateTestCmdRet);
     return this.httpUtils.POST<CashboxTaskRet>(deviceUrl, ct);
         // .timeout(timeoutSetCashbox, "terminate" + timeoutTip)
-        // .catch(x=>Observable.of(terminateTestCmdRet));
+        // .catch(x=>ofterminateTestCmdRet));
   }
 
 

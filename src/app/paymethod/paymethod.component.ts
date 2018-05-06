@@ -9,7 +9,8 @@ import {HomeService} from "../home/home.service";
 import {SlotStatus, Cart, ProductOrder} from "../slotselect/slotselect.service";
 import {MainButton} from "../home-default-button/default-button.services";
 import {ConfService} from "../home/conf.service";
-import {Observable} from "rxjs";
+import {Observable, from} from "rxjs";
+import {tap, flatMap,map,timeoutWith,catchError} from "rxjs/operators"
 
 
 @Component({
@@ -39,8 +40,8 @@ export class Paymethod implements OnInit{
   doWhenOnline(){
     this.service.getPayButton().subscribe(x=> this.mainButtons = x);
     let cart = JSON.parse(localStorage.getItem("cart")) as Cart;
-    this.service.getProductUrl().do(x=>this.productUrl=x).subscribe(x=>{
-        Observable.from(cart.productOrders).flatMap(productOrder=>{return this.productRetrive(productOrder)})
+    this.service.getProductUrl().pipe(tap(x=>this.productUrl=x)).subscribe(x=>{
+        from(cart.productOrders).pipe(flatMap(productOrder=>{return this.productRetrive(productOrder)}))
           .subscribe(
             (orderTask:OrderTask)=>{
               this.needToPayAmount += orderTask.total_paid;
@@ -65,15 +66,15 @@ export class Paymethod implements OnInit{
       this.homeService.setPageWaiting('paymethod->ngOnInit', this.defaultWaiting);
     });
     this.service.getOrdermainUrl().subscribe(x=>this.ordermainUrl=x);
-    this.service.initWXPayConnection().timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
-      .catch(err=>{
+    this.service.initWXPayConnection().pipe(timeoutWith(2000, Observable.throw(new Error('TimeoutError'))))
+      .pipe(catchError(err=>{
         if(err.name == 'TimeoutError'){
           this.timeoutMsg = '网络超时';
         }else{
           console.log('initWXPayConnection err:' + err.name);this.timeoutMsg = '网络连接异常';
         }
         this.homeService.setPageWaiting('paymethod->ngOninit->initWXPayConnection', 5);
-        return Observable.throw(err);})
+        return Observable.throw(err);}))
       .subscribe(x=>{
         this.doWhenOnline();
       });
@@ -82,7 +83,7 @@ export class Paymethod implements OnInit{
   productRetrive(productOrder:ProductOrder){
     let slotStatus = productOrder.slotStatus;
     let productId = productOrder.product;
-    return this.paymethodService.getProductPrice(this.productUrl, productId).map(
+    return this.paymethodService.getProductPrice(this.productUrl, productId).pipe(map(
       (data:Product)=>{
         let itemCount = Number(productOrder.itemCnt)
         let orderTask:OrderTask = new OrderTask();
@@ -94,6 +95,6 @@ export class Paymethod implements OnInit{
         orderTask.total_paid = data.sale_unit_price*itemCount;
         return orderTask;
       },
-      (error:any)=>{this.needToPay = error});
+      (error:any)=>{this.needToPay = error}));
   }
 }

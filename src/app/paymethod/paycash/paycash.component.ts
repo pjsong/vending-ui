@@ -4,7 +4,8 @@ import {
   PaycashVars, TimeVars
 } from "./paycash.service";
 import {HomeService} from "../../home/home.service";
-import {Observable, Subscription, Subject} from "rxjs";
+import {Observable, Subscription, Subject,interval,from} from "rxjs";
+import {map, flatMap,filter,tap,takeWhile} from 'rxjs/operators'
 import {ChargeCoinService, ChargeCoinRet, ChargeCoinReq} from "../../vendor-management/chargecoin/chargecoin.services";
 import {PaymethodService, BuyTask, OrderTask, OrderTaskRet} from "../paymethod.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
@@ -86,21 +87,21 @@ export class Paycash implements OnInit{
       this.retAddress = "paymethod";
       return;
     }
-    this.confService.getPaycashVars().do((x:any)=>this.paycashVars = x).subscribe((x:any)=>{return console.log('ngOnInit:' + this.paycashVars)});
-    this.confService.getDeviceUrl().do((x:any)=>this.deviceUrl = x).subscribe((x:any)=>{return console.log('ngOnInit:' + this.deviceUrl)});
-    this.confService.getControlBoardUrl().do((x:any)=>this.controlboardLogUrl=x).subscribe((x:any)=>console.log('ngOnInit:' + this.controlboardLogUrl));
-    this.confService.getOrdermainUrl().do((x:any)=>this.orderMainUrl=x).subscribe((x:any)=>console.log('ngOnInit:' + this.orderMainUrl));
-    this.confService.getSlotStatusUrl().do((x:any)=>this.slotStatusUrl=x).subscribe((x:any)=>console.log('ngOnInit:' + this.slotStatusUrl));
+    this.confService.getPaycashVars().pipe(tap((x:any)=>this.paycashVars = x)).subscribe((x:any)=>{return console.log('ngOnInit:' + this.paycashVars)});
+    this.confService.getDeviceUrl().pipe(tap((x:any)=>this.deviceUrl = x)).subscribe((x:any)=>{return console.log('ngOnInit:' + this.deviceUrl)});
+    this.confService.getControlBoardUrl().pipe(tap((x:any)=>this.controlboardLogUrl=x)).subscribe((x:any)=>console.log('ngOnInit:' + this.controlboardLogUrl));
+    this.confService.getOrdermainUrl().pipe(tap((x:any)=>this.orderMainUrl=x)).subscribe((x:any)=>console.log('ngOnInit:' + this.orderMainUrl));
+    this.confService.getSlotStatusUrl().pipe(tap((x:any)=>this.slotStatusUrl=x)).subscribe((x:any)=>console.log('ngOnInit:' + this.slotStatusUrl));
 
-    this.confService.getPaycashTimeVars().do((x:any)=>this.timeVars = x).subscribe((x:any)=>{
+    this.confService.getPaycashTimeVars().pipe(tap((x:any)=>this.timeVars = x)).subscribe((x:any)=>{
       this.homeService.setPageWaiting('paycash', this.timeVars.timeWithoutPay);
-      this.confService.getDeviceLogUrl().do((x:any)=>this.deviceLogUrl=x).subscribe((x:any)=>{
+      this.confService.getDeviceLogUrl().pipe(tap((x:any)=>this.deviceLogUrl=x)).subscribe((x:any)=>{
         this.currentPayoutAvailableSubscription = this.service.getCurrentPayoutAvailable(this.deviceLogUrl).subscribe(
           (cashboxLogList:CashboxLog[])=>{return this.doCurrentPayoutCheck(cashboxLogList)},
           (error:any)=>{return this.tipMessage = error;})
       });
-      this.intervalSource$ = Observable.interval(this.timeVars.queryInterval).takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish);
-      this.timeCounterSubs = this.homeService.waitingCnt$.do(x=>this.waitingCnt = x).subscribe(wc=>{
+      this.intervalSource$ = interval(this.timeVars.queryInterval).pipe(takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish));
+      this.timeCounterSubs = this.homeService.waitingCnt$.pipe(tap(x=>this.waitingCnt = x)).subscribe(wc=>{
         if(!this.countdownSubjSubscription){
           console.log("this.countdownSubjSubscription registing")
           this.countdownSubjSubscription = this.countdownSubj.asObservable().subscribe((waitingCnt=>this.getMessage(waitingCnt)));
@@ -117,7 +118,7 @@ export class Paycash implements OnInit{
     }
 
     let productOrders = (JSON.parse(localStorage.getItem("cart")) as Cart).productOrders;
-    Observable.from(productOrders).flatMap(productOrder=>{
+    from(productOrders).pipe(flatMap(productOrder=>{
       let su:SlotUpdateReq = new SlotUpdateReq();
       let slotStatus = productOrder.slotStatus;
       su.slot_no = slotStatus.slot_no;
@@ -126,7 +127,7 @@ export class Paycash implements OnInit{
       su.current_item_num = slotStatus.current_item_num - productOrder.itemCnt;
       su.running_status="1";
       return this.slotUpdateService.slotCreate(this.slotStatusUrl, su);
-    }).subscribe(x=>console.log("slotStatusUrl: "+this.slotStatusUrl + "\nslotUpdateReturned: " + JSON.stringify(x)));
+    })).subscribe(x=>console.log("slotStatusUrl: "+this.slotStatusUrl + "\nslotUpdateReturned: " + JSON.stringify(x)));
     let sendTaskSub:Subject<number> = new Subject<number>();
 
     let sendTaskSub$:Subscription = sendTaskSub.asObservable()
@@ -138,14 +139,14 @@ export class Paycash implements OnInit{
         console.log("why? delme: " + orderTask.change_left)
         console.log("indexOfOrderTask: " + indexOfOrderTask + '\nsend order to ordermain '+ this.orderMainUrl + '\nobj:' + JSON.stringify(orderTask));
         this.paymethodService.sendOrder(this.orderMainUrl, orderTask)
-          .map((orderTaskRet:OrderTaskRet)=>orderTaskRet.controlboard_input_id)
+          // .pipe()
           .subscribe(
             controlboardInputId=>{
               console.log("now querying controlboardInputId: "+ controlboardInputId);
-              let orderIntervalSource$ = Observable.interval(this.timeVars.queryInterval)
-                .takeWhile(val=> this.productDelievered == false)
-                .flatMap(x=>{
-                return this.service.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)})
+              let orderIntervalSource$ = interval(this.timeVars.queryInterval)
+                .pipe(takeWhile(val=> this.productDelievered == false),
+                flatMap(x=>{
+                return this.service.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)}))
                 .subscribe((dataRet:any)=> {
                   orderIntervalSource$.unsubscribe();
                   console.log("this.buyTask.orderTasks.length"+this.buyTask.orderTasks.length + "?=" + indexOfOrderTask);

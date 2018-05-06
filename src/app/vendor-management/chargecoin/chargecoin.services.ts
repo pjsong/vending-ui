@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {map,flatMap} from "rxjs/operators";
 import {HttpUtils} from "../../common/http-util";
 import {ConfService} from "../../home/conf.service";
 import { Environment as env} from "../../environments/environment"
@@ -31,10 +32,9 @@ export class ChargeCoinRet{
 export class ChargeCoinService{
   constructor(private http: Http, private confService: ConfService ){}
   getDeviceUrl(){
-    if(env.isDev) return Observable.of(env.coinchangelogUrl);
-    return this.http.get(env.confUrlPrefix+"confname=coinlog").map(x=>x.json())
-        // .timeout(timeoutSet, "coinLog" + timeoutTip)
-        .map(x=>x[0].conf_value).catch(error=>Observable.of(env.coinchangelogUrl));
+    if(env.isDev) return of(env.coinchangelogUrl);
+    return this.http.get(env.confUrlPrefix+"confname=coinlog").pipe(map(x=>x.json()),
+        map(x=>x[0].conf_value));
   }
 
   // coinUpdateTest(deviceUrl:string, cc: ChargeCoinReq):Observable<ChargeCoinReq>{
@@ -42,29 +42,25 @@ export class ChargeCoinService{
   //   return testData;
   // }
   coinCreateWithUrl(cc: ChargeCoinReq): Observable<ChargeCoinReq>{
-    return this.confService.getCoinChangePostUrl().flatMap(x=>this.coinCreate(x, cc));
+    return this.confService.getCoinChangePostUrl().pipe(flatMap(x=>this.coinCreate(x, cc)));
   }
 
   coinCreate(coinChangePostUrl:string, cc: ChargeCoinReq): Observable<ChargeCoinReq>{
     console.log(cc);
     let retData:number = cc.amount_data;
-    if(env.isDev) return Observable.of(env.chargeCoinRet[0]);
+    if(env.isDev) return of(env.chargeCoinRet[0]);
     return new HttpUtils(this.http).POSTWithToken<ChargeCoinReq>(coinChangePostUrl, cc)
         // .timeout(timeoutSetCashbox, "coinUpdate"+timeoutTip);
         // catch(this.handleError));
   }
 
   coinGetWithUrl(){
-    return this.confService.getCoinChangeLogUrl().flatMap(x=>this.coinGet(x))
+    return this.confService.getCoinChangeLogUrl().pipe(flatMap(x=>this.coinGet(x)))
   }
 
   coinGet(coinChangeLogUrl:string): Observable<ChargeCoinRet[]>{
-    if(env.isDev) return Observable.of(env.chargeCoinRet);
-    return this.http.get(coinChangeLogUrl).map((res:Response)=>res.json() as ChargeCoinRet[])
-        // .timeout(timeoutSet, "coinGet"+timeoutTip)
-        // .map(x=>x[0])
-      //   .catch(error=>{return Observable.of(CHARGECOINRET[0])})
-      // .catch(this.handleError);
+    if(env.isDev) return of(env.chargeCoinRet);
+    return this.http.get(coinChangeLogUrl).pipe(map((res:Response)=>res.json() as ChargeCoinRet[]))
   }
 
   private handleError(error: Response | any){

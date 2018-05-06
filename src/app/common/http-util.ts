@@ -1,5 +1,6 @@
 import {Http, Request, Headers, RequestOptions, RequestMethod, Response} from "@angular/http";
-import {Observable, Subject} from "rxjs";
+import {Observable, of, Subject} from "rxjs";
+import {map, filter} from 'rxjs/operators'
 import {error} from "util";
 export class HttpUtils{
   constructor(private http: Http){}
@@ -14,11 +15,11 @@ export class HttpUtils{
       body: JSON.stringify(data)
     })
 
-    return this.http.request(new Request(options)).map(
+    return this.http.request(new Request(options)).pipe(map(
       (res: Response) => {
         return res.json() as T
       }
-    ).filter(data=>data!=undefined);
+    ),filter(data=>data!=undefined));
   }
 
   POSTWithToken<T>(url: string, data: any): Observable<T>{
@@ -30,11 +31,11 @@ export class HttpUtils{
       body: JSON.stringify(data)
     })
 
-    return this.http.request(new Request(options)).map(
+    return this.http.request(new Request(options)).pipe(map(
         (res: Response) => {
           return res.json() as T
         }
-    ).filter(data=>data!=undefined);
+    ),filter(data=>data!=undefined));
   }
 
   getHttpHeader(){
@@ -63,15 +64,15 @@ export class HttpUtils{
       body: JSON.stringify(data)
     })
 
-    return this.http.request(new Request(options)).map(
+    return this.http.request(new Request(options)).pipe(map(
       (res: Response) => {
         return res.json() as T
       }
-    ).filter(data=>data!=undefined);
+    ),filter(data=>data!=undefined));
   }
 
   GetWithToken<T>(url: string){
-    return this.http.get(url, new RequestOptions({headers:this.getHttpHeader()})).map(res=>res.json() as T);
+    return this.http.get(url, new RequestOptions({headers:this.getHttpHeader()})).pipe(map(res=>res.json() as T));
   }
 }
 

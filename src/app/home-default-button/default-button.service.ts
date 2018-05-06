@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
-import { Observable } from "rxjs";
+import {Observable, of, Subject} from "rxjs";
+import {map, filter} from 'rxjs/operators'
 import { Environment as env } from '../environments/environment';
 
 export class MainButton {
@@ -41,6 +42,6 @@ export class VendingStatus {
 //     return this.http.get(confUrlPrefix+"confname=default-button")
 //       .map(x=>x.json()).map(x=>JSON.parse(x[0].conf_value) as MainButton[]);
 //       // .timeout(timeoutSet, new Error("getButtonNew "+timeoutTip))
-//       // .catch(x=>Observable.of(BUTTONSTEST as MainButton[]))
+//       // .catch(x=>ofBUTTONSTEST as MainButton[]))
 //   }
 // }

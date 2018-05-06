@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, of, Subject} from "rxjs";
+import {map, filter} from 'rxjs/operators'
 import { Environment as env} from '../environments/environment';
 
 export class MainButton{

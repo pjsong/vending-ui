@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MemberChargeService, MemberInfoUpdateReq} from "./membercharge.services";
-import {Subject, Subscription, Observable} from "rxjs";
+import {Subject, Subscription, Observable, interval} from "rxjs";
+import {filter,takeWhile} from "rxjs/operators"
 import {HomeService} from "../home/home.service";
 import {PaycashService, CashboxLog, CashboxTaskRet, TimeVars} from "../paymethod/paycash/paycash.service";
 import {ConfService} from "../home/conf.service";
@@ -65,11 +66,11 @@ export class MemberCharge implements OnInit{
     this.confService.getMemberchargeTimeVars().subscribe(x=>{
       this.timeVars = x;
       this.homeService.setPageWaiting('chargeChange->ngOnInit', this.timeVars.timeWithoutPay);
-      this.intervalSource$ = Observable.interval(this.timeVars.queryInterval).takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish);
+      this.intervalSource$ = interval(this.timeVars.queryInterval).pipe(takeWhile(val => this.waitingCnt > this.timeVars.timeJumpToFinish));
       this.startChargeRetSubjSubscription = this.startChargeRetSubj.asObservable().subscribe((operateId)=>this.doTollRet(operateId));
       this.countdownSubjSubscription = this.countdownSubj.asObservable().subscribe((waitingCnt=>this.doWaitingCnt(waitingCnt)));
     });
-    this.service.balanceSub.asObservable().filter(x=>x!=undefined).subscribe(
+    this.service.balanceSub.asObservable().pipe(filter(x=>x!=undefined)).subscribe(
       x=>{this.amountBefore = x.balance;this.miu.id = x.id; this.miu.balance = x.balance; this.miu.owner = x.owner;this.miu.user = x.user});
   }
 

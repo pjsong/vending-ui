@@ -3,8 +3,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ConfService} from "../home/conf.service";
 import {FooterBannerService} from "./footerbanner.service";
 import {Member} from "../membercharge/membercharge.services";
-
-
+import {flatMap} from "rxjs/operators"
+ 
 @Component({
   selector: 'footerbanner',
   templateUrl: 'footerbanner.component.html',
@@ -17,7 +17,7 @@ export class FooterBanner implements OnInit{
 
   ngOnInit(){
     this.confService.getMemberUrl()
-      .flatMap(url=> this.footerBannerService.getManagerInfo(url))
+      .pipe(flatMap(url=> this.footerBannerService.getManagerInfo(url)))
       .subscribe(x=>{
         // console.log(JSON.stringify(x))
         this.manager = x as Member;

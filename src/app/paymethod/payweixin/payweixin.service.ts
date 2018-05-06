@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
 import {Http, Response,} from "@angular/http";
 import {HttpUtils} from "../../common/http-util";
-import {Observable} from "rxjs";
+import {Observable,of} from "rxjs";
+import {map,flatMap,filter} from "rxjs/operators"
 import * as CryptoJS from "crypto-js";
 import {Environment as env} from "../../environments/environment";
 
@@ -46,9 +44,10 @@ export class PayweixinService {
     this.httpUtils = new HttpUtils(http);
   }
   getVendingConf(vendingConfUrl:string): Observable<VendingConf>{
-    if(env.isDev) return Observable.of(env.vendingConf[0])
+    if(env.isDev) return of(env.vendingConf[0])
     let urlAddr =  vendingConfUrl;
-    return this.http.get(vendingConfUrl).map(x=>x.json() as VendingConf[]).filter(x=>x.length>0).map(x=>x[0]);
+    return this.http.get(vendingConfUrl).pipe(
+      map(x=>x.json() as VendingConf[]),filter(x=>x.length>0),map(x=>x[0]));
   }
 
   getRandom(): string{
@@ -92,10 +91,10 @@ export class PayweixinService {
   }
 
   toll(tollUrl:string, wxPayParams:WXPayParams):Observable<WXPollRet>{
-    if(env.isDev) return Observable.of(env.payWXPollRet as WXPollRet);
+    if(env.isDev) return of(env.payWXPollRet as WXPollRet);
     let paramstr = '?termNo='+wxPayParams.termNo+'&slotNo='+wxPayParams.slotNo+'&timestamp='+wxPayParams.timestampstr;
     paramstr = paramstr + '&nonce='+wxPayParams.randomstr+'&sign=' + wxPayParams.sign;
-    return this.http.get(tollUrl+paramstr).map((res:Response)=>res.json() as WXPollRet);
+    return this.http.get(tollUrl+paramstr).pipe(map((res:Response)=>res.json() as WXPollRet));
     //   .map(data=>data[0].outputDesc[0])
     //   .filter(data=>data.length>0)
     //   .catch(this.handleError);

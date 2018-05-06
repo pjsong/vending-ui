@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import {map, filter} from 'rxjs/operators'
 import {HttpUtils} from "../../common/http-util";
 import {Environment as env} from "../../environments/environment"
 
@@ -39,11 +40,10 @@ export class SlotUpdateService{
 
   slotCreate(slotUpdateUrl:string, su: SlotUpdateReq): Observable<SlotUpdateReq>{
     console.log(su);
-    if(env.isDev) return Observable.of(env.slotUpdateReq[0]);
+    if(env.isDev) return of(env.slotUpdateReq[0]);
     return new HttpUtils(this.http).POSTWithToken<SlotUpdateReq>(slotUpdateUrl + 'create/', su)
-      .catch(err=> this.handleCreateError(err))
     // .timeout(timeoutSetCashbox, "slotUpdate" + timeoutTip)
-    // .catch(error=>Observable.of(SLOTUPDATE[0]).catch(this.handleError));
+    // .catch(error=>ofSLOTUPDATE[0]).catch(this.handleError));
   }
 
   private handleError(error: Response | any, slotCreateUrl: string, su: SlotUpdateReq){

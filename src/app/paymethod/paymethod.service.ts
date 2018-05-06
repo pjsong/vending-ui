@@ -1,7 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import {map, flatMap,catchError} from "rxjs/operators"
 import {CashboxTaskRet} from "./paycash/paycash.service";
 import {MainButton} from "../home-default-button/default-button.service";
 import {HttpUtils} from "../common/http-util";
@@ -65,18 +66,17 @@ export class PaymethodService{
   constructor(private http: Http ){}
 
   getProductPrice(productUrl:string, productId: number): Observable<Product> {
-    if(env.isDev) return Observable.of(env.productTest[0] as Product)
+    if(env.isDev) return of(env.productTest[0] as Product)
     return this.http.get(productUrl + productId +'/?format=json')
-      .map((res:Response)=>res.json() as Product)
-      .catch(err=>{return this.handleError(err)});
+      .pipe(map((res:Response)=>res.json() as Product),
+      catchError(err=>{return this.handleError(err)}));
   }
 
 
-  sendOrder(ordermainUrl:string, orderTask: OrderTask){
-    if(env.isDev) return Observable.of(env.orderTaskTestRet);
+  sendOrder(ordermainUrl:string, orderTask: OrderTask):Observable<number>{
+    if(env.isDev) return of(env.orderTaskTestRet.controlboard_input_id as number);
     return new HttpUtils(this.http).POST<OrderTaskRet>(ordermainUrl, orderTask)
-        // .timeout(timeoutSetCashbox, "sendOrder "+timeoutTip)
-        .catch(err=>{return this.handleError(err)});
+        .pipe(catchError(err=>{return this.handleError(err)}),map((orderTaskRet:OrderTaskRet)=>orderTaskRet.controlboard_input_id));
   }
 
   private handleError(error: Response | any){

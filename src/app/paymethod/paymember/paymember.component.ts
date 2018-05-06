@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Subject, Subscription, Observable} from "rxjs";
+import {Subject, Subscription, Observable, of, from, interval} from "rxjs";
+import {map,flatMap, filter,tap,takeWhile} from 'rxjs/operators'
 import {MemberInfoUpdateReq, MemberChargeService} from "../../membercharge/membercharge.services";
 import {HomeService} from "../../home/home.service";
 import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.service";
@@ -80,8 +81,8 @@ export class Paymember implements OnInit{
       this.amountToPay += orderTask.total_paid;
       return orderTask;
     });
-    this.confService.getSlotStatusUrl().do((x:any)=>this.slotStatusUrl=x).subscribe((x:any)=>console.log(this.slotStatusUrl));
-    this.confService.getControlBoardUrl().do((x:any)=>this.controlboardLogUrl=x).subscribe((x:any)=>console.log(this.controlboardLogUrl));
+    this.confService.getSlotStatusUrl().pipe(tap((x:any)=>this.slotStatusUrl=x)).subscribe((x:any)=>console.log(this.slotStatusUrl));
+    this.confService.getControlBoardUrl().pipe(tap((x:any)=>this.controlboardLogUrl=x)).subscribe((x:any)=>console.log(this.controlboardLogUrl));
 
 
     this.confService.getOrdermainUrl().subscribe(url=>this.ordermainUrl=url);
@@ -115,7 +116,7 @@ export class Paymember implements OnInit{
 
 
     let productOrders = (JSON.parse(localStorage.getItem("cart")) as Cart).productOrders;
-    Observable.from(productOrders).flatMap(productOrder=>{
+    from(productOrders).pipe(flatMap(productOrder=>{
       let su:SlotUpdateReq = new SlotUpdateReq();
       let slotStatus = productOrder.slotStatus;
       su.slot_no = slotStatus.slot_no;
@@ -124,7 +125,7 @@ export class Paymember implements OnInit{
       su.current_item_num = slotStatus.current_item_num - productOrder.itemCnt;
       su.running_status="1";
       return this.slotUpdateService.slotCreate(this.slotStatusUrl, su);
-    }).subscribe(x=>console.log("slotUpdateReturned: " + x));
+    })).subscribe(x=>console.log("slotUpdateReturned: " + x));
 
     let sendTaskSub:Subject<number> = new Subject<number>();
 
@@ -133,14 +134,13 @@ export class Paymember implements OnInit{
         let orderTask = this.buyTask.orderTasks[indexOfOrderTask];
         console.log("indexOfOrderTask: " + indexOfOrderTask);
         this.paymethodService.sendOrder(this.ordermainUrl, orderTask)
-          .map((orderTaskRet:OrderTaskRet)=>orderTaskRet.controlboard_input_id)
           .subscribe(
             controlboardInputId=>{
               console.log("now querying controlboardInputId: "+ controlboardInputId);
-              let orderIntervalSource$ = Observable.interval(this.timeVars.queryInterval)
-                .takeWhile(val=> this.productDelievered == false)
-                .flatMap(x=>{
-                  return this.paycashService.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)})
+              let orderIntervalSource$ = interval(this.timeVars.queryInterval)
+                .pipe(takeWhile(val=> this.productDelievered == false),
+                flatMap(x=>{
+                  return this.paycashService.orderTaskSendLog(this.controlboardLogUrl, controlboardInputId)}))
                 .subscribe((dataRet:any)=> {
                   orderIntervalSource$.unsubscribe();
                   console.log("this.buyTask.orderTasks.length"+this.buyTask.orderTasks.length + "?=" + indexOfOrderTask);

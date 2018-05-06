@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {SlotSelectService, SlotStatus, Cart, ProductOrder, Slot} from "./slotselect.service";
 import {HomeService} from "../home/home.service";
 import {ConfService} from "../home/conf.service";
-
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'slotselect',
@@ -41,8 +41,8 @@ export class SlotSelect implements OnInit{
       }
       this.homeService.setPageWaiting('slotselect->ngOnInit', this.defaultWaiting);
     })
-    this.confService.getSlotStatusUrl().do(x=>this.slotStatusUrl = x).subscribe(x=>console.log("ngOnInit: " + x));
-    this.confService.getSlotUrl().do(x=>this.slotUrl = x).subscribe(x=>console.log("ngOnInit: " + x));
+    this.confService.getSlotStatusUrl().pipe(tap(x=>this.slotStatusUrl = x)).subscribe(x=>console.log("ngOnInit: " + x));
+    this.confService.getSlotUrl().pipe(tap(x=>this.slotUrl = x)).subscribe(x=>console.log("ngOnInit: " + x));
   }
 
   onFinish(inputTxt: string){
