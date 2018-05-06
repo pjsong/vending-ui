@@ -3,7 +3,7 @@ import {HomeService} from "../../home/home.service";
 import {PaymethodService, OrderTask, BuyTask, OrderTaskRet} from "../paymethod.service";
 import {TimeVars, PaycashService} from "../paycash/paycash.service";
 import {ConfService} from "../../home/conf.service";
-import {Observable, Subscription, Subject, of, interval, from} from "rxjs";
+import {Observable, Subscription, Subject, of, interval, from,defer} from "rxjs";
 import {map,flatMap,filter,tap,takeWhile,timeoutWith,catchError} from "rxjs/operators"
 import {Cart} from "../../slotselect/slotselect.service";
 import {SlotUpdateReq, SlotUpdateService} from "../../vendor-management/slotupdate/slotupdate.services";
@@ -118,7 +118,7 @@ export class Payweixin implements OnInit{
 
   ngOnInit(){
     this.confService.initWXPayConnection()
-    .pipe(timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
+    .pipe(timeoutWith(2000, defer(() =>Observable.throw(new Error('TimeoutError'))))
     , catchError(err=>{
       if(err.name == 'TimeoutError'){
         this.timeoutMsg = '网络超时';

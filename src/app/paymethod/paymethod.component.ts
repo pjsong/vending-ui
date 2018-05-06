@@ -9,7 +9,7 @@ import {HomeService} from "../home/home.service";
 import {SlotStatus, Cart, ProductOrder} from "../slotselect/slotselect.service";
 import {MainButton} from "../home-default-button/default-button.services";
 import {ConfService} from "../home/conf.service";
-import {Observable, from} from "rxjs";
+import {Observable, from, defer} from "rxjs";
 import {tap, flatMap,map,timeoutWith,catchError} from "rxjs/operators"
 
 
@@ -66,7 +66,7 @@ export class Paymethod implements OnInit{
       this.homeService.setPageWaiting('paymethod->ngOnInit', this.defaultWaiting);
     });
     this.service.getOrdermainUrl().subscribe(x=>this.ordermainUrl=x);
-    this.service.initWXPayConnection().pipe(timeoutWith(2000, Observable.throw(new Error('TimeoutError'))))
+    this.service.initWXPayConnection().pipe(timeoutWith(2000, defer(() =>Observable.throw(new Error('TimeoutError')))))
       .pipe(catchError(err=>{
         if(err.name == 'TimeoutError'){
           this.timeoutMsg = '网络超时';

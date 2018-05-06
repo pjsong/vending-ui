@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {MainButton} from "./default-button.services";
-import {Observable, of, Subject} from "rxjs";
+import {Observable, of, Subject,defer} from "rxjs";
 import {map, filter, timeoutWith,retryWhen,catchError} from 'rxjs/operators'
 import {HomeService} from "../home/home.service";
 import {ConfService} from "../home/conf.service";
@@ -27,7 +27,7 @@ export class DefaultButton implements OnInit{
       this.mainButtons = env.mainButton;
       return;
     }
-    this.service.initWXPayConnection().pipe(timeoutWith(2000, Observable.throw(new Error('TimeoutError')))
+    this.service.initWXPayConnection().pipe(timeoutWith(2000, defer(() =>Observable.throw(new Error('TimeoutError'))))
       ,catchError(err=>{
         if(err.name == 'TimeoutError'){
           this.timeoutMsg = '网络超时';
